@@ -78,10 +78,10 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
       
       
-        m_driverController.y().onTrue(new InstantCommand(m_exampleSubsystem::climbUp)).onFalse(new InstantCommand(m_exampleSubsystem::stop));
-        m_driverController.a().onTrue(new InstantCommand(m_exampleSubsystem::climbDown)).onFalse(new InstantCommand(m_exampleSubsystem::stop));
-        m_driverController.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
-        m_driverController.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
+        joystick.y().onTrue(new InstantCommand(m_exampleSubsystem::climbUp)).onFalse(new InstantCommand(m_exampleSubsystem::stop));
+        joystick.a().onTrue(new InstantCommand(m_exampleSubsystem::climbDown)).onFalse(new InstantCommand(m_exampleSubsystem::stop));
+        joystick.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
+        joystick.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
       
     }
 
