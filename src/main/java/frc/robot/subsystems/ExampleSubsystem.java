@@ -4,18 +4,35 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ExampleSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {}
-
+  SparkFlex leftClimb = new SparkFlex(41, MotorType.kBrushless);
+  SparkFlex rightClimb = new SparkFlex(42, MotorType.kBrushless);
   /**
    * Example command factory method.
    *
    * @return a command
    */
+  public void climbUp() {
+    leftClimb.set(0.4);
+    rightClimb.set(0.4);
+    System.out.println(".");
+  }
+  public void climbDown() {
+    leftClimb.set(-0.4);
+    rightClimb.set(-0.4);
+  }
+  public void stop() {
+    leftClimb.set(0.0);
+    rightClimb.set(0.0);
+  }
   public Command exampleMethodCommand() {
     // Inline construction of command goes here.
     // Subsystem::RunOnce implicitly requires `this` subsystem.
