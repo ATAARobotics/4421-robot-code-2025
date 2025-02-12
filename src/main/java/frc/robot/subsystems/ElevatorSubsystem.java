@@ -1,12 +1,18 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.generated.TunerConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
     private double elevatorSpeed = 0;
@@ -16,6 +22,19 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public SparkFlexConfig leftConfig;
     public SparkFlexConfig rightConfig;
+
+    public double defaultSetpoint = Constants.ElevatorConstants.Encoder.rest;
+
+    public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID, TunerConstants.kCANBus);
+    public double encoderCurrentPosition;
+
+    public boolean setpointMode = false;
+
+    private PIDController ElevatorPID = new PIDController(
+        Constants.ElevatorConstants.kP,
+        Constants.ElevatorConstants.kI,
+        Constants.ElevatorConstants.kD
+    );
 
     public ElevatorSubsystem() {
         leftConfig = new SparkFlexConfig();
@@ -29,23 +48,44 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         leftClimbMotor.configure(leftConfig, null, null);
         rightClimbMotor.configure(rightConfig, null, null);
+
     }
 
     @Override
     public void periodic() {
+        encoderCurrentPosition = -encoder.getPosition().getValueAsDouble();
+
+        SmartDashboard.putNumber("Elevator Encoder Value", encoderCurrentPosition);
+        SmartDashboard.putNumber("Current Elevator Setpoint", defaultSetpoint);
+
+        if (setpointMode) {
+            ElevatorPID.setSetpoint(defaultSetpoint);
+
+            elevatorSpeed = MathUtil.clamp(ElevatorPID.calculate(encoderCurrentPosition), -Constants.ElevatorConstants.maxElevatorSpeed, Constants.ElevatorConstants.maxElevatorSpeed);
+        }
+
         leftClimbMotor.set(elevatorSpeed);
-        rightClimbMotor.set(elevatorSpeed); // Switch to enum once encoder work
+        rightClimbMotor.set(elevatorSpeed);
     }
 
     public void elevatorUp() {
         elevatorSpeed = 0.1;
+        setpointMode = false;
     }
 
     public void elevatorDown() {
         elevatorSpeed = -0.1; 
+        setpointMode = false;
+
     }
 
     public void elevatorStop() {
         elevatorSpeed = 0.0;
+        setpointMode = false;
+    }
+
+    public void setElevatorSetpoint(double setpoint) {
+        setpointMode = true;
+        defaultSetpoint = setpoint;
     }
 }

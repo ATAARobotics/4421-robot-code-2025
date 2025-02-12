@@ -20,7 +20,7 @@ import frc.robot.subsystems.ClimbSubsystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
-    private final ClimbSubsystem m_exampleSubsystem = new ClimbSubsystem();
+    private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
   
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -62,6 +62,7 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
+        
         joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
         joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
         joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
@@ -73,10 +74,21 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
       
       
-        joystick.y().onTrue(new InstantCommand(m_exampleSubsystem::climbUp)).onFalse(new InstantCommand(m_exampleSubsystem::stop));
-        joystick.a().onTrue(new InstantCommand(m_exampleSubsystem::climbDown)).onFalse(new InstantCommand(m_exampleSubsystem::stop));
+        joystick.y().onTrue(new InstantCommand(m_climbSubsystem::climbUp)).onFalse(new InstantCommand(m_climbSubsystem::stop));
+        joystick.a().onTrue(new InstantCommand(m_climbSubsystem::climbDown)).onFalse(new InstantCommand(m_climbSubsystem::stop));
         joystick.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
         joystick.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
+
+        // Rest
+        joystick.povDown().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.rest)
+            ));
+
+        // L2
+        joystick.povDown().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L2)
+            ));
+       
       
     }
 
