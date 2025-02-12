@@ -40,6 +40,12 @@ public final class Constants {
       public static final double top = 4.0;
 
     }
+  }
 
+  public static class ClimbConstants {
+    public static final int leftClimbMotorID = 41;
+    public static final int rightClimbMotorID = 42;
+
+    public static final double maxClimbSpeed = 0.4;
   }
 }
