@@ -20,5 +20,6 @@ public final class Constants {
   public static class ElevatorConstants {
     public static final int leftClimbMotorID = 21;
     public static final int rightClimbMotorID = 22;
+    public static final int leftClimbMotorEncoderID = 23;
   }
 }
