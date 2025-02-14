@@ -10,7 +10,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
@@ -77,6 +76,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightClimbMotor.set(elevatorSpeed);
 
         SmartDashboard.putBoolean("Left Min Touch Limit Value", minLimitTouchLeft.get());
+        SmartDashboard.putBoolean("Right Min Tough Limit Value", minLimitTouchRight.get());
     }
 
     public void elevatorUp() {
