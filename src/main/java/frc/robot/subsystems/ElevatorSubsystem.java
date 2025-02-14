@@ -99,4 +99,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         setpointMode = true;
         defaultSetpoint = setpoint;
     }
+
+    public void zero(){
+        encoder.setPosition(0);
+    }
 }

@@ -51,4 +51,12 @@ public final class Constants {
 
     public static final double maxClimbSpeed = 0.4;
   }
+
+  public static class ShooterConstants {
+    public static final int leftShooterMotorID = 0;
+    public static final int rightShooterMotorID = 1;
+
+    public static final double maxShooterSpeed = 0.3;
+    public static final double fractionalRatio = 2; //By how much the speed is divided when shooting L1
+  }
 }
