@@ -4,6 +4,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
+
+import au.grapplerobotics.CanBridge;
+import au.grapplerobotics.LaserCan;
+
 import com.revrobotics.spark.SparkMax;
 import frc.robot.Constants;
 
@@ -17,9 +21,14 @@ public class ShooterSubsystem extends SubsystemBase {
     public double leftShooterSpeed;
     public double rightShooterSpeed;
 
+    private LaserCan laserCan;
+
     public ShooterSubsystem() {
         leftShooterMotor = new SparkMax(Constants.ShooterConstants.leftShooterMotorID, MotorType.kBrushless);
         rightShooterMotor = new SparkMax(Constants.ShooterConstants.rightShooterMotorID, MotorType.kBrushless);
+
+        laserCan = new LaserCan(33);
+        CanBridge.runTCP();
 
         leftConfig = new SparkMaxConfig();
         rightConfig = new SparkMaxConfig();
