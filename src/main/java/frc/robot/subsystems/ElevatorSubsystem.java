@@ -8,6 +8,7 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,6 +23,9 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public SparkFlexConfig leftConfig;
     public SparkFlexConfig rightConfig;
+
+    private DigitalInput minLimitTouchLeft;
+    private DigitalInput minLimitTouchRight;
 
     public double defaultSetpoint = Constants.ElevatorConstants.Encoder.rest;
 
@@ -49,6 +53,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         leftClimbMotor.configure(leftConfig, null, null);
         rightClimbMotor.configure(rightConfig, null, null);
 
+        minLimitTouchLeft = new DigitalInput(Constants.ElevatorConstants.minLimitTouchLeftPin);
+        minLimitTouchRight = new DigitalInput(Constants.ElevatorConstants.minLimitTouchRightPin);
     }
 
     @Override
@@ -66,6 +72,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         leftClimbMotor.set(elevatorSpeed);
         rightClimbMotor.set(elevatorSpeed);
+
+        SmartDashboard.putBoolean("Left Min Touch Limit Value", minLimitTouchLeft.get());
     }
 
     public void elevatorUp() {

@@ -23,6 +23,9 @@ public final class Constants {
     public static final int leftClimbMotorID = 21;
     public static final int rightClimbMotorID = 22;
 
+    public static final int minLimitTouchLeftPin = 5;
+    public static final int minLimitTouchRightPin = 9;
+
     public static final double maxElevatorSpeed = 0.2;
 
     public static final double kP = 0;
