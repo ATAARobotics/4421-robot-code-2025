@@ -22,13 +22,13 @@ public final class Constants {
   public static class ElevatorConstants {
     public static final int leftClimbMotorID = 21;
     public static final int rightClimbMotorID = 22;
-
+    
     public static final int minLimitTouchLeftPin = 5;
     public static final int minLimitTouchRightPin = 9;
 
-    public static final double maxElevatorSpeed = 0.2;
+    public static final double maxElevatorSpeed = 0.175;
 
-    public static final double kP = 0;
+    public static final double kP = 2.0;
     public static final double kI = 0;
     public static final double kD = 0;
 
@@ -36,10 +36,10 @@ public final class Constants {
       public static final int encoderID = 23;
 
       public static final double rest = 0.017;
-      public static final double L1 = 0.0;
-      public static final double L2 = 0.0;
-      public static final double L3 = 0.0;
-      public static final double L4 = 0.0;
+      public static final double L1 = 1.7;
+      public static final double L2 = 2.25;
+      public static final double L3 = 3.22;
+      public static final double L4 = 4.6;
       public static final double top = 4.0;
 
     }
