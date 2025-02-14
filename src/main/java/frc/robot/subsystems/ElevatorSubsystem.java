@@ -22,13 +22,15 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public SparkFlexConfig leftConfig;
     public SparkFlexConfig rightConfig;
+    
+    public boolean setpointMode = false;
 
-    public double defaultSetpoint = Constants.ElevatorConstants.Encoder.rest;
+    public double defaultSetpoint = Constants.ElevatorConstants.Encoder.L2;
 
     public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID, TunerConstants.kCANBus);
     public double encoderCurrentPosition;
 
-    public boolean setpointMode = false;
+    
 
     private PIDController ElevatorPID = new PIDController(
         Constants.ElevatorConstants.kP,
@@ -69,12 +71,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void elevatorUp() {
-        elevatorSpeed = 0.1;
+        elevatorSpeed = Constants.ElevatorConstants.maxElevatorSpeed;
         setpointMode = false;
     }
 
     public void elevatorDown() {
-        elevatorSpeed = -0.1; 
+        elevatorSpeed = -Constants.ElevatorConstants.maxElevatorSpeed / 2.0; 
         setpointMode = false;
 
     }
