@@ -35,12 +35,12 @@ public final class Constants {
     public static class Encoder {
       public static final int encoderID = 23;
 
-      public static final double rest = 0.017;
-      public static final double L1 = 1.7;
-      public static final double L2 = 2.25;
-      public static final double L3 = 3.22;
-      public static final double L4 = 4.6;
-      public static final double top = 4.0;
+      public static final double rest = 0.006;
+      public static final double L1 = 1f;
+      public static final double L2 = 1.399169921875;
+      public static final double L3 = 2.37;
+      public static final double L4 = 3.9;
+      public static final double top = 3.9;
 
     }
   }
