@@ -22,6 +22,9 @@ public final class Constants {
   public static class ElevatorConstants {
     public static final int leftClimbMotorID = 21;
     public static final int rightClimbMotorID = 22;
+    
+    public static final int minLimitTouchLeftPin = 5;
+    public static final int minLimitTouchRightPin = 9;
 
     public static final double maxElevatorSpeed = 0.175;
 
@@ -40,6 +43,12 @@ public final class Constants {
       public static final double top = 4.0;
 
     }
+  }
 
+  public static class ClimbConstants {
+    public static final int leftClimbMotorID = 41;
+    public static final int rightClimbMotorID = 42;
+
+    public static final double maxClimbSpeed = 0.4;
   }
 }
