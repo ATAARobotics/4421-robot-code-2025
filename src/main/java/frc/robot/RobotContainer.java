@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.AlignmentSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -32,6 +33,10 @@ public class RobotContainer {
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.2) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
+    private final SwerveRequest.FieldCentric driveToSetpoint = new SwerveRequest.FieldCentric() // Add a 10% deadband
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for turn motors
+
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
@@ -40,6 +45,9 @@ public class RobotContainer {
     private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    private final AlignmentSubsystem m_alignmentSubsystem = new AlignmentSubsystem(drivetrain);
+
+    private boolean scoring = false;
 
     public RobotContainer() {
         configureBindings();
@@ -51,9 +59,12 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
+                scoring ? driveToSetpoint.withVelocityX(m_alignmentSubsystem.getOutputs()[0])
+                .withVelocityY(m_alignmentSubsystem.getOutputs()[1])
+                .withRotationalRate(m_alignmentSubsystem.getOutputs()[2]) :
                 drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate).withDeadband(0.2) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
 
@@ -93,6 +104,8 @@ public class RobotContainer {
             ));
        
         joystick.leftTrigger().onTrue(new InstantCommand(m_shooterSubsystem::shoot)).onFalse(new InstantCommand(m_shooterSubsystem::stopShooter));
+
+        joystick.rightTrigger().onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
 
     }
 
