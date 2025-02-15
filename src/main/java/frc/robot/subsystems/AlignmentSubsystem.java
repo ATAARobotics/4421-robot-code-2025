@@ -1,11 +1,14 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.generated.TunerConstants;
 
 public class AlignmentSubsystem extends SubsystemBase {
 
@@ -82,15 +85,16 @@ public class AlignmentSubsystem extends SubsystemBase {
         curY = currentPose.getY();
         curR = currentPose.getRotation().getRadians();
 
-        xOutput = controllerXY.calculate(curX, goalX);
-        yOutput = controllerXY.calculate(curY, goalY);
-        rOutput = controllerR.calculate(curR, goalR);
+        xOutput = MathUtil.clamp(controllerXY.calculate(curX, goalX), -Constants.SwerveConstants.maxSpeed, Constants.SwerveConstants.maxSpeed);
+        yOutput = MathUtil.clamp(controllerXY.calculate(curY, goalY), -Constants.SwerveConstants.maxSpeed, Constants.SwerveConstants.maxSpeed);
+        rOutput = MathUtil.clamp(controllerR.calculate(curR, goalR), -Constants.SwerveConstants.maxAngularRate, Constants.SwerveConstants.maxAngularRate);
 
         SmartDashboard.putNumber("xOutput", xOutput);
         SmartDashboard.putNumber("yOutput", yOutput);
         SmartDashboard.putNumber("rOutput", rOutput);
     }
 
+    // returns speed of swerve modules
     public double[] getOutputs() {
         return new double[]{xOutput, yOutput, rOutput};
     }

@@ -58,6 +58,7 @@ public class RobotContainer {
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
+            // if right trigger is being held down, scoring will be true, thus alignment will be active
             drivetrain.applyRequest(() ->
                 scoring ? driveToSetpoint.withVelocityX(m_alignmentSubsystem.getOutputs()[0])
                 .withVelocityY(m_alignmentSubsystem.getOutputs()[1])
@@ -84,6 +85,7 @@ public class RobotContainer {
         // reset the field-centric heading on left bumper press
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
+
         drivetrain.registerTelemetry(logger::telemeterize);
       
       
@@ -105,6 +107,7 @@ public class RobotContainer {
        
         joystick.leftTrigger().onTrue(new InstantCommand(m_shooterSubsystem::shoot)).onFalse(new InstantCommand(m_shooterSubsystem::stopShooter));
 
+        // bool to acitvate alignment
         joystick.rightTrigger().onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
 
     }

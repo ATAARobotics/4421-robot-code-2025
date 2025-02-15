@@ -59,4 +59,11 @@ public final class Constants {
     public static final double maxShooterSpeed = 0.3;
     public static final double fractionalRatio = 2; //By how much the speed is divided when shooting L1
   }
+
+  public static class SwerveConstants {
+    public static final double maxSpeed = 3.6; // Meters per second, for running auto-alignment
+    public static final double maxAngularRate = 0.75; // Rotations per second, for running auto-alignment
+  }
+   
+  
 }
