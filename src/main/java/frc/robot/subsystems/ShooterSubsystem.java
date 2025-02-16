@@ -91,7 +91,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 leftSpeed = Constants.ShooterConstants.maxShooterSpeed;
                 rightSpeed = Constants.ShooterConstants.maxShooterSpeed;
 
-                if (checkShooterLaserCan()) {
+                if (!checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;
                 }
 

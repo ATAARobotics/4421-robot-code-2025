@@ -72,6 +72,10 @@ public class ElevatorSubsystem extends SubsystemBase {
             elevatorSpeed = MathUtil.clamp(ElevatorPID.calculate(encoderCurrentPosition), -Constants.ElevatorConstants.maxElevatorSpeed, Constants.ElevatorConstants.maxElevatorSpeed);
         }
 
+        if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.top) {
+            elevatorSpeed = 0;
+        }
+
         leftClimbMotor.set(elevatorSpeed);
         rightClimbMotor.set(elevatorSpeed);
 
@@ -95,6 +99,11 @@ public class ElevatorSubsystem extends SubsystemBase {
         setpointMode = false;
     }
 
+    public void returnToIntake() {
+        setpointMode = true;
+        defaultSetpoint = Constants.ElevatorConstants.Encoder.Intake;
+    }
+
     public void setElevatorSetpoint(double setpoint) {
         setpointMode = true;
         defaultSetpoint = setpoint;
@@ -102,5 +111,9 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public void zero(){
         encoder.setPosition(0);
+    }
+
+    public boolean isSetpointAtL1() {
+        return defaultSetpoint == Constants.ElevatorConstants.Encoder.L1;
     }
 }

@@ -44,6 +44,7 @@ public class RobotContainer {
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController joystick = new CommandXboxController(0);
+    private final CommandXboxController operatorJoystick = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final AlignmentSubsystem m_alignmentSubsystem = new AlignmentSubsystem(drivetrain);
@@ -71,7 +72,7 @@ public class RobotContainer {
         );
 
         // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        joystick.povRight().whileTrue(drivetrain.applyRequest(() ->
+        operatorJoystick.povRight().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(0.0))
         ));
 
@@ -90,28 +91,42 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
       
       
-        //joystick.y().onTrue(new InstantCommand(m_climbSubsystem::climbUp)).onFalse(new InstantCommand(m_climbSubsystem::stop));
-        //joystick.a().onTrue(new InstantCommand(m_climbSubsystem::climbDown)).onFalse(new InstantCommand(m_climbSubsystem::stop));
-        joystick.a().onTrue(new InstantCommand(m_elevatorSubsystem::zero));
+        joystick.y().onTrue(new InstantCommand(m_climbSubsystem::climbUp)).onFalse(new InstantCommand(m_climbSubsystem::stop));
+        joystick.a().onTrue(new InstantCommand(m_climbSubsystem::climbDown)).onFalse(new InstantCommand(m_climbSubsystem::stop));
+        // joystick.a().onTrue(new InstantCommand(m_elevatorSubsystem::zero));
         joystick.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
         joystick.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
 
         // Rest
         joystick.povDown().onTrue(new InstantCommand(
-            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.rest)
-            ));
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L1)
+        ));
 
         // L2
         joystick.povUp().onTrue(new InstantCommand(
             () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L2)
-            ));
+        ));
+
+        joystick.povLeft().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L3)
+        ));
+
+        joystick.povRight().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L4)
+        ));
+
+        joystick.button(10).onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake)
+        ));
        
 
         // bool to acitvate alignment
-        joystick.rightTrigger().onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
-
-        joystick.leftTrigger().onTrue(new InstantCommand(() -> m_shooterSubsystem.shoot())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
-        joystick.rightBumper().onTrue(new InstantCommand(() -> m_shooterSubsystem.shootL1())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
+        // joystick.rightTrigger().onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
+        
+        joystick.rightBumper()
+            .onTrue(m_elevatorSubsystem.isSetpointAtL1() ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
+            .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()))
+            .onFalse(new InstantCommand(() -> m_elevatorSubsystem.returnToIntake()));
 
     }
 
