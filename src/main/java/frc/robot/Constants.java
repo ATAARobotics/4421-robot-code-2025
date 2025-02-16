@@ -56,13 +56,18 @@ public final class Constants {
     public static final int leftShooterMotorID = 31;
     public static final int rightShooterMotorID = 32;
 
-    public static final double maxShooterSpeed = 0.3;
+    public static final double maxShooterSpeed = 0.9;
+    public static final double intakeSpeed = 0.3;
     public static final double fractionalRatio = 2; //By how much the speed is divided when shooting L1
+
+    public static final int intakeThreshold = 25;
+    public static final int absentThreshold = 80;
   }
 
   public static class SwerveConstants {
     public static final double maxSpeed = 3.6; // Meters per second, for running auto-alignment
-    public static final double maxAngularRate = 0.75; // Rotations per second, for running auto-alignment
+    public static final double maxAngularRate = 3; //99 Rotations per second, for running auto-alignment
+    
   }
    
   

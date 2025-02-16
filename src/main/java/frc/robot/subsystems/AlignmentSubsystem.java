@@ -13,7 +13,8 @@ import frc.robot.generated.TunerConstants;
 public class AlignmentSubsystem extends SubsystemBase {
 
     public final CommandSwerveDrivetrain m_Swerve;
-    private static Pose2d goalPose = new Pose2d(0f, 0f, new Rotation2d(0.0));
+    // private static Pose2d goalPose = new Pose2d(4.700446000000001,-0.7196820000000002, new Rotation2d(-1.047197551));
+    private static Pose2d goalPose;
 
     private Pose2d currentPose;
     private double curX;
@@ -24,8 +25,8 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double goalY;
     private double goalR;
 
-    private PIDController controllerXY = new PIDController(0.1, 0.0, 0.0);
-    private PIDController controllerR = new PIDController(0.1, 0.0, 0.0);
+    private PIDController controllerXY = new PIDController(2, 0.0, 0.0);
+    private PIDController controllerR = new PIDController(2, 0.0, 0.0);
         
     private double xOutput;
     private double yOutput;
@@ -40,7 +41,7 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double controllerR_D;
         
         
-    public AlignmentSubsystem(CommandSwerveDrivetrain m_Swerve) {
+    public AlignmentSubsystem(CommandSwerveDrivetrain m_Swerve) {        
         SmartDashboard.putNumber("AlignmentXY P", controllerR.getP());
         SmartDashboard.putNumber("AlignmentXY I", controllerR.getI());
         SmartDashboard.putNumber("AlignmentXY D", controllerR.getD());
@@ -49,13 +50,14 @@ public class AlignmentSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("AlignmentR I", controllerR.getI());
         SmartDashboard.putNumber("AlignmentR D", controllerR.getD());
 
-
         this.m_Swerve = m_Swerve;
         currentPose = m_Swerve.getState().Pose;
 
         curX = currentPose.getX();
         curY = currentPose.getY();
         curR = currentPose.getRotation().getRadians();
+
+        goalPose = new Pose2d(curX + 1, curY, new Rotation2d(curR));
 
         goalX = goalPose.getX();
         goalY = goalPose.getY();
@@ -67,7 +69,6 @@ public class AlignmentSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-
         controllerXY_P = SmartDashboard.getNumber("AlignmentXY P", 0.0);
         controllerXY_I = SmartDashboard.getNumber("AlignmentXY I", 0.0);
         controllerXY_D = SmartDashboard.getNumber("AlignmentXY D", 0.0);
@@ -92,6 +93,10 @@ public class AlignmentSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("xOutput", xOutput);
         SmartDashboard.putNumber("yOutput", yOutput);
         SmartDashboard.putNumber("rOutput", rOutput);
+
+        SmartDashboard.putNumber("Current Robot X", currentPose.getX());
+        SmartDashboard.putNumber("Current Robot Y", currentPose.getY());
+        SmartDashboard.putNumber("Current Robot R", currentPose.getRotation().getDegrees());
     }
 
     // returns speed of swerve modules
