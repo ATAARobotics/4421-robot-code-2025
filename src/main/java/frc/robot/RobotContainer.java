@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.AbsoluteRotation;
 import frc.robot.subsystems.AlignmentSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -49,9 +50,14 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final AlignmentSubsystem m_alignmentSubsystem = new AlignmentSubsystem(drivetrain);
 
+    private AbsoluteRotation m_AbsoluteRotation = new AbsoluteRotation(() -> joystick.getRightX(), () -> joystick.getRightY(), () -> drivetrain.getState().Pose.getRotation().getRadians());
+
     private boolean scoring = false;
+    private boolean isAbsoluteHeading = false;
 
     public RobotContainer() {
+        scoring = false;
+        isAbsoluteHeading = false;
         configureBindings();
     }
 
@@ -67,10 +73,16 @@ public class RobotContainer {
                 .withRotationalRate(m_alignmentSubsystem.getOutputs()[2]) :
                 drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(isAbsoluteHeading ? m_AbsoluteRotation.rotationSpeed() : -joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
 
+        // toggle absolute heading mode on B press on the second controller
+        operatorJoystick.b().onTrue(
+            new InstantCommand(() -> isAbsoluteHeading = !isAbsoluteHeading)
+        );
+
+        operatorJoystick.y().onTrue(new InstantCommand(() -> MaxSpeed = 0.1 * MaxSpeed)).onFalse(new InstantCommand(() -> MaxSpeed = 10 * MaxSpeed)); // slowmode?
         // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         operatorJoystick.povRight().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(0.0))
@@ -120,8 +132,8 @@ public class RobotContainer {
         ));
        
 
-        // bool to acitvate alignment
-        // joystick.rightTrigger().onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
+        // bool to acitvate alignment, press both the up buttom on the d-pad and the a button on second controller
+        operatorJoystick.povUp().and(operatorJoystick.a()).onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
         
         joystick.rightBumper()
             .onTrue(m_elevatorSubsystem.isSetpointAtL1() ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
