@@ -23,6 +23,8 @@ public final class Constants {
     public static final int leftClimbMotorID = 21;
     public static final int rightClimbMotorID = 22;
     
+    public static final int leftClimbMotorEncoderID = 23;
+    
     public static final int minLimitTouchLeftPin = 5;
     public static final int minLimitTouchRightPin = 9;
 
@@ -59,5 +61,6 @@ public final class Constants {
 
     public static final double maxShooterSpeed = 1;
     public static final double fractionalRatio = 2; //By how much the speed is divided when shooting L1
+    public static final int leftClimbMotorEncoderID = 23;
   }
 }
