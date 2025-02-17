@@ -125,8 +125,7 @@ public class RobotContainer {
         
         joystick.rightBumper()
             .onTrue(m_elevatorSubsystem.isSetpointAtL1() ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
-            .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()))
-            .onFalse(new InstantCommand(() -> m_elevatorSubsystem.returnToIntake()));
+            .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
 
     }
 
