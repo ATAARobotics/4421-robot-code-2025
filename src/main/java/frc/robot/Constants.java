@@ -28,14 +28,15 @@ public final class Constants {
 
     public static final double maxElevatorSpeed = 0.175;
 
-    public static final double kP = 2.0;
+    public static final double kP = 3.0;
     public static final double kI = 0;
     public static final double kD = 0;
 
     public static class Encoder {
       public static final int encoderID = 23;
 
-      public static final double rest = 0.006;
+      public static final double rest = 0.02;
+      public static final double Intake = 0.5;
       public static final double L1 = 1f;
       public static final double L2 = 1.399169921875;
       public static final double L3 = 2.37;
@@ -56,7 +57,7 @@ public final class Constants {
     public static final int leftShooterMotorID = 31;
     public static final int rightShooterMotorID = 32;
 
-    public static final double maxShooterSpeed = 0.3;
+    public static final double maxShooterSpeed = 1;
     public static final double fractionalRatio = 2; //By how much the speed is divided when shooting L1
   }
 }

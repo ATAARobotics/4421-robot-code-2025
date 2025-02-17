@@ -53,7 +53,7 @@ public class RobotContainer {
             drivetrain.applyRequest(() ->
                 drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate).withDeadband(0.2) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate).withRotationalDeadband(MaxAngularRate * 0.1) // Drive counterclockwise with negative X (left)
             )
         );
 
@@ -84,16 +84,20 @@ public class RobotContainer {
 
         // Rest
         joystick.povDown().onTrue(new InstantCommand(
-            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.rest)
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake)
+            ));
+
+        joystick.povLeft().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L3)
             ));
 
         // L2
         joystick.povUp().onTrue(new InstantCommand(
-            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L2)
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L4)
             ));
        
         joystick.leftTrigger().onTrue(new InstantCommand(m_shooterSubsystem::shoot)).onFalse(new InstantCommand(m_shooterSubsystem::stopShooter));
-
+        joystick.rightTrigger().onTrue(new InstantCommand(m_shooterSubsystem::shootL1)).onFalse(new InstantCommand(m_shooterSubsystem::stopShooter));
     }
 
     public Command getAutonomousCommand() {
