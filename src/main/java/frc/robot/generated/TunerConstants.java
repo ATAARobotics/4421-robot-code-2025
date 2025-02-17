@@ -10,8 +10,11 @@ import com.ctre.phoenix6.swerve.*;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants.*;
 
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.*;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -168,6 +171,16 @@ public class TunerConstants {
 
     private static final Distance kBackRightXPos = Inches.of(-13.77);
     private static final Distance kBackRightYPos = Inches.of(-10.0585);
+
+    public static final double swerveWidth = Units.inchesToMeters(20.6875);
+    public static final double swerveLength = Units.inchesToMeters(26.625);
+
+    public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
+        new Translation2d(-swerveLength / 2.0, -swerveWidth / 2.0),
+        new Translation2d(-swerveLength / 2.0, swerveWidth / 2.0),
+        new Translation2d(swerveLength / 2.0, -swerveWidth / 2.0),
+        new Translation2d(swerveLength  / 2.0, swerveWidth / 2.0)
+    );
 
 
     public static final SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> FrontLeft =

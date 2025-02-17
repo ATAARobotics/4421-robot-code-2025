@@ -51,7 +51,7 @@ public class AlignmentSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("AlignmentR D", controllerR.getD());
 
         this.m_Swerve = m_Swerve;
-        currentPose = m_Swerve.getState().Pose;
+        currentPose = m_Swerve.getPose();
 
         curX = currentPose.getX();
         curY = currentPose.getY();
