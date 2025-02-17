@@ -6,58 +6,46 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkFlexConfig;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ClimbSubsystem extends SubsystemBase {
+    private double climbSpeed = 0;
 
-  public ClimbSubsystem() {}
-  SparkFlex leftClimb = new SparkFlex(41, MotorType.kBrushless);
-  SparkFlex rightClimb = new SparkFlex(42, MotorType.kBrushless);
-  
-  public void climbUp() {
-    leftClimb.set(0.4);
-    rightClimb.set(0.4);
-    System.out.println(".");
-  }
+    SparkFlex leftClimb = new SparkFlex(Constants.ClimbConstants.leftClimbMotorID, MotorType.kBrushless);
+    SparkFlex rightClimb = new SparkFlex(Constants.ClimbConstants.rightClimbMotorID, MotorType.kBrushless);
 
-  public void climbDown() {
-    leftClimb.set(-0.4);
-    rightClimb.set(-0.4);
-  }
+    SparkFlexConfig leftConfig;
+    SparkFlexConfig rightConfig;
 
-  public void stop() {
-    leftClimb.set(0.0);
-    rightClimb.set(0.0);
-  }
-  
-  public Command exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
-  }
+    public ClimbSubsystem() {
+        leftConfig = new SparkFlexConfig();
+        rightConfig = new SparkFlexConfig();
 
-  /**
-   * An example method querying a boolean state of the subsystem (for example, a digital sensor).
-   *
-   * @return value of some boolean subsystem state, such as a digital sensor.
-   */
-  public boolean exampleCondition() {
-    // Query some boolean state, such as a digital sensor.
-    return false;
-  }
+        leftConfig.inverted(true);
+        rightConfig.inverted(false);
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+        leftClimb.configure(leftConfig, null, null);
+        rightClimb.configure(rightConfig, null, null);
+    }
 
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-  }
+    @Override
+    public void periodic(){
+        leftClimb.set(climbSpeed);
+        rightClimb.set(climbSpeed);
+    }
+
+    public void climbUp() {
+        climbSpeed = Constants.ClimbConstants.maxClimbSpeed;
+    }
+
+    public void climbDown() {
+        climbSpeed = -Constants.ClimbConstants.maxClimbSpeed;
+    }
+
+    public void stop() {
+        climbSpeed = 0.0;
+    }
 }

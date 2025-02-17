@@ -17,18 +17,20 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
-    private final ClimbSubsystem m_exampleSubsystem = new ClimbSubsystem();
+    private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+    private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDeadband(MaxSpeed * 0.2) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -51,7 +53,7 @@ public class RobotContainer {
             drivetrain.applyRequest(() ->
                 drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate).withRotationalDeadband(MaxAngularRate * 0.1) // Drive counterclockwise with negative X (left)
             )
         );
 
@@ -62,6 +64,7 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
+        
         joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
         joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
         joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
@@ -73,11 +76,28 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
       
       
-        joystick.y().onTrue(new InstantCommand(m_exampleSubsystem::climbUp)).onFalse(new InstantCommand(m_exampleSubsystem::stop));
-        joystick.a().onTrue(new InstantCommand(m_exampleSubsystem::climbDown)).onFalse(new InstantCommand(m_exampleSubsystem::stop));
+        //joystick.y().onTrue(new InstantCommand(m_climbSubsystem::climbUp)).onFalse(new InstantCommand(m_climbSubsystem::stop));
+        //joystick.a().onTrue(new InstantCommand(m_climbSubsystem::climbDown)).onFalse(new InstantCommand(m_climbSubsystem::stop));
+        joystick.a().onTrue(new InstantCommand(m_elevatorSubsystem::zero));
         joystick.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
         joystick.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
-      
+
+        // Rest
+        joystick.povDown().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake)
+            ));
+
+        joystick.povLeft().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L3)
+            ));
+
+        // L2
+        joystick.povUp().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L4)
+            ));
+       
+        joystick.leftTrigger().onTrue(new InstantCommand(m_shooterSubsystem::shoot)).onFalse(new InstantCommand(m_shooterSubsystem::stopShooter));
+        joystick.rightTrigger().onTrue(new InstantCommand(m_shooterSubsystem::shootL1)).onFalse(new InstantCommand(m_shooterSubsystem::stopShooter));
     }
 
     public Command getAutonomousCommand() {
