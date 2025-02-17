@@ -23,20 +23,23 @@ public final class Constants {
     public static final int leftClimbMotorID = 21;
     public static final int rightClimbMotorID = 22;
     
+    public static final int leftClimbMotorEncoderID = 23;
+    
     public static final int minLimitTouchLeftPin = 5;
     public static final int minLimitTouchRightPin = 9;
 
     public static final double maxElevatorSpeed = 0.175;
 
-    public static final double kP = 2.0;
+    public static final double kP = 3.0;
     public static final double kI = 0;
     public static final double kD = 0;
 
     public static class Encoder {
       public static final int encoderID = 23;
+      
+      public static final double rest = 0.02;
+      public static final double Intake = 0.5;
 
-      public static final double rest = 0.01;
-      public static final double Intake = 0.36;
       public static final double L1 = 1f;
       public static final double L2 = 1.55;
       public static final double L3 = 2.4638;
@@ -70,7 +73,6 @@ public final class Constants {
     public static final double maxAngularRate = 3; //99 Rotations per second, for running auto-alignment
 
     public static final double MaxAngularSpeed = 1.5 * Math.PI;
-    
   }
    
   

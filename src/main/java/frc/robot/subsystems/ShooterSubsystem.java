@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import au.grapplerobotics.CanBridge;
 import au.grapplerobotics.LaserCan;
@@ -54,6 +55,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
         leftConfig.inverted(false);
         rightConfig.inverted(true);
+
+        leftConfig.idleMode(IdleMode.kBrake);
+        rightConfig.idleMode(IdleMode.kBrake);
 
         leftShooterMotor.configure(leftConfig, null, null);
         rightShooterMotor.configure(rightConfig, null, null);

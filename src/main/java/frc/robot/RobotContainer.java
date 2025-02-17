@@ -73,6 +73,7 @@ public class RobotContainer {
                 .withRotationalRate(m_alignmentSubsystem.getOutputs()[2]) :
                 drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+
                     .withRotationalRate(isAbsoluteHeading ? m_AbsoluteRotation.rotationSpeed() : -joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
@@ -133,12 +134,11 @@ public class RobotContainer {
        
 
         // bool to acitvate alignment, press both the up buttom on the d-pad and the a button on second controller
-        operatorJoystick.povUp().and(operatorJoystick.a()).onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
+        //operatorJoystick.povUp().and(operatorJoystick.a()).onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
         
         joystick.rightBumper()
             .onTrue(m_elevatorSubsystem.isSetpointAtL1() ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
             .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
-
     }
 
     public Command getAutonomousCommand() {

@@ -23,9 +23,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     public SparkFlexConfig leftConfig;
     public SparkFlexConfig rightConfig;
     
-    public boolean setpointMode = false;
+    public boolean setpointMode = true;
 
-    public double defaultSetpoint = Constants.ElevatorConstants.Encoder.L2;
+    public double defaultSetpoint = Constants.ElevatorConstants.Encoder.Intake;
   
     private DigitalInput minLimitTouchLeft;
     private DigitalInput minLimitTouchRight;
