@@ -56,7 +56,6 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightClimbMotor.configure(rightConfig, null, null);
 
         minLimitTouchLeft = new DigitalInput(Constants.ElevatorConstants.minLimitTouchLeftPin);
-        minLimitTouchRight = new DigitalInput(Constants.ElevatorConstants.minLimitTouchRightPin);
     }
 
     @Override
@@ -80,7 +79,6 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightClimbMotor.set(elevatorSpeed);
 
         SmartDashboard.putBoolean("Left Min Touch Limit Value", minLimitTouchLeft.get());
-        SmartDashboard.putBoolean("Right Min Tough Limit Value", minLimitTouchRight.get());
     }
 
     public void elevatorUp() {

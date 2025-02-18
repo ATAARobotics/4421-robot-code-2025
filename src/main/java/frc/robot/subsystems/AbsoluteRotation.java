@@ -75,7 +75,6 @@ public class AbsoluteRotation extends SubsystemBase{
             rotSpeed = 0;
         }
 
-        System.out.println(rotSpeed);
 
     }
 

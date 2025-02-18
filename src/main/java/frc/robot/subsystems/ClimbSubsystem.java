@@ -15,26 +15,21 @@ public class ClimbSubsystem extends SubsystemBase {
     private double climbSpeed = 0;
 
     SparkFlex leftClimb = new SparkFlex(Constants.ClimbConstants.leftClimbMotorID, MotorType.kBrushless);
-    SparkFlex rightClimb = new SparkFlex(Constants.ClimbConstants.rightClimbMotorID, MotorType.kBrushless);
 
     SparkFlexConfig leftConfig;
     SparkFlexConfig rightConfig;
 
     public ClimbSubsystem() {
         leftConfig = new SparkFlexConfig();
-        rightConfig = new SparkFlexConfig();
 
         leftConfig.inverted(true);
-        rightConfig.inverted(false);
 
         leftClimb.configure(leftConfig, null, null);
-        rightClimb.configure(rightConfig, null, null);
     }
 
     @Override
     public void periodic(){
         leftClimb.set(climbSpeed);
-        rightClimb.set(climbSpeed);
     }
 
     public void climbUp() {

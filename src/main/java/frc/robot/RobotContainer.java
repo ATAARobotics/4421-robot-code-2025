@@ -73,7 +73,8 @@ public class RobotContainer {
                 .withRotationalRate(m_alignmentSubsystem.getOutputs()[2]) :
                 drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(isAbsoluteHeading ? m_AbsoluteRotation.rotationSpeed() : -joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(isAbsoluteHeading ? m_AbsoluteRotation.rotationSpeed() : -joystick.getRightX() * MaxAngularRate)
+                    .withRotationalDeadband(isAbsoluteHeading ? 0.0 : MaxAngularRate * 0.15) // Drive counterclockwise with negative X (left)
             )
         );
 
@@ -105,7 +106,7 @@ public class RobotContainer {
       
         joystick.y().onTrue(new InstantCommand(m_climbSubsystem::climbUp)).onFalse(new InstantCommand(m_climbSubsystem::stop));
         joystick.a().onTrue(new InstantCommand(m_climbSubsystem::climbDown)).onFalse(new InstantCommand(m_climbSubsystem::stop));
-        // joystick.a().onTrue(new InstantCommand(m_elevatorSubsystem::zero));
+        operatorJoystick.a().onTrue(new InstantCommand(m_elevatorSubsystem::zero));
         joystick.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
         joystick.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
 

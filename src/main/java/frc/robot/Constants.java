@@ -24,9 +24,7 @@ public final class Constants {
     public static final int rightClimbMotorID = 22;
     
     public static final int minLimitTouchLeftPin = 5;
-    public static final int minLimitTouchRightPin = 9;
-
-    public static final double maxElevatorSpeed = 0.175;
+    public static final double maxElevatorSpeed = 0.35;
 
     public static final double kP = 2.0;
     public static final double kI = 0;
@@ -70,6 +68,9 @@ public final class Constants {
     public static final double maxAngularRate = 3; //99 Rotations per second, for running auto-alignment
 
     public static final double MaxAngularSpeed = 1.5 * Math.PI;
+
+    public static final double fieldX = 17.548225;
+    public static final double fieldY = 8.0518000;
     
   }
    

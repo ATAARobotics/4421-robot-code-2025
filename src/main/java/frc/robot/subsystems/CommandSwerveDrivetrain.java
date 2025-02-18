@@ -323,8 +323,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         try {
             pose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpiblue")
                     .getDoubleArray(new double[6]);
-            poseX = pose[0];
-            poseY = pose[1];
+            poseX = pose[0] + Constants.SwerveConstants.fieldX / 2;
+            poseY = pose[1] + Constants.SwerveConstants.fieldY / 2;
             poseR = Rotation2d.fromDegrees(pose[5]);
             timeStamp = Timer.getFPGATimestamp() - (pose[6] / 1000.0);
             SmartDashboard.putBoolean("Limelight Status", true);
