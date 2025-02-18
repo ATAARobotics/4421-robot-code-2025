@@ -131,6 +131,10 @@ public class RobotContainer {
         joystick.button(10).onTrue(new InstantCommand(
             () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake)
         ));
+
+        operatorJoystick.x().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.rest)
+        ));
        
 
         // bool to acitvate alignment, press both the up buttom on the d-pad and the a button on second controller

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -9,6 +10,11 @@ import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.util.DriveFeedforwards;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -21,6 +27,7 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -77,25 +84,18 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final StringPublisher fieldTypePub = table.getStringTopic(".type").publish();
 
     public Pigeon2 gyro;
+    public RobotConfig config;
 
-    private static final SwerveModule[] mSwerveModules = new SwerveModule[] {
-            new SwerveModule<TalonFX, TalonFX, CANcoder>(TalonFX::new, TalonFX::new, CANcoder::new,
-                    TunerConstants.FrontLeft, TunerConstants.kCANBus.getName(), 0, 0),
-            new SwerveModule<TalonFX, TalonFX, CANcoder>(TalonFX::new, TalonFX::new, CANcoder::new,
-                    TunerConstants.FrontRight, TunerConstants.kCANBus.getName(), 0, 0),
-            new SwerveModule<TalonFX, TalonFX, CANcoder>(TalonFX::new, TalonFX::new, CANcoder::new,
-                    TunerConstants.BackLeft, TunerConstants.kCANBus.getName(), 0, 0),
-            new SwerveModule<TalonFX, TalonFX, CANcoder>(TalonFX::new, TalonFX::new, CANcoder::new,
-                    TunerConstants.BackRight, TunerConstants.kCANBus.getName(), 0, 0)
+    public SwerveRequest request;
 
-    };
-
-    public static final SwerveModulePosition[] mSwerveModulePositions = new SwerveModulePosition[] {
-            mSwerveModules[0].getPosition(false),
-            mSwerveModules[1].getPosition(false),
-            mSwerveModules[2].getPosition(false),
-            mSwerveModules[3].getPosition(false)
-    };
+    public SwerveModulePosition[] getModulePositions() {
+        return new SwerveModulePosition[] {
+            this.getModule(0).getPosition(false),
+            this.getModule(1).getPosition(false),
+            this.getModule(2).getPosition(false),
+            this.getModule(3).getPosition(false)
+        };  
+    }
 
     /*
      * SysId routine for characterizing translation. This is used to find PID gains
@@ -177,13 +177,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if (Utils.isSimulation()) {
             startSimThread();
         }
+        setPathPlanner();
+
+        
 
         PoseEstimator = new SwerveDrivePoseEstimator(
-                TunerConstants.swerveKinematics,
+                this.getKinematics(),
                 this.getPigeon2().getRotation2d(),
-                mSwerveModulePositions,
+                getModulePositions(),
                 new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
-
         gyro = this.getPigeon2();
     }
 
@@ -212,11 +214,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
 
         PoseEstimator = new SwerveDrivePoseEstimator(
-                TunerConstants.swerveKinematics,
+                this.getKinematics(),
                 this.getPigeon2().getRotation2d(),
-                mSwerveModulePositions,
+                getModulePositions(),
                 new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
         gyro = this.getPigeon2();
+        setPathPlanner();
+
 
     }
 
@@ -257,12 +261,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 modules);
         if (Utils.isSimulation()) {
             startSimThread();
+            
         }
+        setPathPlanner();
+
 
         PoseEstimator = new SwerveDrivePoseEstimator(
-                TunerConstants.swerveKinematics,
+                this.getKinematics(),
                 this.getPigeon2().getRotation2d(),
-                mSwerveModulePositions,
+                getModulePositions(),
                 new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
 
         gyro = this.getPigeon2();
@@ -306,6 +313,56 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return PoseEstimator.getEstimatedPosition();
     }
 
+    public void resetPose(Pose2d pose) {
+        PoseEstimator.resetPose(pose);
+    }
+
+    public void setSpeeds(ChassisSpeeds speed) {
+        request = new SwerveRequest.ApplyChassisSpeeds().withSpeeds(speed);
+        this.setControl(request);
+
+    }
+
+    public ChassisSpeeds getChassisSpeeds() {
+        return this.getState().Speeds;
+    }
+
+    private void setPathPlanner() {
+        // Load the RobotConfig from the GUI settings. You should probably
+        // store this in your Constants file
+        try{
+        config = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+        // Handle exception as needed
+        e.printStackTrace();
+        }
+
+        // Configure AutoBuilder last
+        AutoBuilder.configure(
+                this::getPose, // Robot pose supplier
+                this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+                this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+                this::setSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+                new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+                        new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                        new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+                ),
+                config, // The robot configuration
+                () -> {
+                // Boolean supplier that controls when the path will be mirrored for the red alliance
+                // This will flip the path being followed to the red side of the field.
+                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+                },
+                this // Reference to this subsystem to set requirements
+        );
+    }
+
     @Override
     public void periodic() {
         /*
@@ -321,53 +378,56 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          */
 
         try {
-            pose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpiblue")
-                    .getDoubleArray(new double[6]);
-            poseX = pose[0] + Constants.SwerveConstants.fieldX / 2;
-            poseY = pose[1] + Constants.SwerveConstants.fieldY / 2;
+            pose = inst.getTable("limelight").getEntry("botpose_wpiblue").getDoubleArray(new double[10]);
+            poseX = pose[0];
+            poseY = pose[1];
             poseR = Rotation2d.fromDegrees(pose[5]);
             timeStamp = Timer.getFPGATimestamp() - (pose[6] / 1000.0);
             SmartDashboard.putBoolean("Limelight Status", true);
             Pose2d visionBotPose = new Pose2d(poseX, poseY, poseR);
 
             // distance from current pose to vision estimated pose
-            double poseDifference = PoseEstimator.getEstimatedPosition().getTranslation()
-                    .getDistance(visionBotPose.getTranslation());
+            // double poseDifference = PoseEstimator.getEstimatedPosition().getTranslation()
+            //         .getDistance(visionBotPose.getTranslation());
 
-            if (Math.abs(pose[0]) >= 0.1) {
-                double xyStds;
-                double degStds;
-                // multiple targets detected
-                if (pose[7] >= 2) {
-                    if (!DriverStation.isEnabled()) {
-                        gyro.setYaw(poseR.getDegrees());
-                    }
-                    xyStds = 0.5;
-                    degStds = 6;
-                }
-                // 1 target with large area and close to estimated pose
-                else if (pose[9] > 0.8 && poseDifference < 0.5) {
-                    xyStds = 1.0;
-                    degStds = 12;
-                }
-                // 1 target farther away and estimated pose is close
-                else if (pose[9] > 0.1 && poseDifference < 0.3) {
-                    xyStds = 2.0;
-                    degStds = 30;
-                }
-                // conditions don't match to add a vision measurement
-                else {
-                    return;
-                }
-
-                PoseEstimator.setVisionMeasurementStdDevs(
-                        VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds)));
+            // if (Math.abs(pose[0]) >= 0.1) {
+            //     double xyStds;
+            //     double degStds;
+            //     // multiple targets detected
+            //     if (pose[7] >= 2) {
+            //         if (!DriverStation.isEnabled()) {
+            //             gyro.setYaw(poseR.getDegrees());
+            //         }
+            //         xyStds = 0.5;
+            //         degStds = 6;
+            //     }
+            //     // 1 target with large area and close to estimated pose
+            //     else if (pose[9] > 0.8 && poseDifference < 0.5) {
+            //         xyStds = 1.0;
+            //         degStds = 12;
+            //     }
+            //     // 1 target farther away and estimated pose is close
+            //     else if (pose[9] > 0.1 && poseDifference < 0.3) {
+            //         xyStds = 2.0;
+            //         degStds = 30;
+            //     }
+            //     // conditions don't match to add a vision measurement
+            //     else {
+            //         return;
+            //     }
+                
+            //     PoseEstimator.setVisionMeasurementStdDevs(
+            //             VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds)));
                 PoseEstimator.addVisionMeasurement(visionBotPose, timeStamp);
-            }
+                PoseEstimator.update(gyro.getRotation2d(), getModulePositions());
+            
+
         } catch (Exception e) {
             DriverStation.reportError("LIMELIGHT FAIL: RESTART ROBOT CODE", e.getStackTrace());
             SmartDashboard.putBoolean("Limelight Status", false);
         }
+
+        System.out.println("Pose: " + PoseEstimator.getEstimatedPosition().getX() + PoseEstimator.getEstimatedPosition().getY() + PoseEstimator.getEstimatedPosition().getRotation().getDegrees());
 
         fieldTypePub.set("Field2d");
         fieldPub.set(new double[] { getPose().getX(), getPose().getY(), getPose().getRotation().getRadians() });
