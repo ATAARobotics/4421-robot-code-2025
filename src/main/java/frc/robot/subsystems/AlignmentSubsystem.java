@@ -80,7 +80,7 @@ public class AlignmentSubsystem extends SubsystemBase {
         controllerXY.setPID(controllerXY_P, controllerXY_I, controllerXY_D);
         controllerR.setPID(controllerR_P, controllerR_I, controllerR_D);
 
-        currentPose = m_Swerve.getState().Pose;
+        currentPose = m_Swerve.getPose();
 
         curX = currentPose.getX();
         curY = currentPose.getY();

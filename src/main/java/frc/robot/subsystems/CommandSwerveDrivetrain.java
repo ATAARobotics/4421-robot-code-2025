@@ -29,6 +29,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
@@ -46,6 +47,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
@@ -87,13 +89,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public RobotConfig config;
 
     public SwerveRequest request;
+    public boolean isPigeonInitialized = false;
 
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
-            this.getModule(0).getPosition(false),
-            this.getModule(1).getPosition(false),
+            this.getModule(3).getPosition(false),
             this.getModule(2).getPosition(false),
-            this.getModule(3).getPosition(false)
+            this.getModule(1).getPosition(false),
+            this.getModule(0).getPosition(false)
         };  
     }
 
@@ -317,6 +320,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         PoseEstimator.resetPose(pose);
     }
 
+    public void zeroGyro(){
+        pose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+        Rotation2d poseR = Rotation2d.fromDegrees(pose[5]);
+          if (Math.abs(pose[0]) >= 0.1) {
+              gyro.setYaw(poseR.getDegrees());
+          }
+    }
+
     public void setSpeeds(ChassisSpeeds speed) {
         request = new SwerveRequest.ApplyChassisSpeeds().withSpeeds(speed);
         this.setControl(request);
@@ -328,6 +339,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     private void setPathPlanner() {
+        
         // Load the RobotConfig from the GUI settings. You should probably
         // store this in your Constants file
         try{
@@ -365,6 +377,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumberArray("SwerveDrivePositions angles", new double[] {getModulePositions()[0].angle.getRadians(), getModulePositions()[1].angle.getRadians(), getModulePositions()[2].angle.getRadians(), getModulePositions()[3].angle.getRadians()});
+        SmartDashboard.putNumberArray("SwerveDrivePositions DistanceMeteres array", new double[] {getModulePositions()[0].distanceMeters, getModulePositions()[1].distanceMeters, getModulePositions()[2].distanceMeters, getModulePositions()[3].distanceMeters});
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply
@@ -378,10 +392,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          */
 
         try {
-            pose = inst.getTable("limelight").getEntry("botpose_wpiblue").getDoubleArray(new double[10]);
+            pose = inst.getTable("limelight").getEntry("botpose_orb_wpiblue").getDoubleArray(new double[10]);
+            LimelightHelpers.SetRobotOrientation("limelight", gyro.getRotation2d().getDegrees(), 0.0, 0.0, 0.0, 0.0, 0.0);            
             poseX = pose[0];
             poseY = pose[1];
-            poseR = Rotation2d.fromDegrees(pose[5]);
+            poseR = gyro.getRotation2d();
             timeStamp = Timer.getFPGATimestamp() - (pose[6] / 1000.0);
             SmartDashboard.putBoolean("Limelight Status", true);
             Pose2d visionBotPose = new Pose2d(poseX, poseY, poseR);
@@ -390,9 +405,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             // double poseDifference = PoseEstimator.getEstimatedPosition().getTranslation()
             //         .getDistance(visionBotPose.getTranslation());
 
-            // if (Math.abs(pose[0]) >= 0.1) {
-            //     double xyStds;
-            //     double degStds;
+            if (Math.abs(pose[0]) >= 0.1) {
             //     // multiple targets detected
             //     if (pose[7] >= 2) {
             //         if (!DriverStation.isEnabled()) {
@@ -416,21 +429,24 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             //         return;
             //     }
                 
-            //     PoseEstimator.setVisionMeasurementStdDevs(
-            //             VecBuilder.fill(xyStds, xyStds, Units.degreesToRadians(degStds)));
+                PoseEstimator.setVisionMeasurementStdDevs(
+                        VecBuilder.fill(0.7, 0.7, 9999999));
+                if (!isPigeonInitialized) {
+                    zeroGyro();
+                    isPigeonInitialized = true;
+                }
                 PoseEstimator.addVisionMeasurement(visionBotPose, timeStamp);
-                PoseEstimator.update(gyro.getRotation2d(), getModulePositions());
             
-
+            }
+            
+            PoseEstimator.update(gyro.getRotation2d(), getModulePositions());
         } catch (Exception e) {
             DriverStation.reportError("LIMELIGHT FAIL: RESTART ROBOT CODE", e.getStackTrace());
             SmartDashboard.putBoolean("Limelight Status", false);
         }
 
-        System.out.println("Pose: " + PoseEstimator.getEstimatedPosition().getX() + PoseEstimator.getEstimatedPosition().getY() + PoseEstimator.getEstimatedPosition().getRotation().getDegrees());
-
         fieldTypePub.set("Field2d");
-        fieldPub.set(new double[] { getPose().getX(), getPose().getY(), getPose().getRotation().getRadians() });
+        fieldPub.set(new double[] { getPose().getX(), getPose().getY(), getPose().getRotation().getDegrees() });
 
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {

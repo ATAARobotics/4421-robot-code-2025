@@ -2,8 +2,13 @@
   "robotWidth": 0.84,
   "robotLength": 0.985,
   "holonomicMode": true,
-  "pathFolders": [],
-  "autoFolders": [],
+  "pathFolders": [
+    "Position to Station",
+    "Preloaded"
+  ],
+  "autoFolders": [
+    "1 Coral Autos"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
