@@ -4,28 +4,28 @@
     {
       "anchor": {
         "x": 6.2204999999999995,
-        "y": 3.8592499999999994
+        "y": 3.8495
       },
       "prevControl": null,
       "nextControl": {
         "x": 7.41,
-        "y": 1.3339999999999996
+        "y": 1.3242500000000001
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "NNE"
     },
     {
       "anchor": {
-        "x": 1.60875,
-        "y": 0.8659999999999991
+        "x": 1.58925,
+        "y": 0.85625
       },
       "prevControl": {
-        "x": 2.4765,
-        "y": 1.5192499999999995
+        "x": 2.4570000000000003,
+        "y": 1.5095000000000005
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "East Station"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 53.471144633014816
+    "rotation": 54.0
   },
   "reversed": false,
   "folder": "Position to Station",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -179.33380002981684
+    "rotation": 180.0
   },
   "useDefaultConstraints": false
 }

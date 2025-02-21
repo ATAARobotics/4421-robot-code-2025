@@ -3,9 +3,10 @@
   "robotLength": 0.985,
   "holonomicMode": true,
   "pathFolders": [
-    "Station to Position",
+    "Linked Waypoints",
     "Position to Station",
-    "Preloaded"
+    "Preloaded",
+    "Station to Position"
   ],
   "autoFolders": [
     "1 Coral Autos",

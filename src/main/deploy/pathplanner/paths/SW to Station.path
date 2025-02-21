@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.4807500000000005,
-        "y": 5.448499999999999
+        "x": 3.471,
+        "y": 5.41925
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3985000000000003,
-        "y": 6.14075
+        "x": 2.38875,
+        "y": 6.1115
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SW"
     },
     {
       "anchor": {
-        "x": 1.3455000000000001,
-        "y": 6.95
+        "x": 1.7160000000000002,
+        "y": 7.184
       },
       "prevControl": {
-        "x": 2.5935,
-        "y": 6.6770000000000005
+        "x": 2.6910000000000003,
+        "y": 6.6185
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "West Station"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -54.323591778138
+    "rotation": -53.806792694435316
   },
   "reversed": false,
   "folder": "Position to Station",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -59.588918732874674
+    "rotation": -59.99999999999999
   },
   "useDefaultConstraints": true
 }

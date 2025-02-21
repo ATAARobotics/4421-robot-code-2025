@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3260000000000003,
-        "y": 7.008500000000001
+        "x": 1.7160000000000002,
+        "y": 7.184
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.97375,
-        "y": 7.03775
+        "x": 3.3637499999999996,
+        "y": 7.2132499999999995
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "West Station"
     },
     {
       "anchor": {
@@ -25,10 +25,15 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SSW"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -48,7 +53,7 @@
   "folder": "Station to Position",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -54.92624550665175
+    "rotation": -53.806792694435316
   },
   "useDefaultConstraints": true
 }

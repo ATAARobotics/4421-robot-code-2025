@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.21625,
-        "y": 5.614249999999999
+        "x": 5.19675,
+        "y": 5.624
       },
       "prevControl": {
-        "x": 5.54775,
-        "y": 6.02375
+        "x": 5.52825,
+        "y": 6.0335
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "NWW"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -119.16761337957774
+    "rotation": -119.99999999999999
   },
   "reversed": false,
   "folder": "Preloaded",
