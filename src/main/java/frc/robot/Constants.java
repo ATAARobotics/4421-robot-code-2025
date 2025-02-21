@@ -33,13 +33,15 @@ public final class Constants {
     public static class Encoder {
       public static final int encoderID = 23;
 
+      public static final double offset = 0.042;
+
       public static final double rest = 0.01;
-      public static final double Intake = 0.36;
-      public static final double L1 = 1f;
-      public static final double L2 = 1.55;
-      public static final double L3 = 2.4638;
-      public static final double L4 = 4.026;
-      public static final double top = 4.1;
+      public static final double Intake = 0.36 - offset;
+      public static final double L1 = 1f - offset;
+      public static final double L2 = 1.55 - offset;
+      public static final double L3 = 2.4638 - offset;
+      public static final double L4 = 4.026 - offset;
+      public static final double top = 4.1 - offset;
 
     }
 
@@ -58,13 +60,13 @@ public final class Constants {
     public static final int leftShooterMotorID = 31;
     public static final int rightShooterMotorID = 32;
 
-    public static final double maxShooterSpeed = 0.9;
-    public static final double intakeSpeed = 0.5;
+    public static final double maxShooterSpeed = 0.34;
+    public static final double intakeSpeed = 0.2;
     public static final double fractionalRatio = 2; //By how much the speed is divided when shooting L1
 
-    public static final int intakeThreshold = 25;
-    public static final int absentThreshold = 80;
-  }
+    public static final int intakeThreshold = 90;
+    public static final int absentThreshold = 30;
+  } // 0.2758
 
   public static class SwerveConstants {
     public static final double maxSpeed = 3.6; // Meters per second, for running auto-alignment

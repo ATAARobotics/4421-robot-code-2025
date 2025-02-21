@@ -52,8 +52,8 @@ public class ShooterSubsystem extends SubsystemBase {
         leftConfig = new SparkMaxConfig();
         rightConfig = new SparkMaxConfig();
 
-        leftConfig.inverted(false);
-        rightConfig.inverted(true);
+        leftConfig.inverted(true);
+        rightConfig.inverted(false);
 
         leftShooterMotor.configure(leftConfig, null, null);
         rightShooterMotor.configure(rightConfig, null, null);

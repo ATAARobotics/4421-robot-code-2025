@@ -93,10 +93,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
-            this.getModule(3).getPosition(false),
-            this.getModule(2).getPosition(false),
+            this.getModule(0).getPosition(false),
             this.getModule(1).getPosition(false),
-            this.getModule(0).getPosition(false)
+            this.getModule(2).getPosition(false),
+            this.getModule(3).getPosition(false)
         };  
     }
 
