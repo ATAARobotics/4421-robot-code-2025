@@ -9,14 +9,16 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ScoreCoralCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -62,12 +64,27 @@ public class RobotContainer {
     private boolean scoring = false;
     private boolean isAbsoluteHeading = false;
 
+    private Command coralL1Command;
+    private Command coralL2Command;
+    private Command coralL3Command;
+    private Command coralL4Command;
+
+    private Command intake;
+
     public RobotContainer() {
         scoring = false;
         isAbsoluteHeading = false;
         configureBindings();
+
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
+
+        coralL1Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 1);
+        coralL2Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 2);
+        coralL3Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 3);
+        coralL4Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 4);
+        intake = new IntakeCommand(m_shooterSubsystem);
+        registerAutoCommands();
     }
 
     private void configureBindings() {
@@ -159,5 +176,13 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
+      }
+
+      public void registerAutoCommands() {
+        NamedCommands.registerCommand("Intake", intake);
+        NamedCommands.registerCommand("ScoreCoralL1", coralL1Command);
+        NamedCommands.registerCommand("ScoreCoralL1", coralL2Command);
+        NamedCommands.registerCommand("ScoreCoralL1", coralL3Command);
+        NamedCommands.registerCommand("ScoreCoralL1", coralL4Command);
       }
 }

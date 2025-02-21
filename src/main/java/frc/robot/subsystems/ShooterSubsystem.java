@@ -28,7 +28,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private int laserCan_distance;
     private int shooterLaserCan_distance;
 
-    private enum ShooterState {
+    public enum ShooterState {
         IDLE, INTAKE, SHOOT, SHOOTL1
     }
 
@@ -112,6 +112,10 @@ public class ShooterSubsystem extends SubsystemBase {
         
     }
 
+    public void intake() {
+        shooterState = ShooterState.INTAKE;
+    }
+
     public void shoot() {
         shooterState = ShooterState.SHOOT;
     }
@@ -122,6 +126,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void stop() {
         shooterState = ShooterState.IDLE;
+    }
+
+    public ShooterState getState() {
+        return shooterState;
     }
 
     public void runShooter(double leftSpeed, double rightSpeed) {

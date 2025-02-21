@@ -34,8 +34,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID, TunerConstants.kCANBus);
     public double encoderCurrentPosition;
 
-    
-
     private PIDController ElevatorPID = new PIDController(
         Constants.ElevatorConstants.kP,
         Constants.ElevatorConstants.kI,
@@ -68,7 +66,9 @@ public class ElevatorSubsystem extends SubsystemBase {
         if (setpointMode) {
             ElevatorPID.setSetpoint(defaultSetpoint);
 
-            elevatorSpeed = MathUtil.clamp(ElevatorPID.calculate(encoderCurrentPosition), -Constants.ElevatorConstants.maxElevatorSpeed, Constants.ElevatorConstants.maxElevatorSpeed);
+            elevatorSpeed = MathUtil.clamp(ElevatorPID.calculate(encoderCurrentPosition), 
+                                            -Constants.ElevatorConstants.maxElevatorSpeed, 
+                                            Constants.ElevatorConstants.maxElevatorSpeed);
         }
 
         if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.top) {
@@ -113,5 +113,9 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public boolean isSetpointAtL1() {
         return defaultSetpoint == Constants.ElevatorConstants.Encoder.L1;
+    }
+
+    public double getSpeed() {
+        return elevatorSpeed;
     }
 }

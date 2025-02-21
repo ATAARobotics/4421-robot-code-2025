@@ -42,6 +42,8 @@ public final class Constants {
       public static final double top = 4.1;
 
     }
+
+    public static double threshold = 0.1;
   }
 
   public static class ClimbConstants {
@@ -52,6 +54,7 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
+    
     public static final int leftShooterMotorID = 31;
     public static final int rightShooterMotorID = 32;
 
