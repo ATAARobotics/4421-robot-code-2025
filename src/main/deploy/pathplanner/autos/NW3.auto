@@ -7,25 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Preloaded to NE"
+            "pathName": "Preloaded to NW"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreCoralL3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "NE to Station"
+            "pathName": "NW to Station"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Station to SE"
+            "name": "Intake"
           }
         }
       ]
     }
   },
-  "resetOdom": true,
-  "folder": "2 Coral Autos",
+  "resetOdom": false,
+  "folder": "1 Coral Autos",
   "choreoAuto": false
 }

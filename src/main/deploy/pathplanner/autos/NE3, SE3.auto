@@ -7,37 +7,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Preloaded to NW"
+            "pathName": "Preloaded to NE"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreCoralL3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "NW to Station"
+            "pathName": "NE to Station"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Station to SWW"
+            "pathName": "Station to SE"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "SWW to Station"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Station to SW"
+            "name": "ScoreCoralL3"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "3 Coral Autos",
+  "folder": "2 Coral Autos",
   "choreoAuto": false
 }
