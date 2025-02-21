@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Preloaded to NW"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NW to Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Station to SWW"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SWW to Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Station to SW"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "3 Coral Autos",
+  "choreoAuto": false
+}
