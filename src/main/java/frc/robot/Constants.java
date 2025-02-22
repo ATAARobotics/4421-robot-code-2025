@@ -17,6 +17,30 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
+    /* Controller buttons
+     * 
+     * operatorJoystick.b: toggle absolute heading mode
+     * operatorJoystick.y: toggle slow mode
+     * operatorJoystick.povRight: while true set swerve module directions to 0
+     * joystick.leftBumper: reset field-centric heading
+     * joystick.y: climb up while held
+     * joystick.a: climb down while held
+     * operatorJoystick.a: zero elevator
+     * joystick.x: elevator up with hold PID
+     * joystick.b: elevator down with hold PID
+     * joystick.povDown: set elevator setpoint to L1
+     * joystick.povUp: set elevator setpoint to L2
+     * joystick.povLeft: set elevator setpoint to L3
+     * joystick.povRight: set elevator setpoint to L4
+     * joystick.button(10): set elevator setpoint to intake
+     * operatorJoystick.x: set elevator setpoint to rest
+     * operatorJoystick.rightBumper: stop elevator
+     * operatorJoystick.leftBumper: zero gyro
+     * operatorJoystick.povUp and operatorJoystick.a: activate alignment when held
+     * joystick.rightBumper: shoot
+     * joystick.rightTrigger: intake while trigger held
+     * 
+     */
   }
 
   public static class ElevatorConstants {
