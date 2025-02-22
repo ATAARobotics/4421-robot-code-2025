@@ -174,7 +174,7 @@ public class RobotContainer {
         operatorJoystick.povUp().and(operatorJoystick.a()).onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
         
         joystick.rightBumper()
-            .onTrue(m_elevatorSubsystem.isSetpointAtL1() ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
+            .onTrue(m_elevatorSubsystem.isAtSetpoint(Constants.ElevatorConstants.Encoder.L1) ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
             .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
 
     }

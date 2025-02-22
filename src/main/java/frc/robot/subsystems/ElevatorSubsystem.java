@@ -116,8 +116,9 @@ public class ElevatorSubsystem extends SubsystemBase {
         encoder.setPosition(0);
     }
 
-    public boolean isSetpointAtL1() {
-        return defaultSetpoint == Constants.ElevatorConstants.Encoder.L1;
+    public boolean isAtSetpoint(double setpoint) {
+        return Math.abs(defaultSetpoint - setpoint) 
+                < Constants.ElevatorConstants.threshold;
     }
 
     public double getSpeed() {
