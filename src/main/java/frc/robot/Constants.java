@@ -77,6 +77,10 @@ public final class Constants {
     public static final int rightClimbMotorID = 42;
 
     public static final double maxClimbSpeed = 0.4;
+
+    public static final double kP = 0.1;
+    public static final double kI = 0;
+    public static final double kD = 0;
   }
 
   public static class ShooterConstants {
