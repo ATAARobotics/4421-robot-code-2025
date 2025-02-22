@@ -92,6 +92,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     }
 
+    public void idlePID() {
+        defaultSetpoint = encoderCurrentPosition;
+        setpointMode = true;
+    }
+
     public void elevatorStop() {
         elevatorSpeed = 0.0;
         setpointMode = false;

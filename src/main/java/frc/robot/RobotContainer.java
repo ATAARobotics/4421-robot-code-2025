@@ -133,8 +133,9 @@ public class RobotContainer {
         joystick.y().onTrue(new InstantCommand(m_climbSubsystem::climbUp)).onFalse(new InstantCommand(m_climbSubsystem::stop));
         joystick.a().onTrue(new InstantCommand(m_climbSubsystem::climbDown)).onFalse(new InstantCommand(m_climbSubsystem::stop));
         operatorJoystick.a().onTrue(new InstantCommand(m_elevatorSubsystem::zero));
-        joystick.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
-        joystick.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
+        joystick.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::idlePID));
+        joystick.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::idlePID));
+
 
         // Rest
         joystick.povDown().onTrue(new InstantCommand(
@@ -162,6 +163,10 @@ public class RobotContainer {
             () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.rest)
         ));
 
+        operatorJoystick.rightBumper().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.elevatorStop()
+        ));
+        
         operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_Swerve.zeroGyro()));
        
 
