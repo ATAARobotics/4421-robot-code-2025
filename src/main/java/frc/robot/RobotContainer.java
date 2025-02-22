@@ -177,6 +177,10 @@ public class RobotContainer {
             .onTrue(m_elevatorSubsystem.isAtSetpoint(Constants.ElevatorConstants.Encoder.L1) ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
             .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
 
+        joystick.rightTrigger(0.3)
+            .onTrue(new InstantCommand(m_shooterSubsystem::intake))
+            .onFalse(new InstantCommand(m_shooterSubsystem::stop));
+
     }
 
     public Command getAutonomousCommand() {
