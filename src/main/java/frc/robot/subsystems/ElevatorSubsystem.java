@@ -92,6 +92,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     }
 
+    public void idlePID() {
+        defaultSetpoint = encoderCurrentPosition;
+        setpointMode = true;
+    }
+
     public void elevatorStop() {
         elevatorSpeed = 0.0;
         setpointMode = false;
@@ -111,11 +116,16 @@ public class ElevatorSubsystem extends SubsystemBase {
         encoder.setPosition(0);
     }
 
-    public boolean isSetpointAtL1() {
-        return defaultSetpoint == Constants.ElevatorConstants.Encoder.L1;
+    public boolean isAtSetpoint(double setpoint) {
+        return Math.abs(defaultSetpoint - setpoint) 
+                < Constants.ElevatorConstants.threshold;
     }
 
     public double getSpeed() {
         return elevatorSpeed;
+    }
+
+    public void initSetPointMode() {
+        setpointMode = false;
     }
 }

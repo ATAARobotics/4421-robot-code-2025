@@ -133,8 +133,9 @@ public class RobotContainer {
         joystick.y().onTrue(new InstantCommand(m_climbSubsystem::climbUp)).onFalse(new InstantCommand(m_climbSubsystem::stop));
         joystick.a().onTrue(new InstantCommand(m_climbSubsystem::climbDown)).onFalse(new InstantCommand(m_climbSubsystem::stop));
         operatorJoystick.a().onTrue(new InstantCommand(m_elevatorSubsystem::zero));
-        joystick.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
-        joystick.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::elevatorStop));
+        joystick.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::idlePID));
+        joystick.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::idlePID));
+
 
         // Rest
         joystick.povDown().onTrue(new InstantCommand(
@@ -162,6 +163,10 @@ public class RobotContainer {
             () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.rest)
         ));
 
+        operatorJoystick.rightBumper().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.elevatorStop()
+        ));
+        
         operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_Swerve.zeroGyro()));
        
 
@@ -169,8 +174,11 @@ public class RobotContainer {
         operatorJoystick.povUp().and(operatorJoystick.a()).onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
         
         joystick.rightBumper()
-            .onTrue(m_elevatorSubsystem.isSetpointAtL1() ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
+            .onTrue(m_elevatorSubsystem.isAtSetpoint(Constants.ElevatorConstants.Encoder.L1) ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
             .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
+
+        joystick.rightTrigger(0.3)
+            .onTrue(new InstantCommand(m_shooterSubsystem::toggleOverride));
 
     }
 
@@ -184,5 +192,9 @@ public class RobotContainer {
         NamedCommands.registerCommand("ScoreCoralL1", coralL2Command);
         NamedCommands.registerCommand("ScoreCoralL1", coralL3Command);
         NamedCommands.registerCommand("ScoreCoralL1", coralL4Command);
+      }
+      public void resetClimbAndElevator() {
+        m_climbSubsystem.initHoldMode();
+        m_elevatorSubsystem.initSetPointMode();;
       }
 }
