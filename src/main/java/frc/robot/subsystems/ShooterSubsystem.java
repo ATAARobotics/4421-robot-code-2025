@@ -36,6 +36,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private double leftSpeed;
     private double rightSpeed;
 
+    private boolean overrideIntake;
+
     public ShooterSubsystem() {
         leftSpeed = 0.0;
         rightSpeed = 0.0;
@@ -57,6 +59,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
         leftShooterMotor.configure(leftConfig, null, null);
         rightShooterMotor.configure(rightConfig, null, null);
+
+        overrideIntake = false;
     }
 
     @Override
@@ -66,7 +70,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("LaserCan Distance", laserCan_distance);
         SmartDashboard.putNumber("ShooterLaserCan Distance", shooterLaserCan_distance);
-
         switch(shooterState) {
             case IDLE:
                 leftSpeed = 0.0;
@@ -74,6 +77,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
                 if (checkLaserCan()) {
                     shooterState = ShooterState.INTAKE;
+                }
+                else if(overrideIntake && !checkShooterLaserCan()) {
+                    leftSpeed = Constants.ShooterConstants.intakeSpeed;
+                    rightSpeed = Constants.ShooterConstants.intakeSpeed;
                 }
 
                 break;
@@ -93,8 +100,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
                 if (!checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;
+                    overrideIntake = false;
                 }
-
+    
                 break;
             
             case SHOOTL1:
@@ -143,5 +151,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public boolean checkShooterLaserCan() {
         return shooterLaserCan_distance < Constants.ShooterConstants.absentThreshold;
+    }
+
+    public void toggleOverride() {
+        overrideIntake = !overrideIntake;
     }
 }

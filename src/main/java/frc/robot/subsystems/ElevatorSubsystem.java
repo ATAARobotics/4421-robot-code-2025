@@ -124,4 +124,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     public double getSpeed() {
         return elevatorSpeed;
     }
+
+    public void initSetPointMode() {
+        setpointMode = false;
+    }
 }

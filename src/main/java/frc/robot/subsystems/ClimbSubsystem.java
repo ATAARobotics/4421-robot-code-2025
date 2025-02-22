@@ -52,6 +52,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
     @Override
     public void periodic(){
+
         curEncoderPosition = encoder.getPosition();
         if(hold) {
             climbPID.setSetpoint(curSetPosition);
@@ -76,5 +77,9 @@ public class ClimbSubsystem extends SubsystemBase {
         climbSpeed = 0.0;
         hold = true;
         curSetPosition = curEncoderPosition;
+    }
+
+    public void initHoldMode() {
+        hold = false;
     }
 }
