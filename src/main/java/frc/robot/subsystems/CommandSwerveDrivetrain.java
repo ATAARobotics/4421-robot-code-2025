@@ -428,9 +428,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             //     else {
             //         return;
             //     }
-                
-                PoseEstimator.setVisionMeasurementStdDevs(
-                        VecBuilder.fill(0.7, 0.7, 9999999));
                 if (!isPigeonInitialized) {
                     zeroGyro();
                     isPigeonInitialized = true;
