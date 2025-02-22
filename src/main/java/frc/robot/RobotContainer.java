@@ -83,7 +83,7 @@ public class RobotContainer {
         coralL2Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 2);
         coralL3Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 3);
         coralL4Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 4);
-        intake = new IntakeCommand(m_shooterSubsystem);
+        intake = new IntakeCommand(m_shooterSubsystem, m_elevatorSubsystem);
         registerAutoCommands();
     }
 
@@ -132,7 +132,7 @@ public class RobotContainer {
       
         joystick.y().onTrue(new InstantCommand(m_climbSubsystem::climbUp)).onFalse(new InstantCommand(m_climbSubsystem::stop));
         joystick.a().onTrue(new InstantCommand(m_climbSubsystem::climbDown)).onFalse(new InstantCommand(m_climbSubsystem::stop));
-        operatorJoystick.a().onTrue(new InstantCommand(m_elevatorSubsystem::zero));
+        operatorJoystick.a().onTrue(new InstantCommand(() -> {m_elevatorSubsystem.zero(); m_elevatorSubsystem.elevatorStop();}));
         joystick.x().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorUp)).onFalse(new InstantCommand(m_elevatorSubsystem::idlePID));
         joystick.b().onTrue(new InstantCommand(m_elevatorSubsystem::elevatorDown)).onFalse(new InstantCommand(m_elevatorSubsystem::idlePID));
 

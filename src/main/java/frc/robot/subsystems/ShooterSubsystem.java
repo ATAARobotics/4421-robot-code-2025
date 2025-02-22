@@ -29,7 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private int shooterLaserCan_distance;
 
     public enum ShooterState {
-        IDLE, INTAKE, SHOOT, SHOOTL1
+        IDLE, INTAKE, REVERSE, SLOW, SHOOT, SHOOTL1
     }
 
     private ShooterState shooterState;
@@ -75,21 +75,39 @@ public class ShooterSubsystem extends SubsystemBase {
                 leftSpeed = 0.0;
                 rightSpeed = 0.0;
 
-                if (checkLaserCan()) {
+                if (checkLaserCan() && !checkShooterLaserCan()) {
                     shooterState = ShooterState.INTAKE;
                 }
                 else if(overrideIntake && !checkShooterLaserCan()) {
-                    leftSpeed = Constants.ShooterConstants.intakeSpeed;
-                    rightSpeed = Constants.ShooterConstants.intakeSpeed;
+                    leftSpeed = Constants.ShooterConstants.maxShooterSpeed;
+                    rightSpeed = Constants.ShooterConstants.maxShooterSpeed;
                 }
 
                 break;
 
             case INTAKE:
+                leftSpeed = Constants.ShooterConstants.maxShooterSpeed;
+                rightSpeed = Constants.ShooterConstants.maxShooterSpeed;
+
+                if (!checkLaserCan()) {
+                    shooterState = ShooterState.REVERSE;
+                }
+
+                break;
+            case REVERSE:
+                leftSpeed = -Constants.ShooterConstants.intakeSpeed;
+                rightSpeed = -Constants.ShooterConstants.intakeSpeed;
+
+                if (checkLaserCan()) {
+                    shooterState = ShooterState.SLOW;
+                }
+
+                break;
+            case SLOW:
                 leftSpeed = Constants.ShooterConstants.intakeSpeed;
                 rightSpeed = Constants.ShooterConstants.intakeSpeed;
 
-                if (!checkLaserCan()) {
+                if (!checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;
                 }
 

@@ -1,16 +1,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class IntakeCommand extends Command {
 
     private ShooterSubsystem shooter;
+    private ElevatorSubsystem elevatorSubsystem;
 
     boolean isDone;
     
-    public IntakeCommand(ShooterSubsystem shooter) {
+    public IntakeCommand(ShooterSubsystem shooter, ElevatorSubsystem elevatorSubsystem) {
         this.shooter = shooter;
+        this.elevatorSubsystem = elevatorSubsystem;
 
         isDone = false;
     }
@@ -19,11 +23,12 @@ public class IntakeCommand extends Command {
     public void initialize() {
         isDone = false;
         shooter.intake();
+        elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake);
     }
 
     @Override
     public void execute() {
-        if(shooter.getState() == ShooterSubsystem.ShooterState.IDLE) {
+        if(shooter.checkLaserCan()) {
             isDone = true;
         }
     }
@@ -33,3 +38,4 @@ public class IntakeCommand extends Command {
         return isDone;
     }
 }
+

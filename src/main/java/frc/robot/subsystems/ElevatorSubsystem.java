@@ -4,6 +4,7 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SmartMotionConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.math.MathUtil;
@@ -29,6 +30,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   
     private DigitalInput minLimitTouchLeft;
     private DigitalInput minLimitTouchRight;
+
+    private boolean hasBeenReset = false;
 
 
     public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID, TunerConstants.kCANBus);
@@ -58,6 +61,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putBoolean("Setpoint Mode", setpointMode);
         encoderCurrentPosition = -encoder.getPosition().getValueAsDouble();
 
         SmartDashboard.putNumber("Elevator Encoder Value", encoderCurrentPosition);
@@ -75,6 +79,15 @@ public class ElevatorSubsystem extends SubsystemBase {
             elevatorSpeed = 0;
         }
 
+        if (isPressed() && !hasBeenReset) {
+            elevatorStop();
+            zero();
+            hasBeenReset = true;
+        }
+        else if (!isPressed()){
+            hasBeenReset = false;
+        }
+
         leftClimbMotor.set(elevatorSpeed);
         rightClimbMotor.set(elevatorSpeed);
 
@@ -90,6 +103,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorSpeed = -Constants.ElevatorConstants.maxElevatorSpeed / 2.0; 
         setpointMode = false;
 
+    }
+
+    public boolean isPressed() {
+        return !minLimitTouchLeft.get();
     }
 
     public void idlePID() {
