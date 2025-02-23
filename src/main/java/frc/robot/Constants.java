@@ -107,6 +107,8 @@ public final class Constants {
 
     public static final int gyroCounter = 10;
     
+    public static final double linearDeadBand = 0.20;
+    public static final double angularDeadBand = 0.15;
   }
    
   
