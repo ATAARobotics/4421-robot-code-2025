@@ -125,7 +125,7 @@ public class ShooterSubsystem extends SubsystemBase {
                     shooterState = ShooterState.IDLE;
                     overrideIntake = false;
                 }
-    
+     
                 break;
             
             case SHOOTL1:

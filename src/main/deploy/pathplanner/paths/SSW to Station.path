@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.01825,
-        "y": 4.883
+        "x": 2.3195572356290994,
+        "y": 5.595371957574171
       },
       "isLocked": false,
       "linkedName": "SSW"
@@ -20,8 +20,8 @@
         "y": 7.25225
       },
       "prevControl": {
-        "x": 2.9835000000000003,
-        "y": 6.97925
+        "x": 1.9833327149359117,
+        "y": 6.671980357288515
       },
       "nextControl": null,
       "isLocked": false,

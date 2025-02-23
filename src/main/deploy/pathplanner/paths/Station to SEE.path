@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9932500000000006,
-        "y": 1.9579999999999995
+        "x": 3.1322403982918496,
+        "y": 2.0748253871381968
       },
       "isLocked": false,
       "linkedName": "East Station"
@@ -20,8 +20,8 @@
         "y": 2.7575
       },
       "prevControl": {
-        "x": 3.2467500000000005,
-        "y": 2.41625
+        "x": 3.741767229069859,
+        "y": 2.5889868812050496
       },
       "nextControl": null,
       "isLocked": false,

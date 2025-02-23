@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.720249999999999,
-        "y": 6.998750000000001
+        "x": 2.4992653650783545,
+        "y": 6.570885786702181
       },
       "isLocked": false,
       "linkedName": "West Station"
@@ -20,8 +20,8 @@
         "y": 5.3315
       },
       "prevControl": {
-        "x": 3.3832500000000003,
-        "y": 5.8775
+        "x": 3.4583135899197655,
+        "y": 5.749383175582124
       },
       "nextControl": null,
       "isLocked": false,
