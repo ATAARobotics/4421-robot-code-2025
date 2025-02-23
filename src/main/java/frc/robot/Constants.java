@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -106,6 +109,29 @@ public final class Constants {
     public static final double fieldY = 8.0518000;
 
     public static final int gyroCounter = 10;
+
+    public static class Waypoints {
+      public static final Pose2d NNW = new Pose2d(5.870, 4.191, Rotation2d.fromDegrees(180.0));
+      public static final Pose2d NW = new Pose2d(5.333, 5.156, Rotation2d.  fromDegrees(-120.0));
+      public static final Pose2d NWW = new Pose2d(5.119, 5.119, Rotation2d.fromDegrees(-120));
+
+      public static final Pose2d SWW = new Pose2d(3.910, 5.332, Rotation2d.fromDegrees(-60.0));
+      public static final Pose2d SW = new Pose2d(3.637, 3.637, Rotation2d.fromDegrees(-60.0));
+      public static final Pose2d SSW = new Pose2d(3.101, 4.191, Rotation2d.fromDegrees(-60.0));
+      
+      public static final Pose2d SSE = new Pose2d(3.110, 3.859, Rotation2d.fromDegrees(0.0));
+      public static final Pose2d SE = new Pose2d(3.656, 2.904, Rotation2d.fromDegrees(60.0));
+      public static final Pose2d SEE = new Pose2d(3.929, 2.757, Rotation2d.fromDegrees(60));
+
+      public static final Pose2d NEE = new Pose2d(5.031, 2.748, Rotation2d.fromDegrees(120));
+      public static final Pose2d NE = new Pose2d(5.314, 2.923, Rotation2d.fromDegrees(120.0));
+      public static final Pose2d NNE = new Pose2d(5.889, 3.859, Rotation2d.fromDegrees(180.0));
+
+      public static final Pose2d[] Waypoints = {NNW, NW, NWW, SWW, SW, SSW, SSE, SE, SEE, NEE, NE, NNE};
+      public static final Pose2d centerOfReef = new Pose2d(4.495, 4.015, Rotation2d.fromDegrees(0.0));
+    }
+
+    
     
     public static final double linearDeadBand = 0.20;
     public static final double angularDeadBand = 0.15;

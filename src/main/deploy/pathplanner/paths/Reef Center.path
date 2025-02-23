@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.91,
-        "y": 5.3315
+        "x": 4.495,
+        "y": 4.015249999999999
       },
       "prevControl": {
-        "x": 2.9100000000000006,
-        "y": 5.3315
+        "x": 3.495,
+        "y": 4.015249999999999
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SWW"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Linked Waypoints",
