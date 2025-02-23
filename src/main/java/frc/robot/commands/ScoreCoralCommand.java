@@ -13,6 +13,7 @@ public class ScoreCoralCommand extends Command{
     private ElevatorSubsystem elevator;
 
     private int position;
+    private double desiredPosition;
 
     private boolean startedScoring;
     private boolean doneScoring;
@@ -35,27 +36,33 @@ public class ScoreCoralCommand extends Command{
         isDone = false;
         switch(position) {
             case 1:
-                elevator.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L1);
+                desiredPosition = Constants.ElevatorConstants.Encoder.L1;
+                
                 break;
             case 2:
-                elevator.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L2);
+            desiredPosition = Constants.ElevatorConstants.Encoder.L2;
                 break;
             case 3:
-                elevator.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L3);
+            desiredPosition = Constants.ElevatorConstants.Encoder.L3;
                 break;
             case 4:
-                elevator.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L4);
+            desiredPosition = Constants.ElevatorConstants.Encoder.L4;
                 break;
         }
+        elevator.setElevatorSetpoint(desiredPosition);
+        shooter.stop();
     }
     
     @Override
     public void execute() {
-        if(Math.abs(elevator.getSpeed()) < Constants.ElevatorConstants.threshold) {
+        
+        if(!startedScoring && elevator.isAtSetpoint(desiredPosition)) {
+            System.out.println("at setpoint");
             startedScoring = true;
             shooter.shoot();
         }
         if(startedScoring && shooter.getState() == ShooterSubsystem.ShooterState.IDLE) {
+            shooter.stop();
             isDone = true;
         } 
     }

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.7160000000000002,
-        "y": 7.184
+        "x": 1.7355,
+        "y": 7.25225
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3637499999999996,
-        "y": 7.2132499999999995
+        "x": 3.3832499999999994,
+        "y": 7.281499999999999
       },
       "isLocked": false,
       "linkedName": "West Station"
     },
     {
       "anchor": {
-        "x": 2.7592499999999998,
-        "y": 4.2005
+        "x": 3.1005000000000003,
+        "y": 4.1907499999999995
       },
       "prevControl": {
-        "x": 1.794,
-        "y": 4.4247499999999995
+        "x": 2.1352500000000005,
+        "y": 4.414999999999999
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,8 +38,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.2,
-    "maxAcceleration": 1.2,
+    "maxVelocity": 2.6,
+    "maxAcceleration": 2.6,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

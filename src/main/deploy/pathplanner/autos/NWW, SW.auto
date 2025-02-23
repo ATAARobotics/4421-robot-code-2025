@@ -7,7 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SW to Station"
+            "pathName": "Preloaded to NWW"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreCoralL4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NWW to Station"
           }
         },
         {
@@ -19,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Station to SWW"
+            "pathName": "Station to SW"
           }
         },
         {
@@ -31,7 +43,7 @@
       ]
     }
   },
-  "resetOdom": true,
-  "folder": "Test Autos",
+  "resetOdom": false,
+  "folder": "2 Coral Autos",
   "choreoAuto": false
 }

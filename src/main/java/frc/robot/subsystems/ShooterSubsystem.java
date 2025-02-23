@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import au.grapplerobotics.CanBridge;
 import au.grapplerobotics.LaserCan;
@@ -57,6 +58,9 @@ public class ShooterSubsystem extends SubsystemBase {
         leftConfig.inverted(true);
         rightConfig.inverted(false);
 
+        leftConfig.idleMode(IdleMode.kBrake);
+        rightConfig.idleMode(IdleMode.kBrake);
+
         leftShooterMotor.configure(leftConfig, null, null);
         rightShooterMotor.configure(rightConfig, null, null);
 
@@ -70,6 +74,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("LaserCan Distance", laserCan_distance);
         SmartDashboard.putNumber("ShooterLaserCan Distance", shooterLaserCan_distance);
+        SmartDashboard.putString("Shooter State", shooterState.toString());
         switch(shooterState) {
             case IDLE:
                 leftSpeed = 0.0;
@@ -86,8 +91,8 @@ public class ShooterSubsystem extends SubsystemBase {
                 break;
 
             case INTAKE:
-                leftSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.5;
-                rightSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.5;
+                leftSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.75;
+                rightSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.75;
 
                 if (!checkLaserCan()) {
                     shooterState = ShooterState.REVERSE;

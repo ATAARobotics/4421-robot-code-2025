@@ -78,7 +78,9 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void autonomousExit() {}
+  public void autonomousExit() {
+
+  }
 
   @Override
   public void teleopInit() {
@@ -97,10 +99,14 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {}
 
   @Override
-  public void teleopExit() {}
+  public void teleopExit() {
+    m_robotContainer.resetClimbAndElevator();
+
+  }
   
   @Override
-  public void testExit() {}
+  public void testExit() {
+  }
 
   public void testInit() {
     // Cancels all running commands at the start of test mode.

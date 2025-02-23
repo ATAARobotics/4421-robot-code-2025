@@ -76,17 +76,26 @@ public class RobotContainer {
     public RobotContainer() {
         scoring = false;
         isAbsoluteHeading = false;
-        configureBindings();
-
-        autoChooser = AutoBuilder.buildAutoChooser();
-        SmartDashboard.putData("Auto Chooser", autoChooser);
 
         coralL1Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 1);
         coralL2Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 2);
         coralL3Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 3);
         coralL4Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 4);
         intake = new IntakeCommand(m_shooterSubsystem, m_elevatorSubsystem);
-        registerAutoCommands();
+        
+        NamedCommands.registerCommand("Intake", intake);
+        NamedCommands.registerCommand("ScoreCoralL1", coralL1Command);
+        NamedCommands.registerCommand("ScoreCoralL2", coralL2Command);
+        NamedCommands.registerCommand("ScoreCoralL3", coralL3Command);
+        NamedCommands.registerCommand("ScoreCoralL4", coralL4Command);
+
+        autoChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+
+        
+
+        
+        configureBindings();
     }
 
     private void configureBindings() {
@@ -116,6 +125,8 @@ public class RobotContainer {
         operatorJoystick.povRight().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(0.0))
         ));
+
+        operatorJoystick.povDown().onTrue(coralL2Command);
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -187,14 +198,6 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
-      }
-
-      public void registerAutoCommands() {
-        NamedCommands.registerCommand("Intake", intake);
-        NamedCommands.registerCommand("ScoreCoralL1", coralL1Command);
-        NamedCommands.registerCommand("ScoreCoralL1", coralL2Command);
-        NamedCommands.registerCommand("ScoreCoralL1", coralL3Command);
-        NamedCommands.registerCommand("ScoreCoralL1", coralL4Command);
       }
       public void resetClimbAndElevator() {
         m_climbSubsystem.initHoldMode();

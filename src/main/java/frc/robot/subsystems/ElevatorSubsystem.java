@@ -32,6 +32,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private DigitalInput minLimitTouchRight;
 
     private boolean hasBeenReset = false;
+    private boolean isManualMode = false;
 
 
     public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID, TunerConstants.kCANBus);
@@ -75,11 +76,14 @@ public class ElevatorSubsystem extends SubsystemBase {
                                             -Constants.ElevatorConstants.maxElevatorSpeed, 
                                             Constants.ElevatorConstants.maxElevatorSpeed);
         }
+        else if (!isManualMode) {
+            elevatorSpeed = 0.0;
+        }
 
         if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.top) {
             elevatorSpeed = 0;
         }
-
+/* 
         if (isPressed() && !hasBeenReset) {
             elevatorStop();
             zero();
@@ -87,7 +91,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
         else if (!isPressed()){
             hasBeenReset = false;
-        }
+        }*/
 
         leftClimbMotor.set(elevatorSpeed);
         rightClimbMotor.set(elevatorSpeed);
@@ -97,12 +101,14 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public void elevatorUp(double speed) {
         elevatorSpeed = speed * Constants.ElevatorConstants.maxElevatorSpeed;
+        isManualMode = true;
         setpointMode = false;
     }
 
     public void elevatorDown(double speed) {
         elevatorSpeed = speed * -Constants.ElevatorConstants.maxElevatorSpeed / 2.0; 
         setpointMode = false;
+        isManualMode = true;
 
     }
 
@@ -119,6 +125,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void elevatorStop() {
         elevatorSpeed = 0.0;
         setpointMode = false;
+        isManualMode = false;
     }
 
     public void returnToIntake() {
@@ -136,7 +143,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public boolean isAtSetpoint(double setpoint) {
-        return Math.abs(defaultSetpoint - setpoint) 
+        return Math.abs(encoderCurrentPosition - setpoint) 
                 < Constants.ElevatorConstants.threshold;
     }
 

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.58925,
-        "y": 0.85625
+        "x": 1.6575,
+        "y": 0.7684999999999991
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5892500000000007,
-        "y": 0.85625
+        "x": 2.6575000000000006,
+        "y": 0.7684999999999991
       },
       "isLocked": false,
       "linkedName": "East Station"
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.2,
-    "maxAcceleration": 1.2,
+    "maxVelocity": 2.6,
+    "maxAcceleration": 2.6,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
