@@ -35,7 +35,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private boolean isManualMode = false;
 
 
-    public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID, TunerConstants.kCANBus);
+    public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID);
     public double encoderCurrentPosition;
 
     private PIDController ElevatorPID = new PIDController(

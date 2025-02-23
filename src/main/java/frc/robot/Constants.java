@@ -100,8 +100,8 @@ public final class Constants {
   } // 0.2758
 
   public static class SwerveConstants {
-    public static final double maxSpeed = 3.6; // Meters per second, for running auto-alignment
-    public static final double maxAngularRate = 3; //99 Rotations per second, for running auto-alignment
+    public static final double autoAlignMaxSpeed = 2.0; // Meters per second, for running auto-alignment
+    public static final double autoAlignMaxAngularRate = 2.0; //99 Rotations per second, for running auto-alignment
 
     public static final double MaxAngularSpeed = 1.5 * Math.PI;
 

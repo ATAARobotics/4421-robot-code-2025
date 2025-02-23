@@ -4,6 +4,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -39,6 +41,8 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double controllerR_P;
     private double controllerR_I;
     private double controllerR_D;
+
+    public Field2d goalPoseField = new Field2d();
         
         
     public AlignmentSubsystem(CommandSwerveDrivetrain m_Swerve) {        
@@ -65,10 +69,16 @@ public class AlignmentSubsystem extends SubsystemBase {
 
         controllerR.enableContinuousInput(-Math.PI, Math.PI);
 
+        SmartDashboard.putData("Goal Pose", goalPoseField);
+
     }
 
     @Override
     public void periodic() {
+        goalX = goalPose.getX();
+        goalY = goalPose.getY();
+        goalR = goalPose.getRotation().getRadians();
+        
         controllerXY_P = SmartDashboard.getNumber("AlignmentXY P", 0.0);
         controllerXY_I = SmartDashboard.getNumber("AlignmentXY I", 0.0);
         controllerXY_D = SmartDashboard.getNumber("AlignmentXY D", 0.0);
@@ -86,9 +96,9 @@ public class AlignmentSubsystem extends SubsystemBase {
         curY = currentPose.getY();
         curR = currentPose.getRotation().getRadians();
 
-        xOutput = MathUtil.clamp(controllerXY.calculate(curX, goalX), -Constants.SwerveConstants.maxSpeed, Constants.SwerveConstants.maxSpeed);
-        yOutput = MathUtil.clamp(controllerXY.calculate(curY, goalY), -Constants.SwerveConstants.maxSpeed, Constants.SwerveConstants.maxSpeed);
-        rOutput = MathUtil.clamp(controllerR.calculate(curR, goalR), -Constants.SwerveConstants.maxAngularRate, Constants.SwerveConstants.maxAngularRate);
+        xOutput = MathUtil.clamp(controllerXY.calculate(curX, goalX), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
+        yOutput = MathUtil.clamp(controllerXY.calculate(curY, goalY), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
+        rOutput = MathUtil.clamp(controllerR.calculate(curR, goalR), -Constants.SwerveConstants.autoAlignMaxAngularRate, Constants.SwerveConstants.autoAlignMaxAngularRate);
 
         SmartDashboard.putNumber("xOutput", xOutput);
         SmartDashboard.putNumber("yOutput", yOutput);
@@ -97,6 +107,39 @@ public class AlignmentSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Current Robot X", currentPose.getX());
         SmartDashboard.putNumber("Current Robot Y", currentPose.getY());
         SmartDashboard.putNumber("Current Robot R", currentPose.getRotation().getDegrees());
+        
+        SmartDashboard.putNumber("Waypoint Index", (int) (angle(curY, curX) / 30));
+
+        updateGoalPose();
+        goalPoseField.setRobotPose(goalPose);
+    }
+
+    public void updateGoalPose() {
+        Pose2d flipCur = currentPose;
+        // Pose2d flipCur = flipCoords(currentPose);
+        
+        goalPose = Constants.SwerveConstants.Waypoints.Waypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
+        // goalPose = flipCoords(goalPose);
+    }
+
+    public Pose2d flipCoords(Pose2d pose) {
+        double x = pose.getX();
+        double y = pose.getY();
+        double r = pose.getRotation().getDegrees();
+
+        double transformX = -(x - Constants.SwerveConstants.fieldX) + Constants.SwerveConstants.fieldX;
+        double transformY = -(y - Constants.SwerveConstants.fieldY) + Constants.SwerveConstants.fieldY;
+        double transformR = (r + 180) % 360;
+
+        return new Pose2d(transformX, transformY, Rotation2d.fromDegrees(transformR));
+    }
+
+    public double angle(double y, double x) {
+        double reefCoordsX = Constants.SwerveConstants.Waypoints.centerOfReef.getX();
+        double reefCoordsY = Constants.SwerveConstants.Waypoints.centerOfReef.getY();
+
+    
+        return ((Math.atan2(y - reefCoordsY, x - reefCoordsX) * 180 / Math.PI) + 360) % 360;
     }
 
     // returns speed of swerve modules

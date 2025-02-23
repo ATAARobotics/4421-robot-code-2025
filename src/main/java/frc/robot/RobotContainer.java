@@ -185,7 +185,7 @@ public class RobotContainer {
        
 
         // bool to acitvate alignment, press both the up buttom on the d-pad and the a button on second controller
-        operatorJoystick.povUp().and(operatorJoystick.a()).onTrue(new InstantCommand(() -> scoring = true)).onFalse(new InstantCommand(() -> scoring = false));
+        operatorJoystick.povUp().onTrue(new InstantCommand(() -> { m_alignmentSubsystem.updateGoalPose(); scoring = true;})).onFalse(new InstantCommand(() -> scoring = false));
         
         joystick.rightBumper()
             .onTrue(m_elevatorSubsystem.isAtSetpoint(Constants.ElevatorConstants.Encoder.L1) ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
