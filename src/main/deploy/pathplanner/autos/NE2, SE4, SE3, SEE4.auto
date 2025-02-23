@@ -11,12 +11,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ScoreCoralL2"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "NE to Station"
@@ -35,12 +29,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ScoreCoralL4"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "SE to Station"
@@ -59,12 +47,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ScoreCoralL3"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "SE to Station"
@@ -80,12 +62,6 @@
           "type": "path",
           "data": {
             "pathName": "Station to SEE"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ScoreCoralL4"
           }
         }
       ]
