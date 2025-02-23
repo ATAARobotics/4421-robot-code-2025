@@ -48,7 +48,7 @@ public final class Constants {
     public static final int rightClimbMotorID = 22;
     
     public static final int minLimitTouchLeftPin = 5;
-    public static final double maxElevatorSpeed = 0.40;
+    public static final double maxElevatorSpeed = 0.50;
 
     public static final double kP = 1.5;
     public static final double kI = 0;
@@ -89,7 +89,7 @@ public final class Constants {
     public static final int rightShooterMotorID = 32;
 
     public static final double maxShooterSpeed = 0.34;
-    public static final double intakeSpeed = 0.07;
+    public static final double intakeSpeed = 0.09;
     public static final double fractionalRatio = 2; //By how much the speed is divided when shooting L1
 
     public static final int intakeThreshold = 90;

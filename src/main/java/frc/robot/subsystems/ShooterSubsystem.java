@@ -86,8 +86,8 @@ public class ShooterSubsystem extends SubsystemBase {
                 break;
 
             case INTAKE:
-                leftSpeed = Constants.ShooterConstants.maxShooterSpeed;
-                rightSpeed = Constants.ShooterConstants.maxShooterSpeed;
+                leftSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.5;
+                rightSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.5;
 
                 if (!checkLaserCan()) {
                     shooterState = ShooterState.REVERSE;

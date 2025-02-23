@@ -61,6 +61,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("Elevator Speed", elevatorSpeed);
         SmartDashboard.putBoolean("Setpoint Mode", setpointMode);
         encoderCurrentPosition = -encoder.getPosition().getValueAsDouble();
 
@@ -91,16 +92,16 @@ public class ElevatorSubsystem extends SubsystemBase {
         leftClimbMotor.set(elevatorSpeed);
         rightClimbMotor.set(elevatorSpeed);
 
-        SmartDashboard.putBoolean("Left Min Touch Limit Value", minLimitTouchLeft.get());
+        SmartDashboard.putBoolean("Left Min Touch Limit Value", isPressed());
     }
 
-    public void elevatorUp() {
-        elevatorSpeed = Constants.ElevatorConstants.maxElevatorSpeed;
+    public void elevatorUp(double speed) {
+        elevatorSpeed = speed * Constants.ElevatorConstants.maxElevatorSpeed;
         setpointMode = false;
     }
 
-    public void elevatorDown() {
-        elevatorSpeed = -Constants.ElevatorConstants.maxElevatorSpeed / 2.0; 
+    public void elevatorDown(double speed) {
+        elevatorSpeed = speed * -Constants.ElevatorConstants.maxElevatorSpeed / 2.0; 
         setpointMode = false;
 
     }
@@ -110,8 +111,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void idlePID() {
-        defaultSetpoint = encoderCurrentPosition;
-        setpointMode = true;
+        //defaultSetpoint = encoderCurrentPosition;
+        elevatorSpeed = 0.0;
+        setpointMode = false;
     }
 
     public void elevatorStop() {
