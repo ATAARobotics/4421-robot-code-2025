@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.Optional;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -27,10 +29,10 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double goalY;
     private double goalR;
 
-    private PIDController controllerX = new PIDController(2, 0.0, 0.0);
-    private PIDController controllerY = new PIDController(2, 0.0, 0.0);
+    private PIDController controllerX = new PIDController(3, 0.4, 0.0);
+    private PIDController controllerY = new PIDController(3, 0.4, 0.0);
     private PIDController controllerR = new PIDController(3, 0.0, 0.0);
-
+        
     private double xOutput;
     private double yOutput;
     private double rOutput;
@@ -122,13 +124,25 @@ public class AlignmentSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Current Robot Y", currentPose.getY());
         SmartDashboard.putNumber("Current Robot R", currentPose.getRotation().getDegrees());
         
-        SmartDashboard.putNumber("Waypoint Index", (int) (angle(flipCoords(currentPose).getY(), flipCoords(currentPose).getX()) / 30));
-
-        updateGoalPose();
+        SmartDashboard.putNumber("Waypoint Index", (int) (angle(curY, curX) / 30));
+        Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            updateRedGoalPose();
+        } else{
+            updateGoalPose();
+        }
         goalPoseField.setRobotPose(goalPose);
     }
 
     public void updateGoalPose() {
+        Pose2d flipCur = currentPose;
+        // Pose2d flipCur = flipCoords(currentPose);
+        
+        goalPose = Constants.SwerveConstants.Waypoints.Waypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
+        // goalPose = flipCoords(goalPose);
+    }
+
+    public void updateRedGoalPose() {
         // Pose2d flipCur = currentPose;
         Pose2d flipCur = flipCoords(currentPose);
         
@@ -158,6 +172,13 @@ public class AlignmentSubsystem extends SubsystemBase {
 
     // returns speed of swerve modules
     public double[] getOutputs() {
-        return new double[]{xOutput, yOutput, rOutput};
+        Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+            if (alliance.isPresent()) {
+                return new double[]{-xOutput, -yOutput, rOutput};
+
+            } else{
+                return new double[]{xOutput, yOutput, rOutput};
+
+            }
     }
 }
