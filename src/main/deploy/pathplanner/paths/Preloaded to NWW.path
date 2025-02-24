@@ -34,14 +34,14 @@
   "eventMarkers": [
     {
       "name": "ScoreCoralL4",
-      "waypointRelativePos": 0.6803472770323592,
-      "endWaypointRelativePos": null,
+      "waypointRelativePos": 0.6104218362282878,
+      "endWaypointRelativePos": 1.0,
       "command": null
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.6,
-    "maxAcceleration": 2.6,
+    "maxVelocity": 2.4,
+    "maxAcceleration": 2.4,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

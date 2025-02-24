@@ -60,14 +60,14 @@ public final class Constants {
     public static class Encoder {
       public static final int encoderID = 23;
 
-      public static final double offset = 0.044;
+      public static final double offset = 0.043;
 
       public static final double rest = 0.01;
-      public static final double Intake = 0.35 - offset;
+      public static final double Intake = 0.38 - offset;
       public static final double L1 = 1f - offset;
       public static final double L2 = 1.55 - offset;
       public static final double L3 = 2.4638 - offset;
-      public static final double L4 = 4.026 - offset;
+      public static final double L4 = 4.022 - offset;
       public static final double top = 4.35 + 0.36 - offset;
 
     }
