@@ -99,6 +99,11 @@ public final class Constants {
     public static final int absentThreshold = 80;
   } // 0.2758
 
+  public static class HornConstants {
+    public static final int hornSparkID = 61;
+    public static final int hornEncoderID = 62;
+  }
+
   public static class SwerveConstants {
     public static final double autoAlignMaxSpeed = 2.0; // Meters per second, for running auto-alignment
     public static final double autoAlignMaxAngularRate = 2.7; //99 Rotations per second, for running auto-alignment
@@ -136,6 +141,7 @@ public final class Constants {
     public static final double linearDeadBand = 0.20;
     public static final double angularDeadBand = 0.15;
   }
+  
    
   
 }
