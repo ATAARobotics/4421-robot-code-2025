@@ -26,8 +26,6 @@ public class HornSubsystem extends SubsystemBase{
         hornConfig.idleMode(IdleMode.kBrake);
     
         hornMotor.configure(hornConfig, null, null);
-
-        hornEncoder.setPosition(0.0);
     }
 
     @Override

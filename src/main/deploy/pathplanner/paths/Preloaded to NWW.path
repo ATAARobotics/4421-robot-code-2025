@@ -4,15 +4,15 @@
     {
       "anchor": {
         "x": 7.0785,
-        "y": 6.647749999999999
+        "y": 5.428999999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.177577825395293,
-        "y": 6.21563878064378
+        "x": 6.496084721493193,
+        "y": 5.474201022115531
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "West Preloaded"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 5.28275
       },
       "prevControl": {
-        "x": 5.352389463067095,
-        "y": 5.431397315008434
+        "x": 5.337622352090114,
+        "y": 5.403559327001442
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,7 +55,7 @@
   "folder": "Preloaded",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -151.85839876773846
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

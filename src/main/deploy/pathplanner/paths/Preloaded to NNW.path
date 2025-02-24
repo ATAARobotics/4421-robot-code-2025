@@ -4,15 +4,15 @@
     {
       "anchor": {
         "x": 7.0785,
-        "y": 4.1907499999999995
+        "y": 4.161499999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.679452535037623,
-        "y": 4.201628283703972
+        "x": 6.629362811825692,
+        "y": 4.17863739117365
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "NNW Preloaded"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 4.210249999999999
       },
       "prevControl": {
-        "x": 6.284556357296403,
-        "y": 4.205379839903061
+        "x": 6.2260485121713485,
+        "y": 4.19302238799546
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,7 +55,7 @@
   "folder": "Preloaded",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -178.87669728592462
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }
