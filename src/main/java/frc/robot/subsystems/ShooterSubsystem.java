@@ -75,6 +75,13 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("LaserCan Distance", laserCan_distance);
         SmartDashboard.putNumber("ShooterLaserCan Distance", shooterLaserCan_distance);
         SmartDashboard.putString("Shooter State", shooterState.toString());
+
+        SmartDashboard.putBoolean("Check LaserCAN", checkLaserCan());
+        SmartDashboard.putBoolean("Check Shooter LaserCAN", checkShooterLaserCan());
+
+        SmartDashboard.putString("Shooter State", shooterState.toString());
+
+
         switch(shooterState) {
             case IDLE:
                 leftSpeed = 0.0;

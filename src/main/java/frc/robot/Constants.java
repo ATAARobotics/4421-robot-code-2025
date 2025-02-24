@@ -116,10 +116,10 @@ public final class Constants {
       public static final Pose2d NWW = new Pose2d(5.119, 5.119, Rotation2d.fromDegrees(-120));
 
       public static final Pose2d SWW = new Pose2d(3.910, 5.332, Rotation2d.fromDegrees(-60.0));
-      public static final Pose2d SW = new Pose2d(3.637, 3.637, Rotation2d.fromDegrees(-60.0));
-      public static final Pose2d SSW = new Pose2d(3.101, 4.191, Rotation2d.fromDegrees(-60.0));
+      public static final Pose2d SW = new Pose2d(3.637, 5.156, Rotation2d.fromDegrees(-60.0));
+      public static final Pose2d SSW = new Pose2d(3.101, 4.191, Rotation2d.fromDegrees(0.0));
       
-      public static final Pose2d SSE = new Pose2d(3.110, 3.859, Rotation2d.fromDegrees(0.0));
+      public static final Pose2d SSE = new Pose2d(3.150, 3.859, Rotation2d.fromDegrees(0.0));
       public static final Pose2d SE = new Pose2d(3.656, 2.904, Rotation2d.fromDegrees(60.0));
       public static final Pose2d SEE = new Pose2d(3.929, 2.757, Rotation2d.fromDegrees(60));
 

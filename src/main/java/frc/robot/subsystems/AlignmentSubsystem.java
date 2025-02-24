@@ -28,8 +28,8 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double goalR;
 
     private PIDController controllerXY = new PIDController(2, 0.0, 0.0);
-    private PIDController controllerR = new PIDController(2, 0.0, 0.0);
-        
+    private PIDController controllerR = new PIDController(3, 0.0, 0.0);
+
     private double xOutput;
     private double yOutput;
     private double rOutput;
@@ -115,11 +115,11 @@ public class AlignmentSubsystem extends SubsystemBase {
     }
 
     public void updateGoalPose() {
-        Pose2d flipCur = currentPose;
-        // Pose2d flipCur = flipCoords(currentPose);
+        // Pose2d flipCur = currentPose;
+        Pose2d flipCur = flipCoords(currentPose);
         
         goalPose = Constants.SwerveConstants.Waypoints.Waypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
-        // goalPose = flipCoords(goalPose);
+        goalPose = flipCoords(goalPose);
     }
 
     public Pose2d flipCoords(Pose2d pose) {

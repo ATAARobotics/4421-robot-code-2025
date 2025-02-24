@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -35,7 +36,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private boolean isManualMode = false;
 
 
-    public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID);
+    public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID, new CANBus("rio"));
     public double encoderCurrentPosition;
 
     private PIDController ElevatorPID = new PIDController(
