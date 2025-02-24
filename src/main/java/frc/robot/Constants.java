@@ -105,8 +105,8 @@ public final class Constants {
 
     public static final double MaxAngularSpeed = 1.5 * Math.PI;
 
-    public static final double fieldX = 17.548225;
-    public static final double fieldY = 8.0518000;
+    public static final double fieldX = 17.548225 / 2;
+    public static final double fieldY = 8.0518000 / 2;
 
     public static final int gyroCounter = 10;
 
@@ -129,6 +129,22 @@ public final class Constants {
 
       public static final Pose2d[] Waypoints = {NNW, NW, NWW, SWW, SW, SSW, SSE, SE, SEE, NEE, NE, NNE};
       public static final Pose2d centerOfReef = new Pose2d(4.495, 4.015, Rotation2d.fromDegrees(0.0));
+    
+
+      public static final String[] waypointNames = {
+          "Teleop NNW",
+          "Teleop NW",
+          "Teleop NWW",
+          "Teleop SWW",
+          "Teleop SW",
+          "Teleop SSW",
+          "Teleop SSE",
+          "Teleop SE",
+          "Teleop SEE",
+          "Teleop NEE",
+          "Teleop NE",
+          "Teleop NNE"
+      };
     }
 
     

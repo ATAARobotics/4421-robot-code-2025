@@ -334,6 +334,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     }
 
+    public void setFeedForward(DriveFeedforwards feedforwards) {
+        //literally nothing
+    }
+
     public ChassisSpeeds getChassisSpeeds() {
         return this.getState().Speeds;
     }

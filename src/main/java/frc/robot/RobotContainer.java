@@ -6,10 +6,16 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.util.FileVersionException;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -75,7 +81,9 @@ public class RobotContainer {
 
     private Command intake;
 
-    public RobotContainer() {
+    private Command alignCommand;
+
+    public RobotContainer(){
         scoring = false;
         isAbsoluteHeading = false;
         speedMultiplier = 1;
@@ -94,8 +102,6 @@ public class RobotContainer {
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
-
-        
 
         
         configureBindings();
@@ -118,6 +124,10 @@ public class RobotContainer {
                     .withDeadband(speedMultiplier * MaxSpeed * Constants.SwerveConstants.linearDeadBand)
             )
         );
+        
+        alignCommand = m_alignmentSubsystem.followpath();
+        operatorJoystick.povRight().onTrue(alignCommand)
+                    .onFalse( new InstantCommand(() ->alignCommand.cancel()));
 
         // toggle absolute heading mode on B press on the second controller
         operatorJoystick.b().onTrue(
