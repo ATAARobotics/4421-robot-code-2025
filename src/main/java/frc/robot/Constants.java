@@ -67,7 +67,7 @@ public final class Constants {
       public static final double L1 = 1f - offset;
       public static final double L2 = 1.55 - offset;
       public static final double L3 = 2.4638 - offset;
-      public static final double L4 = 4.022 - offset;
+      public static final double L4 = 4.018 - offset;
       public static final double top = 4.35 + 0.36 - offset;
 
     }

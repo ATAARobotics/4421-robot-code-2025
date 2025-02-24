@@ -124,8 +124,8 @@ public class RobotContainer {
             new InstantCommand(() -> isAbsoluteHeading = !isAbsoluteHeading)
         );
 
-        operatorJoystick.y().onTrue(new InstantCommand(() -> speedMultiplier *= 0.1))
-                            .onFalse(new InstantCommand(() -> speedMultiplier *= 10)); // slowmode?
+        operatorJoystick.y().onTrue(new InstantCommand(() -> speedMultiplier = 0.1))
+                            .onFalse(new InstantCommand(() -> speedMultiplier = 1)); // slowmode?
         // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         operatorJoystick.povRight().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(0.0))
