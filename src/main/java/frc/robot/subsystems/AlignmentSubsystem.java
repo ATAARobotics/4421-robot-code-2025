@@ -29,9 +29,9 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double goalY;
     private double goalR;
 
-    private PIDController controllerX = new PIDController(3, 0.4, 0.0);
-    private PIDController controllerY = new PIDController(3, 0.4, 0.0);
-    private PIDController controllerR = new PIDController(3, 0.0, 0.0);
+    private PIDController controllerX = new PIDController(3, 0.0, 0.4);
+    private PIDController controllerY = new PIDController(3, 0.0, 0.4);
+    private PIDController controllerR = new PIDController(3.5, 0.0, 0.17);
         
     private double xOutput;
     private double yOutput;
@@ -53,13 +53,13 @@ public class AlignmentSubsystem extends SubsystemBase {
         
         
     public AlignmentSubsystem(CommandSwerveDrivetrain m_Swerve) {        
-        SmartDashboard.putNumber("AlignmentX P", controllerR.getP());
-        SmartDashboard.putNumber("AlignmentX I", controllerR.getI());
-        SmartDashboard.putNumber("AlignmentX D", controllerR.getD());
+        SmartDashboard.putNumber("AlignmentX P", controllerX.getP());
+        SmartDashboard.putNumber("AlignmentX I", controllerX.getI());
+        SmartDashboard.putNumber("AlignmentX D", controllerX.getD());
 
-        SmartDashboard.putNumber("AlignmentY P", controllerR.getP());
-        SmartDashboard.putNumber("AlignmentY I", controllerR.getI());
-        SmartDashboard.putNumber("AlignmentY D", controllerR.getD());
+        SmartDashboard.putNumber("AlignmentY P", controllerY.getP());
+        SmartDashboard.putNumber("AlignmentY I", controllerY.getI());
+        SmartDashboard.putNumber("AlignmentY D", controllerY.getD());
 
         SmartDashboard.putNumber("AlignmentR P", controllerR.getP());
         SmartDashboard.putNumber("AlignmentR I", controllerR.getI());
