@@ -37,12 +37,14 @@ public class RobotContainer {
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
     private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   
-    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private final double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private final double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+
+    private double speedMultiplier = 1;
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.2) // Add a 10% deadband
+             // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
     private final SwerveRequest.FieldCentric driveToSetpoint = new SwerveRequest.FieldCentric() // Add a 10% deadband
@@ -76,6 +78,7 @@ public class RobotContainer {
     public RobotContainer() {
         scoring = false;
         isAbsoluteHeading = false;
+        speedMultiplier = 1;
 
         coralL1Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 1);
         coralL2Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 2);
@@ -108,10 +111,11 @@ public class RobotContainer {
                 scoring ? driveToSetpoint.withVelocityX(m_alignmentSubsystem.getOutputs()[0])
                 .withVelocityY(m_alignmentSubsystem.getOutputs()[1])
                 .withRotationalRate(m_alignmentSubsystem.getOutputs()[2]) :
-                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(isAbsoluteHeading ? m_AbsoluteRotation.rotationSpeed() : -joystick.getRightX() * MaxAngularRate)
-                    .withRotationalDeadband(isAbsoluteHeading ? 0.0 : MaxAngularRate * 0.15) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed * speedMultiplier) // Drive forward with negative Y (forward)
+                    .withVelocityY(-joystick.getLeftX() * MaxSpeed * speedMultiplier) // Drive left with negative X (left)
+                    .withRotationalRate(isAbsoluteHeading ? speedMultiplier * m_AbsoluteRotation.rotationSpeed() : -joystick.getRightX() * MaxAngularRate * speedMultiplier)
+                    .withRotationalDeadband(isAbsoluteHeading ? 0.0 : speedMultiplier * MaxAngularRate * Constants.SwerveConstants.angularDeadBand) // Drive counterclockwise with negative X (left)
+                    .withDeadband(speedMultiplier * MaxSpeed * Constants.SwerveConstants.linearDeadBand)
             )
         );
 
@@ -120,7 +124,8 @@ public class RobotContainer {
             new InstantCommand(() -> isAbsoluteHeading = !isAbsoluteHeading)
         );
 
-        operatorJoystick.y().onTrue(new InstantCommand(() -> MaxSpeed = 0.1 * MaxSpeed)).onFalse(new InstantCommand(() -> MaxSpeed = 10 * MaxSpeed)); // slowmode?
+        operatorJoystick.y().onTrue(new InstantCommand(() -> speedMultiplier *= 0.1))
+                            .onFalse(new InstantCommand(() -> speedMultiplier *= 10)); // slowmode?
         // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         operatorJoystick.povRight().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(0.0))

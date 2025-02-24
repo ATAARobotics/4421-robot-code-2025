@@ -11,12 +11,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ScoreCoralL3"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "NE to Station"
@@ -32,12 +26,6 @@
           "type": "path",
           "data": {
             "pathName": "Station to SE"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ScoreCoralL3"
           }
         }
       ]

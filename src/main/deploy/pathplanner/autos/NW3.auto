@@ -11,12 +11,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ScoreCoralL3"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "NW to Station"
