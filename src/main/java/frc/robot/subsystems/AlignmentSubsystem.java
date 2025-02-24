@@ -27,16 +27,21 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double goalY;
     private double goalR;
 
-    private PIDController controllerXY = new PIDController(2, 0.0, 0.0);
+    private PIDController controllerX = new PIDController(2, 0.0, 0.0);
+    private PIDController controllerY = new PIDController(2, 0.0, 0.0);
     private PIDController controllerR = new PIDController(3, 0.0, 0.0);
 
     private double xOutput;
     private double yOutput;
     private double rOutput;
         
-    private double controllerXY_P;
-    private double controllerXY_I;
-    private double controllerXY_D;
+    private double controllerX_P;
+    private double controllerX_I;
+    private double controllerX_D;
+
+    private double controllerY_P;
+    private double controllerY_I;
+    private double controllerY_D;
 
     private double controllerR_P;
     private double controllerR_I;
@@ -46,9 +51,13 @@ public class AlignmentSubsystem extends SubsystemBase {
         
         
     public AlignmentSubsystem(CommandSwerveDrivetrain m_Swerve) {        
-        SmartDashboard.putNumber("AlignmentXY P", controllerR.getP());
-        SmartDashboard.putNumber("AlignmentXY I", controllerR.getI());
-        SmartDashboard.putNumber("AlignmentXY D", controllerR.getD());
+        SmartDashboard.putNumber("AlignmentX P", controllerR.getP());
+        SmartDashboard.putNumber("AlignmentX I", controllerR.getI());
+        SmartDashboard.putNumber("AlignmentX D", controllerR.getD());
+
+        SmartDashboard.putNumber("AlignmentY P", controllerR.getP());
+        SmartDashboard.putNumber("AlignmentY I", controllerR.getI());
+        SmartDashboard.putNumber("AlignmentY D", controllerR.getD());
 
         SmartDashboard.putNumber("AlignmentR P", controllerR.getP());
         SmartDashboard.putNumber("AlignmentR I", controllerR.getI());
@@ -79,15 +88,20 @@ public class AlignmentSubsystem extends SubsystemBase {
         goalY = goalPose.getY();
         goalR = goalPose.getRotation().getRadians();
         
-        controllerXY_P = SmartDashboard.getNumber("AlignmentXY P", 0.0);
-        controllerXY_I = SmartDashboard.getNumber("AlignmentXY I", 0.0);
-        controllerXY_D = SmartDashboard.getNumber("AlignmentXY D", 0.0);
+        controllerX_P = SmartDashboard.getNumber("AlignmentX P", 0.0);
+        controllerX_I = SmartDashboard.getNumber("AlignmentX I", 0.0);
+        controllerX_D = SmartDashboard.getNumber("AlignmentX D", 0.0);
+
+        controllerY_P = SmartDashboard.getNumber("AlignmentY P", 0.0);
+        controllerY_I = SmartDashboard.getNumber("AlignmentY I", 0.0);
+        controllerY_D = SmartDashboard.getNumber("AlignmentY D", 0.0);
 
         controllerR_P = SmartDashboard.getNumber("AlignmentR P", 0.0);
         controllerR_I = SmartDashboard.getNumber("AlignmentR I", 0.0);
         controllerR_D = SmartDashboard.getNumber("AlignmentR D", 0.0);
 
-        controllerXY.setPID(controllerXY_P, controllerXY_I, controllerXY_D);
+        controllerX.setPID(controllerX_P, controllerX_I, controllerX_D);
+        controllerY.setPID(controllerY_P, controllerY_I, controllerY_D);
         controllerR.setPID(controllerR_P, controllerR_I, controllerR_D);
 
         currentPose = m_Swerve.getPose();
@@ -96,8 +110,8 @@ public class AlignmentSubsystem extends SubsystemBase {
         curY = currentPose.getY();
         curR = currentPose.getRotation().getRadians();
 
-        xOutput = MathUtil.clamp(controllerXY.calculate(curX, goalX), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
-        yOutput = MathUtil.clamp(controllerXY.calculate(curY, goalY), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
+        xOutput = MathUtil.clamp(controllerX.calculate(curX, goalX), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
+        yOutput = MathUtil.clamp(controllerY.calculate(curY, goalY), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
         rOutput = MathUtil.clamp(controllerR.calculate(curR, goalR), -Constants.SwerveConstants.autoAlignMaxAngularRate, Constants.SwerveConstants.autoAlignMaxAngularRate);
 
         SmartDashboard.putNumber("xOutput", xOutput);
@@ -108,7 +122,7 @@ public class AlignmentSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Current Robot Y", currentPose.getY());
         SmartDashboard.putNumber("Current Robot R", currentPose.getRotation().getDegrees());
         
-        SmartDashboard.putNumber("Waypoint Index", (int) (angle(curY, curX) / 30));
+        SmartDashboard.putNumber("Waypoint Index", (int) (angle(flipCoords(currentPose).getY(), flipCoords(currentPose).getX()) / 30));
 
         updateGoalPose();
         goalPoseField.setRobotPose(goalPose);

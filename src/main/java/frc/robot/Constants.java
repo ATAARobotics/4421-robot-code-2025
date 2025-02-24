@@ -105,8 +105,8 @@ public final class Constants {
 
     public static final double MaxAngularSpeed = 1.5 * Math.PI;
 
-    public static final double fieldX = 17.548225;
-    public static final double fieldY = 8.0518000;
+    public static final double fieldX = 17.548225 / 2;
+    public static final double fieldY = 8.0518000 / 2;
 
     public static final int gyroCounter = 10;
 
