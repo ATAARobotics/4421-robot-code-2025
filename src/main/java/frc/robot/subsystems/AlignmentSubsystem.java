@@ -2,6 +2,11 @@ package frc.robot.subsystems;
 
 import java.util.Optional;
 
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.PathPoint;
+import com.pathplanner.lib.path.Waypoint;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectoryState;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -126,10 +131,18 @@ public class AlignmentSubsystem extends SubsystemBase {
         
         SmartDashboard.putNumber("Waypoint Index", (int) (angle(curY, curX) / 30));
         Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+        SmartDashboard.putBoolean("isRedAlliance", alliance.get() == DriverStation.Alliance.Red);
         if (alliance.isPresent()) {
-            updateRedGoalPose();
+            if (alliance.get() == DriverStation.Alliance.Red) {
+                // updateRedGoalPose();
+                updateFromPathPlannerGoalPoseRed();
+            } else{
+                // updateGoalPose();
+                updateFromPathPlannerGoalPose();
+            }
         } else{
-            updateGoalPose();
+            // updateGoalPose();
+            updateFromPathPlannerGoalPoseRed();
         }
         goalPoseField.setRobotPose(goalPose);
     }
@@ -147,6 +160,36 @@ public class AlignmentSubsystem extends SubsystemBase {
         Pose2d flipCur = flipCoords(currentPose);
         
         goalPose = Constants.SwerveConstants.Waypoints.Waypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
+        goalPose = flipCoords(goalPose);
+    }
+
+    public void updateFromPathPlannerGoalPose() {
+        Pose2d flipCur = currentPose;
+        
+        String goalPoseStr = Constants.SwerveConstants.Waypoints.teleopWaypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
+        try {
+            PathPlannerPath goalPath = PathPlannerPath.fromPathFile(goalPoseStr);
+            PathPoint goalPoint = goalPath.getPoint(goalPath.getAllPathPoints().size() - 1);
+            goalPose = new Pose2d(goalPoint.position.getX(), goalPoint.position.getY(), goalPath.getGoalEndState().rotation()); 
+            // If angle is not showing the right angle, it is returning heading and not the angle from goal-end-state
+        } catch (Exception e) {
+            System.out.println("PATH FROM FILE ***************** ################ **************** ERROR: " + e);
+        }
+    }
+
+    // flipping GOALPOSE may not be needed if PATHPLANNER returns flipped coords already
+    public void updateFromPathPlannerGoalPoseRed() {
+        Pose2d flipCur = flipCoords(currentPose);
+        
+        String goalPoseStr = Constants.SwerveConstants.Waypoints.teleopWaypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
+        try {
+            PathPlannerPath goalPath = PathPlannerPath.fromPathFile(goalPoseStr);
+            PathPoint goalPoint = goalPath.getPoint(goalPath.getAllPathPoints().size() - 1);
+            goalPose = new Pose2d(goalPoint.position.getX(), goalPoint.position.getY(), goalPath.getGoalEndState().rotation()); // If angle is not showing the right angle, it is returning heading and not the angle from goal-end-state
+        } catch (Exception e) {
+            System.out.println("PATH FROM FILE ***************** ################ **************** ERROR: " + e);
+        }
+
         goalPose = flipCoords(goalPose);
     }
 
@@ -174,7 +217,11 @@ public class AlignmentSubsystem extends SubsystemBase {
     public double[] getOutputs() {
         Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
             if (alliance.isPresent()) {
-                return new double[]{-xOutput, -yOutput, rOutput};
+                if (alliance.get() == DriverStation.Alliance.Red) {
+                    return new double[]{-xOutput, -yOutput, rOutput};
+                } else{
+                    return new double[]{xOutput, yOutput, rOutput};
+                }
 
             } else{
                 return new double[]{xOutput, yOutput, rOutput};

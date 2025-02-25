@@ -133,6 +133,8 @@ public final class Constants {
       public static final Pose2d NNE = new Pose2d(5.889, 3.859, Rotation2d.fromDegrees(180.0));
 
       public static final Pose2d[] Waypoints = {NNW, NW, NWW, SWW, SW, SSW, SSE, SE, SEE, NEE, NE, NNE};
+      public static final String[] teleopWaypoints = {"Teleop NNW", "Teleop NW", "Teleop NWW", "Teleop SWW", "Teleop SW", "Teleop SSW", "Teleop SSE", "Teleop SE", "Teleop SEE", "Teleop NEE", "Teleop NE", "Teleop NNE"};
+
       public static final Pose2d centerOfReef = new Pose2d(4.495, 4.015, Rotation2d.fromDegrees(0.0));
     }
 
