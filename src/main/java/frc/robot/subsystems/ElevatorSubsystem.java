@@ -65,7 +65,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Elevator Speed", elevatorSpeed);
         SmartDashboard.putBoolean("Setpoint Mode", setpointMode);
-        encoderCurrentPosition = -encoder.getPosition().getValueAsDouble();
+        encoderCurrentPosition = encoder.getPosition().getValueAsDouble();
 
         SmartDashboard.putNumber("Elevator Encoder Value", encoderCurrentPosition);
         SmartDashboard.putNumber("Current Elevator Setpoint", defaultSetpoint);
@@ -82,7 +82,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
 
         if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.top) {
-            elevatorSpeed = 0;
+            elevatorSpeed = -0.02;
         }
 /* 
         if (isPressed() && !hasBeenReset) {

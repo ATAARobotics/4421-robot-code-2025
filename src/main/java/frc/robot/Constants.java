@@ -51,9 +51,9 @@ public final class Constants {
     public static final int rightClimbMotorID = 22;
     
     public static final int minLimitTouchLeftPin = 5;
-    public static final double maxElevatorSpeed = 0.60;
+    public static final double maxElevatorSpeed = 0.80;
 
-    public static final double kP = 1.5;
+    public static final double kP = 1.3;
     public static final double kI = 0;
     public static final double kD = 0.1;
 
@@ -67,8 +67,8 @@ public final class Constants {
       public static final double L1 = 1f - offset;
       public static final double L2 = 1.55 - offset;
       public static final double L3 = 2.4638 - offset;
-      public static final double L4 = 4.018 - offset;
-      public static final double top = 4.35 + 0.36 - offset;
+      public static final double L4 = 4.00 - offset;
+      public static final double top = 4.015 - offset;
 
     }
 
