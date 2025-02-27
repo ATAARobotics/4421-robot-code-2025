@@ -103,7 +103,7 @@ public final class Constants {
   public static class HornConstants {
     public static final int hornSparkID = 61;
     public static final int hornEncoderID = 62;
-    public static double kP = 1.0;
+    public static double kP = 0.5;
     public static double kI = 0.0;
     public static double kD = 0.0;
     public static double maxHornSpeed = 0.4;
