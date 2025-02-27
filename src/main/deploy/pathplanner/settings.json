@@ -17,8 +17,8 @@
     "4 Coral Autos",
     "Test Autos"
   ],
-  "defaultMaxVel": 2.4,
-  "defaultMaxAccel": 2.4,
+  "defaultMaxVel": 2.1,
+  "defaultMaxAccel": 2.7,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
