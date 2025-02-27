@@ -122,18 +122,16 @@ public class RobotContainer {
         );
 
         // toggle absolute heading mode on B press on the second controller
-        operatorJoystick.b().onTrue(
+        operatorJoystick.povUp().onTrue(
             new InstantCommand(() -> isAbsoluteHeading = !isAbsoluteHeading)
         );
 
-        operatorJoystick.y().onTrue(new InstantCommand(() -> speedMultiplier = 0.1))
-                            .onFalse(new InstantCommand(() -> speedMultiplier = 1)); // slowmode?
         // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         operatorJoystick.povRight().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(0.0))
         ));
 
-        operatorJoystick.povDown().onTrue(coralL2Command);
+        //operatorJoystick.povDown().onTrue(coralL2Command);
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -144,7 +142,7 @@ public class RobotContainer {
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // reset the field-centric heading on left bumper press
-        joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        joystick.button(7).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
 
         drivetrain.registerTelemetry(logger::telemeterize);
@@ -152,58 +150,61 @@ public class RobotContainer {
       
         joystick.y().onTrue(new InstantCommand(m_climbSubsystem::climbUp)).onFalse(new InstantCommand(m_climbSubsystem::stop));
         joystick.a().onTrue(new InstantCommand(m_climbSubsystem::climbDown)).onFalse(new InstantCommand(m_climbSubsystem::stop));
-        operatorJoystick.a().onTrue(new InstantCommand(() -> {m_elevatorSubsystem.zero(); m_elevatorSubsystem.elevatorStop();}));
+        operatorJoystick.povDown().onTrue(new InstantCommand(() -> {m_elevatorSubsystem.zero(); m_elevatorSubsystem.elevatorStop();}));
         joystick.leftTrigger(0.1).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorDown(joystick.getLeftTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
         joystick.rightTrigger(0.1).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorUp(joystick.getRightTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
 
 
 
         // Rest
-        joystick.povDown().onTrue(new InstantCommand(
+        operatorJoystick.a().onTrue(new InstantCommand(
             () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L1)
-        ));
+        )); 
 
         // L2
-        joystick.povUp().onTrue(new InstantCommand(
-            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L2)
+        operatorJoystick.y().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L4)
         ));
 
-        joystick.povLeft().onTrue(new InstantCommand(
+        operatorJoystick.x().onTrue(new InstantCommand(
             () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L3)
         ));
 
-        joystick.povRight().onTrue(new InstantCommand(
-            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L4)
+        operatorJoystick.b().onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L2)
         ));
 
         joystick.button(10).onTrue(new InstantCommand(
             () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake)
         ));
 
-        operatorJoystick.x().onTrue(new InstantCommand(
-            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.rest)
-        ));
+        joystick.button(9).onTrue(new InstantCommand(() -> speedMultiplier = 0.1))
+        .onFalse(new InstantCommand(() -> speedMultiplier = 1)); 
+
+        //operatorJoystick.x().onTrue(new InstantCommand(
+          //  () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.rest)
+        //));
 
         operatorJoystick.rightBumper().onTrue(new InstantCommand(
             () -> m_elevatorSubsystem.elevatorStop()
         ));
         
-        operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_Swerve.zeroGyro()));
-       
+        joystick.button(8).onTrue(new InstantCommand(() -> m_Swerve.zeroGyro()));
+        
 
         // bool to acitvate alignment, press both the up buttom on the d-pad and the a button on second controller
-        operatorJoystick.povUp().onTrue(new InstantCommand(() -> { m_alignmentSubsystem.updateGoalPose(); scoring = true;})).onFalse(new InstantCommand(() -> scoring = false));
+        joystick.leftBumper().onTrue(new InstantCommand(() -> { m_alignmentSubsystem.updateGoalPose(); scoring = true;})).onFalse(new InstantCommand(() -> scoring = false));
         
         joystick.rightBumper()
             .onTrue(m_elevatorSubsystem.isAtSetpoint(Constants.ElevatorConstants.Encoder.L1) ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
             .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
 
-        joystick.b()
+        joystick.povUp()
             .onTrue(new InstantCommand(m_shooterSubsystem::toggleOverride));
 
 
-        operatorJoystick.leftTrigger().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunIn())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
-        operatorJoystick.rightTrigger().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunOut())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
+        operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunIn())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
+        operatorJoystick.rightBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunOut())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
 
     }
 

@@ -84,6 +84,7 @@ public final class Constants {
     public static final double kP = 0.1;
     public static final double kI = 0;
     public static final double kD = 0;
+    public static double startPos;
   }
 
   public static class ShooterConstants {
@@ -102,6 +103,10 @@ public final class Constants {
   public static class HornConstants {
     public static final int hornSparkID = 61;
     public static final int hornEncoderID = 62;
+    public static double kP = 1.0;
+    public static double kI = 0.0;
+    public static double kD = 0.0;
+    public static double maxHornSpeed = 0.4;
   }
 
   public static class SwerveConstants {

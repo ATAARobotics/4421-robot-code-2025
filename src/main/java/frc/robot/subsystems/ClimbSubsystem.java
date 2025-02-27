@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.sim.SparkRelativeEncoderSim;
@@ -25,12 +26,17 @@ public class ClimbSubsystem extends SubsystemBase {
     SparkFlexConfig leftConfig;
     SparkFlexConfig rightConfig;
 
+    //public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID, new CANBus("rio"));
+
+
     private boolean hold;
 
     private RelativeEncoder encoder = leftClimb.getEncoder();
 
     private double curEncoderPosition;
     private double curSetPosition;
+
+    private boolean startedClimb = false;
 
     private PIDController climbPID = new PIDController(
         Constants.ClimbConstants.kP,
@@ -48,6 +54,7 @@ public class ClimbSubsystem extends SubsystemBase {
         hold = false;
         curEncoderPosition = encoder.getPosition();
         curSetPosition = curEncoderPosition;
+        startedClimb = false;
     }
 
     @Override
@@ -60,15 +67,23 @@ public class ClimbSubsystem extends SubsystemBase {
                                             -Constants.ClimbConstants.maxClimbSpeed, 
                                             Constants.ClimbConstants.maxClimbSpeed);
         }
+
         leftClimb.set(climbSpeed);
+        
     }
 
     public void climbUp() {
-        climbSpeed = Constants.ClimbConstants.maxClimbSpeed;
-        hold = false;
+        if(!startedClimb) {
+            climbSpeed = 0;
+        }
+        else {
+            climbSpeed = Constants.ClimbConstants.maxClimbSpeed;
+            hold = false;
+        }
     }
 
     public void climbDown() {
+        startedClimb = true;
         climbSpeed = -Constants.ClimbConstants.maxClimbSpeed;
         hold = false;
     }
