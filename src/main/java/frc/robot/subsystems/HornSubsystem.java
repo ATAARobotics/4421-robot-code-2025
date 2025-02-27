@@ -51,7 +51,7 @@ public class HornSubsystem extends SubsystemBase{
     public void periodic(){
         hornPosition = hornEncoder.getPosition().getValueAsDouble();
         SmartDashboard.putNumber("Horn Encoder Value", hornPosition);
-        hornSpeed = 0;
+        //hornSpeed = 0;
         if(holdSetpoint){
         hornPID.setSetpoint(setpoint);
 
