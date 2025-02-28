@@ -64,11 +64,12 @@ public final class Constants {
 
       public static final double rest = 0.01;
       public static final double Intake = 0.38 - offset;
+      public static final double Processor = 0.76;
       public static final double L1 = 1f - offset;
       public static final double L2 = 1.55 - offset;
       public static final double L3 = 2.4638 - offset;
-      public static final double L4 = 4.00 - offset;
-      public static final double top = 4.015 - offset;
+      public static final double L4 = 4.017 - offset;
+      public static final double top = 4.020 - offset;
 
     }
 
@@ -92,7 +93,7 @@ public final class Constants {
     public static final int leftShooterMotorID = 31;
     public static final int rightShooterMotorID = 32;
 
-    public static final double maxShooterSpeed = 0.34;
+    public static final double maxShooterSpeed = 0.28;
     public static final double intakeSpeed = 0.09;
     public static final double fractionalRatio = 2; //By how much the speed is divided when shooting L1
 
@@ -103,7 +104,7 @@ public final class Constants {
   public static class HornConstants {
     public static final int hornSparkID = 61;
     public static final int hornEncoderID = 62;
-    public static double kP = 0.5;
+    public static double kP = 1.0;
     public static double kI = 0.0;
     public static double kD = 0.0;
     public static double maxHornSpeed = 0.4;
@@ -139,6 +140,8 @@ public final class Constants {
 
       public static final Pose2d[] Waypoints = {NNW, NW, NWW, SWW, SW, SSW, SSE, SE, SEE, NEE, NE, NNE};
       public static final String[] teleopWaypoints = {"Teleop NNW", "Teleop NW", "Teleop NWW", "Teleop SWW", "Teleop SW", "Teleop SSW", "Teleop SSE", "Teleop SE", "Teleop SEE", "Teleop NEE", "Teleop NE", "Teleop NNE"};
+      public static final String[] teleopAlignWaypoints = {"Align NNW", "Align NW", "Align NWW", "Align SWW", "Align SW", "Align SSW", "Align SSE", "Align SE", "Align SEE", "Align NEE", "Align NE", "Align NNE"};
+
 
       public static final Pose2d centerOfReef = new Pose2d(4.495, 4.015, Rotation2d.fromDegrees(0.0));
     }

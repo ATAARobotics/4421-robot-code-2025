@@ -8,11 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.044987332420768,
-        "y": 6.323586203996379
+        "x": 2.1324870970979224,
+        "y": 6.3781777998165765
       },
       "isLocked": false,
       "linkedName": "West Station"
+    },
+    {
+      "anchor": {
+        "x": 2.925,
+        "y": 4.24925
+      },
+      "prevControl": {
+        "x": 2.7063926452202463,
+        "y": 4.370538187537777
+      },
+      "nextControl": {
+        "x": 3.1635602658824205,
+        "y": 4.116891496798859
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,8 +36,8 @@
         "y": 4.1907499999999995
       },
       "prevControl": {
-        "x": 2.786444277756754,
-        "y": 4.909401933657269
+        "x": 3.0494791588968684,
+        "y": 4.435488378218719
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +46,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 2.0,
       "rotationDegrees": 0.0
     }
   ],
@@ -39,14 +55,14 @@
   "eventMarkers": [
     {
       "name": "ScoreCoralL4",
-      "waypointRelativePos": 0.7576953433307066,
+      "waypointRelativePos": 1.5,
       "endWaypointRelativePos": null,
       "command": null
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.1,
-    "maxAcceleration": 2.7,
+    "maxVelocity": 1.9,
+    "maxAcceleration": 1.9,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

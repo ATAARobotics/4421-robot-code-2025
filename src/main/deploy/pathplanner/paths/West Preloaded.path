@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.0785,
-        "y": 5.428999999999999
+        "x": 7.1,
+        "y": 6.1648053278688515
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.078500000000002,
-        "y": 5.428999999999999
+        "x": 8.099999999999989,
+        "y": 6.1648053278688515
       },
       "isLocked": false,
       "linkedName": "West Preloaded"
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.1,
-    "maxAcceleration": 2.7,
+    "maxVelocity": 1.9,
+    "maxAcceleration": 1.9,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

@@ -11,6 +11,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "ScoreCoralL4"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "NW to Station"

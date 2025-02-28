@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9097500000000003,
-        "y": 5.3315
+        "x": 3.94875,
+        "y": 5.2925
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1083611345789457,
-        "y": 6.063420865479516
+        "x": 3.1473611345789454,
+        "y": 6.024420865479517
       },
       "isLocked": false,
       "linkedName": "SWW"
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.1,
-    "maxAcceleration": 2.7,
+    "maxVelocity": 1.9,
+    "maxAcceleration": 1.9,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

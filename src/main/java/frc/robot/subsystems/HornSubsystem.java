@@ -36,7 +36,7 @@ public class HornSubsystem extends SubsystemBase{
 
         hornEncoder = new CANcoder(Constants.HornConstants.hornEncoderID);
 
-        hornEncoder.setPosition(0);////remove
+        //hornEncoder.setPosition(0);////remove
 
         hornPosition = hornEncoder.getPosition().getValueAsDouble();
 
@@ -69,14 +69,18 @@ public class HornSubsystem extends SubsystemBase{
     }
 
     public void hornRunOut() {
-        hornSpeed = 0.3;
+        holdSetpoint = false;
+        hornSpeed = 0.1;
     }
 
     public void hornRunIn() {
+        holdSetpoint = false;
         hornSpeed = -0.3;
     }
 
     public void hornStop() {
+        holdSetpoint = true;
+        setpoint = hornPosition;
         hornSpeed = 0.0;
     }
 

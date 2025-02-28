@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.1005000000000003,
-        "y": 4.1907499999999995
+        "x": 2.0,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3195572356290994,
-        "y": 5.595371957574171
+        "x": 3.0,
+        "y": 7.0
       },
       "isLocked": false,
-      "linkedName": "SSW"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.7355,
-        "y": 7.25225
+        "x": 5.45025,
+        "y": 2.66
       },
       "prevControl": {
-        "x": 1.9833327149359117,
-        "y": 6.671980357288515
+        "x": 4.45025,
+        "y": 2.66
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "West Station"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -53.806792694435316
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Position to Station",
+  "folder": "Teleop Align",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

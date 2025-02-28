@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.0785,
-        "y": 5.428999999999999
+        "x": 7.1,
+        "y": 6.1648053278688515
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.496084721493193,
-        "y": 5.474201022115531
+        "x": 6.616078283583997,
+        "y": 6.161364348498651
       },
       "isLocked": false,
       "linkedName": "West Preloaded"
     },
     {
       "anchor": {
-        "x": 5.11875,
-        "y": 5.28275
+        "x": 5.15775,
+        "y": 5.468
       },
       "prevControl": {
-        "x": 5.337622352090114,
-        "y": 5.403559327001442
+        "x": 5.960937279029264,
+        "y": 6.155882440247541
+      },
+      "nextControl": {
+        "x": 4.96787000567783,
+        "y": 5.30537900579503
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.021249999999999,
+        "y": 5.2925
+      },
+      "prevControl": {
+        "x": 5.3259685380999455,
+        "y": 5.362103786389521
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,14 +50,14 @@
   "eventMarkers": [
     {
       "name": "ScoreCoralL4",
-      "waypointRelativePos": 0.6104218362282878,
+      "waypointRelativePos": 1.2,
       "endWaypointRelativePos": 1.0,
       "command": null
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.1,
-    "maxAcceleration": 2.7,
+    "maxVelocity": 1.9,
+    "maxAcceleration": 1.9,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

@@ -77,6 +77,7 @@ public class RobotContainer {
 
     private Command intake;
 
+
     public RobotContainer() {
         scoring = false;
         isAbsoluteHeading = false;
@@ -127,9 +128,9 @@ public class RobotContainer {
         );
 
         // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        operatorJoystick.povRight().whileTrue(drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(0.0))
-        ));
+        // operatorJoystick.povRight().whileTrue(drivetrain.applyRequest(() ->
+        //     point.withModuleDirection(new Rotation2d(0.0))
+        // ));
 
         //operatorJoystick.povDown().onTrue(coralL2Command);
 
@@ -160,6 +161,9 @@ public class RobotContainer {
         operatorJoystick.a().onTrue(new InstantCommand(
             () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L1)
         )); 
+        operatorJoystick.povRight()
+            .onTrue(new InstantCommand(()->m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Processor)));
+
 
         // L2
         operatorJoystick.y().onTrue(new InstantCommand(
@@ -193,15 +197,13 @@ public class RobotContainer {
         
 
         // bool to acitvate alignment, press both the up buttom on the d-pad and the a button on second controller
-        joystick.leftBumper().onTrue(new InstantCommand(() -> { m_alignmentSubsystem.updateGoalPose(); scoring = true;})).onFalse(new InstantCommand(() -> scoring = false));
+        joystick.leftBumper().onTrue(new InstantCommand(() -> {scoring = true;})).onFalse(new InstantCommand(() -> scoring = false));
         
         joystick.rightBumper()
-            .onTrue(m_elevatorSubsystem.isAtSetpoint(Constants.ElevatorConstants.Encoder.L1) ? new InstantCommand(() -> m_shooterSubsystem.shootL1()) : new InstantCommand(() -> m_shooterSubsystem.shoot()))
+            .onTrue(new InstantCommand(() -> {if (m_elevatorSubsystem.isAtL1()) { m_shooterSubsystem.shootL1();} else { m_shooterSubsystem.shoot();}}))
             .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
 
-        joystick.povUp()
-            .onTrue(new InstantCommand(m_shooterSubsystem::toggleOverride));
-
+        
 
         operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunIn())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
         operatorJoystick.rightBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunOut())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
@@ -214,5 +216,8 @@ public class RobotContainer {
       public void resetClimbAndElevator() {
         m_climbSubsystem.initHoldMode();
         m_elevatorSubsystem.initSetPointMode();;
+      }
+      public void zeroEll() {
+        m_elevatorSubsystem.zero();
       }
 }

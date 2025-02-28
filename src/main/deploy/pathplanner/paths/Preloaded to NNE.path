@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.0785,
+        "x": 7.079,
         "y": 3.8787499999999993
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.676811594850645,
-        "y": 3.880388575797025
+        "x": 6.743377092105675,
+        "y": 3.875344430290429
       },
       "isLocked": false,
       "linkedName": "NNE Preloaded"
     },
     {
       "anchor": {
-        "x": 5.889000000000001,
+        "x": 6.1425,
         "y": 3.8592499999999994
       },
       "prevControl": {
-        "x": 6.284413037270311,
-        "y": 3.864937671430479
+        "x": 6.39247215713999,
+        "y": 3.8629810393699646
+      },
+      "nextControl": {
+        "x": 5.814232027687766,
+        "y": 3.85435033140247
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.859749999999999,
+        "y": 3.8592499999999994
+      },
+      "prevControl": {
+        "x": 6.109707577906227,
+        "y": 3.863855349851201
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,14 +50,14 @@
   "eventMarkers": [
     {
       "name": "ScoreCoralL4",
-      "waypointRelativePos": 0.6140489344909276,
+      "waypointRelativePos": 1.25,
       "endWaypointRelativePos": null,
       "command": null
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.1,
-    "maxAcceleration": 2.7,
+    "maxVelocity": 1.9,
+    "maxAcceleration": 1.9,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

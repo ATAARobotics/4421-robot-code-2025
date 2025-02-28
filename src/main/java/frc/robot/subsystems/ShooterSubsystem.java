@@ -37,6 +37,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private double leftSpeed;
     private double rightSpeed;
 
+    private boolean prevPressed;
+
     private boolean overrideIntake;
 
     public ShooterSubsystem() {
@@ -65,6 +67,7 @@ public class ShooterSubsystem extends SubsystemBase {
         rightShooterMotor.configure(rightConfig, null, null);
 
         overrideIntake = false;
+        prevPressed = false;
     }
 
     @Override
@@ -101,7 +104,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 leftSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.75;
                 rightSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.75;
 
-                if (!checkLaserCan()) {
+                if (!checkLaserCan() && checkShooterLaserCan()) {
                     shooterState = ShooterState.REVERSE;
                 }
 
@@ -110,7 +113,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 leftSpeed = -Constants.ShooterConstants.intakeSpeed;
                 rightSpeed = -Constants.ShooterConstants.intakeSpeed;
 
-                if (checkLaserCan()) {
+                if (checkLaserCan() && checkShooterLaserCan()) {
                     shooterState = ShooterState.SLOW;
                 }
 
@@ -119,7 +122,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 leftSpeed = Constants.ShooterConstants.intakeSpeed;
                 rightSpeed = Constants.ShooterConstants.intakeSpeed;
 
-                if (!checkShooterLaserCan()) {
+                if (!checkLaserCan() && checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;
                 }
 

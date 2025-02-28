@@ -35,6 +35,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private boolean hasBeenReset = false;
     private boolean isManualMode = false;
 
+    private boolean prevPressed = false;
 
     public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID, new CANBus("rio"));
     public double encoderCurrentPosition;
@@ -59,6 +60,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightClimbMotor.configure(rightConfig, null, null);
 
         minLimitTouchLeft = new DigitalInput(Constants.ElevatorConstants.minLimitTouchLeftPin);
+        //SmartDashboard.putNumber("Elevator P", defaultSetpoint)
+        prevPressed = false;
     }
 
     @Override
@@ -69,6 +72,14 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("Elevator Encoder Value", encoderCurrentPosition);
         SmartDashboard.putNumber("Current Elevator Setpoint", defaultSetpoint);
+
+        if (isPressed() && !prevPressed) {
+            prevPressed = true;
+            zero();
+        }
+        if(!isPressed()) {
+            prevPressed = false;
+        }
 
         if (setpointMode) {
             ElevatorPID.setSetpoint(defaultSetpoint);
@@ -139,8 +150,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         defaultSetpoint = setpoint;
     }
 
-    public void zero(){
+    public void zero(){  
         encoder.setPosition(0);
+        setpointMode = false;
+        System.out.println("Zero Elevator");
     }
 
     public boolean isAtSetpoint(double setpoint) {
@@ -148,6 +161,10 @@ public class ElevatorSubsystem extends SubsystemBase {
                 < Constants.ElevatorConstants.threshold;
     }
 
+    public boolean isAtL1()
+ {
+    return Math.abs(encoderCurrentPosition - Constants.ElevatorConstants.Encoder.L1) < 0.1;
+ }
     public double getSpeed() {
         return elevatorSpeed;
     }

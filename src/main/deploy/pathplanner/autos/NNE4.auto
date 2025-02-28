@@ -7,13 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Align NW"
+            "pathName": "Preloaded to NNE"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreCoralL4"
           }
         }
       ]
     }
   },
   "resetOdom": false,
-  "folder": "Test Autos",
+  "folder": "1 Coral Autos",
   "choreoAuto": false
 }

@@ -8,20 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.971397968171745,
-        "y": 2.0870181172447833
+        "x": 2.945248766770785,
+        "y": 2.1496964489653516
       },
       "isLocked": false,
       "linkedName": "East Station"
     },
     {
       "anchor": {
-        "x": 3.65625,
-        "y": 2.90375
+        "x": 3.5295000000000005,
+        "y": 2.728249999999999
       },
       "prevControl": {
-        "x": 3.48313999525757,
-        "y": 2.721453526200877
+        "x": 3.3717275200072336,
+        "y": 2.534322579151549
+      },
+      "nextControl": {
+        "x": 3.6872724799927674,
+        "y": 2.9221774208484494
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.65625,
+        "y": 2.9232499999999995
+      },
+      "prevControl": {
+        "x": 3.3298465173859753,
+        "y": 2.479445629994737
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,14 +50,14 @@
   "eventMarkers": [
     {
       "name": "ScoreCoralL4",
-      "waypointRelativePos": 0.6235201262825574,
+      "waypointRelativePos": 1.25,
       "endWaypointRelativePos": null,
       "command": null
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.1,
-    "maxAcceleration": 2.7,
+    "maxVelocity": 1.9,
+    "maxAcceleration": 1.9,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
