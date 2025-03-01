@@ -8,36 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.021131867879464,
-        "y": 1.904008098609037
+        "x": 2.3985000000000003,
+        "y": 1.4119999999999993
       },
       "isLocked": false,
       "linkedName": "East Station"
     },
     {
       "anchor": {
-        "x": 3.81225,
-        "y": 2.51375
+        "x": 3.94875,
+        "y": 2.7575
       },
       "prevControl": {
-        "x": 3.6566159666883618,
-        "y": 2.318102235701115
-      },
-      "nextControl": {
-        "x": 4.050607293734969,
-        "y": 2.8133892924560415
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.9682500000000003,
-        "y": 2.7769999999999992
-      },
-      "prevControl": {
-        "x": 3.776285194840697,
-        "y": 2.6168453448064937
+        "x": 3.8025,
+        "y": 2.5332499999999993
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,14 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "ScoreCoralL4",
-      "waypointRelativePos": 1.2,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.9,
     "maxAcceleration": 1.9,

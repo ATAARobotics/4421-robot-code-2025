@@ -51,6 +51,8 @@ public class ScoreCoralCommand extends Command{
         }
         elevator.setElevatorSetpoint(desiredPosition);
         shooter.stop();
+
+        System.out.println("Started Elevator Score Coral Command *********************##################");
     }
     
     @Override

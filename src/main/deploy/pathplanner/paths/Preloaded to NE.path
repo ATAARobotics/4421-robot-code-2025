@@ -8,27 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.982326922863623,
-        "y": 1.9010780194717976
+        "x": 6.795750000000001,
+        "y": 1.9092499999999994
       },
       "isLocked": false,
       "linkedName": "East Preloaded"
-    },
-    {
-      "anchor": {
-        "x": 5.46975,
-        "y": 2.70875
-      },
-      "prevControl": {
-        "x": 5.659696927098735,
-        "y": 2.5415479668903083
-      },
-      "nextControl": {
-        "x": 5.222662908881851,
-        "y": 2.9262500386746955
-      },
-      "isLocked": false,
-      "linkedName": null
     },
     {
       "anchor": {
@@ -36,8 +20,8 @@
         "y": 2.9232499999999995
       },
       "prevControl": {
-        "x": 5.663763665105108,
-        "y": 2.897611957526361
+        "x": 5.50875,
+        "y": 2.6502499999999998
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,14 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "ScoreCoralL4",
-      "waypointRelativePos": 1.6,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.9,
     "maxAcceleration": 1.9,

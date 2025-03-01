@@ -95,7 +95,7 @@ public final class Constants {
 
     public static final double maxShooterSpeed = 0.28;
     public static final double intakeSpeed = 0.09;
-    public static final double fractionalRatio = 2; //By how much the speed is divided when shooting L1
+    public static final double fractionalRatio = 3; //By how much the speed is divided when shooting L1
 
     public static final int intakeThreshold = 80;
     public static final int absentThreshold = 80;
@@ -105,12 +105,13 @@ public final class Constants {
     public static final int hornSparkID = 61;
     public static final int hornEncoderID = 62;
     public static double kP = 1.0;
-    public static double kI = 0.0;
+    public static double kI = 0.1;
     public static double kD = 0.0;
     public static double maxHornSpeed = 0.4;
   }
 
   public static class SwerveConstants {
+    public static final double alignmentthreshold = 0.05;
     public static final double autoAlignMaxSpeed = 2.0; // Meters per second, for running auto-alignment
     public static final double autoAlignMaxAngularRate = 2.7; //99 Rotations per second, for running auto-alignment
 

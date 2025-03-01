@@ -20,8 +20,8 @@
         "y": 4.1907499999999995
       },
       "prevControl": {
-        "x": 6.187048512171347,
-        "y": 4.17352238799546
+        "x": 6.113250000000001,
+        "y": 4.1907499999999995
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,14 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "ScoreCoralL4",
-      "waypointRelativePos": 0.6803472770323596,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.9,
     "maxAcceleration": 1.9,

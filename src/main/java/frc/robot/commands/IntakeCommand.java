@@ -22,6 +22,8 @@ public class IntakeCommand extends Command {
 
     @Override
     public void initialize() {
+        System.out.println("Started Intake Command *********************##################");
+
         isDone = false;
         shooter.stop();
         elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake);

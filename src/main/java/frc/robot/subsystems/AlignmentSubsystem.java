@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import java.util.Optional;
 
+import com.ctre.phoenix6.signals.UpdateModeValue;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.PathPoint;
 import com.pathplanner.lib.path.Waypoint;
@@ -54,10 +55,13 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double controllerR_I;
     private double controllerR_D;
 
+    private boolean isAligned;
+
     public Field2d goalPoseField = new Field2d();
         
         
-    public AlignmentSubsystem(CommandSwerveDrivetrain m_Swerve) {        
+    public AlignmentSubsystem(CommandSwerveDrivetrain m_Swerve) {     
+        isAligned = false;   
         SmartDashboard.putNumber("AlignmentX P", controllerX.getP());
         SmartDashboard.putNumber("AlignmentX I", controllerX.getI());
         SmartDashboard.putNumber("AlignmentX D", controllerX.getD());
@@ -87,10 +91,13 @@ public class AlignmentSubsystem extends SubsystemBase {
 
         SmartDashboard.putData("Goal Pose", goalPoseField);
 
+        
     }
 
     @Override
     public void periodic() {
+        isAligned = Math.pow((curX - goalX), 2) + Math.pow((curY - goalY), 2) < Constants.SwerveConstants.alignmentthreshold;
+
         goalX = goalPose.getX();
         goalY = goalPose.getY();
         goalR = goalPose.getRotation().getRadians();
@@ -117,10 +124,22 @@ public class AlignmentSubsystem extends SubsystemBase {
         curY = currentPose.getY();
         curR = currentPose.getRotation().getRadians();
 
+        calcPID();
+
+        updateSmartDashboard();
+        
+        goalPoseField.setRobotPose(goalPose);
+        updateGoal();
+
+    }
+
+    public void calcPID() {
         xOutput = MathUtil.clamp(controllerX.calculate(curX, goalX), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
         yOutput = MathUtil.clamp(controllerY.calculate(curY, goalY), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
         rOutput = MathUtil.clamp(controllerR.calculate(curR, goalR), -Constants.SwerveConstants.autoAlignMaxAngularRate, Constants.SwerveConstants.autoAlignMaxAngularRate);
+    }
 
+    public void updateSmartDashboard() {
         SmartDashboard.putNumber("xOutput", xOutput);
         SmartDashboard.putNumber("yOutput", yOutput);
         SmartDashboard.putNumber("rOutput", rOutput);
@@ -130,6 +149,9 @@ public class AlignmentSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Current Robot R", currentPose.getRotation().getDegrees());
         
         SmartDashboard.putNumber("Waypoint Index", (int) (angle(curY, curX) / 30));
+    }
+
+    public void updateGoal() {
         Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
         SmartDashboard.putBoolean("isRedAlliance", alliance.get() == DriverStation.Alliance.Red);
         if (alliance.isPresent()) {
@@ -144,7 +166,6 @@ public class AlignmentSubsystem extends SubsystemBase {
             // updateGoalPose();
             updateFromPathPlannerGoalPoseRed();
         }
-        goalPoseField.setRobotPose(goalPose);
     }
 
     public void updateGoalPose() {

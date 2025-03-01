@@ -144,6 +144,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
                 if (!checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;
+                    overrideIntake = false;
                 }
 
                 break;

@@ -38,18 +38,25 @@ public class HornSubsystem extends SubsystemBase{
 
         //hornEncoder.setPosition(0);////remove
 
-        hornPosition = hornEncoder.getPosition().getValueAsDouble();
+        hornPosition = -hornEncoder.getPosition().getValueAsDouble();
 
         hornConfig.inverted(false);
         hornConfig.idleMode(IdleMode.kBrake);
     
         hornMotor.configure(hornConfig, null, null);
         holdSetpoint = false;
+
+        SmartDashboard.putNumber("Horn kP", Constants.HornConstants.kP);
+        SmartDashboard.putNumber("Horn kI", Constants.HornConstants.kI);
+        SmartDashboard.putNumber("Horn kD", Constants.HornConstants.kD);
+
+
     }
 
     @Override
     public void periodic(){
-        hornPosition = hornEncoder.getPosition().getValueAsDouble();
+        hornPID.setPID(SmartDashboard.getNumber("Horn kP", 0.0), SmartDashboard.getNumber("Horn kI", 0.0), SmartDashboard.getNumber("Horn kD", 0.0));
+        hornPosition = -hornEncoder.getPosition().getValueAsDouble();
         SmartDashboard.putNumber("Horn Encoder Value", hornPosition);
         //hornSpeed = 0;
         if(holdSetpoint){
@@ -58,6 +65,10 @@ public class HornSubsystem extends SubsystemBase{
         hornSpeed = MathUtil.clamp(hornPID.calculate(hornPosition), 
                                             -Constants.HornConstants.maxHornSpeed, 
                                             Constants.HornConstants.maxHornSpeed);
+        }
+
+        if (hornPosition < 0.05 && hornSpeed < 0){
+            hornSpeed = 0.02;
         }
         setHornSpeed(hornSpeed);
         putSmartDashboard();
@@ -70,12 +81,12 @@ public class HornSubsystem extends SubsystemBase{
 
     public void hornRunOut() {
         holdSetpoint = false;
-        hornSpeed = 0.1;
+        hornSpeed = 0.2;
     }
 
     public void hornRunIn() {
         holdSetpoint = false;
-        hornSpeed = -0.3;
+        hornSpeed = -0.25;
     }
 
     public void hornStop() {
