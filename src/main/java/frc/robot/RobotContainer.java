@@ -226,7 +226,7 @@ public class RobotContainer {
         operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunIn())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
         operatorJoystick.rightBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunOut())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
 
-        DriverStation.startDataLog(DataLogManager.getLog());
+        DriverStation.startDataLog(DataLogManager.getLog(), true);
 
         
     }
