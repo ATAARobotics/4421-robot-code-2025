@@ -56,6 +56,9 @@ public class ElevatorSubsystem extends SubsystemBase {
         leftConfig.inverted(true);
         rightConfig.inverted(false);
 
+        leftConfig.smartCurrentLimit(40);
+        rightConfig.smartCurrentLimit(40);
+
         leftClimbMotor.configure(leftConfig, null, null);
         rightClimbMotor.configure(rightConfig, null, null);
 

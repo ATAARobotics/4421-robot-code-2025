@@ -19,6 +19,8 @@ import edu.wpi.first.cscore.VideoSink;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -115,6 +117,7 @@ public class RobotContainer {
 
         
         configureBindings();
+        
     }
 
     private void configureBindings() {
@@ -222,6 +225,9 @@ public class RobotContainer {
 
         operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunIn())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
         operatorJoystick.rightBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunOut())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
+
+        DriverStation.startDataLog(DataLogManager.getLog());
+
         
     }
 

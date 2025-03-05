@@ -37,6 +37,7 @@ import edu.wpi.first.networktables.DoubleArrayPublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StringPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
@@ -90,6 +91,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public SwerveRequest request;
     public boolean isPigeonInitialized = false;
+
+    public StructPublisher<Pose2d> publisher;
 
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
@@ -190,6 +193,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 getModulePositions(),
                 new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
         gyro = this.getPigeon2();
+
+        publisher = NetworkTableInstance.getDefault()
+        .getStructTopic("AdPose", Pose2d.struct).publish();
+        
     }
 
     /**
@@ -223,6 +230,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
         gyro = this.getPigeon2();
         setPathPlanner();
+        publisher = NetworkTableInstance.getDefault()
+        .getStructTopic("Pose", Pose2d.struct).publish();
 
 
     }
@@ -277,6 +286,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         gyro = this.getPigeon2();
 
+        publisher = NetworkTableInstance.getDefault()
+        .getStructTopic("Pose", Pose2d.struct).publish();
+
     }
 
     /**
@@ -314,6 +326,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public Pose2d getPose() {
         return PoseEstimator.getEstimatedPosition();
+
     }
 
     public void resetPose(Pose2d pose) {
@@ -444,6 +457,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         fieldTypePub.set("Field2d");
         fieldPub.set(new double[] { getPose().getX(), getPose().getY(), getPose().getRotation().getDegrees() });
+        publisher.set(PoseEstimator.getEstimatedPosition());
+
 
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {

@@ -60,6 +60,9 @@ public class ShooterSubsystem extends SubsystemBase {
         leftConfig.inverted(true);
         rightConfig.inverted(false);
 
+        leftConfig.smartCurrentLimit(20);
+        rightConfig.smartCurrentLimit(20);
+
         leftConfig.idleMode(IdleMode.kBrake);
         rightConfig.idleMode(IdleMode.kBrake);
 

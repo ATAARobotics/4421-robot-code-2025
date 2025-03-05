@@ -42,6 +42,7 @@ public class HornSubsystem extends SubsystemBase{
 
         hornConfig.inverted(false);
         hornConfig.idleMode(IdleMode.kBrake);
+        hornConfig.smartCurrentLimit(20);
     
         hornMotor.configure(hornConfig, null, null);
         holdSetpoint = false;

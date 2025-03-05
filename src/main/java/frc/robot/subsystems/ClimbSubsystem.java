@@ -50,6 +50,7 @@ public class ClimbSubsystem extends SubsystemBase {
         leftConfig.inverted(true);
 
         leftClimb.configure(leftConfig, null, null);
+        leftConfig.smartCurrentLimit(40);
 
         hold = false;
         curEncoderPosition = encoder.getPosition();
