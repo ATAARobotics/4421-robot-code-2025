@@ -6,12 +6,19 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import org.ejml.dense.row.CovarianceRandomDraw_DDRM;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSink;
+import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -77,6 +84,14 @@ public class RobotContainer {
 
     private Command intake;
 
+    // private UsbCamera cam1;
+    // private UsbCamera cam2;
+
+    // private int cameraState = 0;
+
+    // private VideoSink server;
+    // private boolean isInit = false;
+
 
     public RobotContainer() {
         scoring = false;
@@ -97,8 +112,6 @@ public class RobotContainer {
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
-
-        
 
         
         configureBindings();
@@ -194,7 +207,9 @@ public class RobotContainer {
         ));
         
         joystick.button(8).onTrue(new InstantCommand(() -> m_Swerve.zeroGyro()));
-        
+
+        // operatorJoystick.button(7).onTrue(new InstantCommand(() -> setSource()));
+         
 
         // bool to acitvate alignment, press both the up buttom on the d-pad and the a button on second controller
         joystick.leftBumper().onTrue(new InstantCommand(() -> {scoring = true;})).onFalse(new InstantCommand(() -> scoring = false));
@@ -207,15 +222,45 @@ public class RobotContainer {
 
         operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunIn())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
         operatorJoystick.rightBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunOut())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
-
+        
     }
+
+    // public void camerainit() {
+    //     cam1 = CameraServer.startAutomaticCapture(0);
+    //     cam2 = CameraServer.startAutomaticCapture(1);
+
+    //     server = CameraServer.getServer();
+
+    //     isInit = true;
+
+
+    // }
+
+
+    // public void setSource() {
+    //     if (!isInit) {
+    //         camerainit();
+    //     }
+    //     cameraState++;
+    //     cameraState %= 3;
+    //     if (cameraState == 0){
+             
+    //     } else if (cameraState == 1) {
+    //         server.setSource(cam1);
+    //     } else {
+    //         server.setSource(cam2);
+    //     }
+
+    // }
+             
+    
 
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
       }
       public void resetClimbAndElevator() {
         m_climbSubsystem.initHoldMode();
-        m_elevatorSubsystem.initSetPointMode();;
+        m_elevatorSubsystem.initSetPointMode();
       }
       public void zeroEll() {
         m_elevatorSubsystem.zero();

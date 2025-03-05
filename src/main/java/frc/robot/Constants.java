@@ -50,7 +50,7 @@ public final class Constants {
     public static final int leftClimbMotorID = 21;
     public static final int rightClimbMotorID = 22;
     
-    public static final int minLimitTouchLeftPin = 5;
+    public static final int minLimitTouchLeftPin = 1;
     public static final double maxElevatorSpeed = 0.80;
 
     public static final double kP = 1.3;
@@ -60,7 +60,7 @@ public final class Constants {
     public static class Encoder {
       public static final int encoderID = 23;
 
-      public static final double offset = 0.043;
+      public static final double offset = 0.02;
 
       public static final double rest = 0.01;
       public static final double Intake = 0.38 - offset;
@@ -68,8 +68,8 @@ public final class Constants {
       public static final double L1 = 1f - offset;
       public static final double L2 = 1.55 - offset;
       public static final double L3 = 2.4638 - offset;
-      public static final double L4 = 4.017 - offset;
-      public static final double top = 4.020 - offset;
+      public static final double L4 = 4.1 - offset;
+      public static final double top = 4.135 - offset;
 
     }
 
@@ -93,7 +93,7 @@ public final class Constants {
     public static final int leftShooterMotorID = 31;
     public static final int rightShooterMotorID = 32;
 
-    public static final double maxShooterSpeed = 0.28;
+    public static final double maxShooterSpeed = 0.25;
     public static final double intakeSpeed = 0.09;
     public static final double fractionalRatio = 3; //By how much the speed is divided when shooting L1
 

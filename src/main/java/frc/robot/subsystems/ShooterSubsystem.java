@@ -139,7 +139,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 break;
             
             case SHOOTL1:
-                leftSpeed = Constants.ShooterConstants.maxShooterSpeed;
+                leftSpeed = 0.4;
                 rightSpeed = Constants.ShooterConstants.maxShooterSpeed / Constants.ShooterConstants.fractionalRatio;
 
                 if (!checkShooterLaserCan()) {
