@@ -94,6 +94,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public StructPublisher<Pose2d> publisher;
 
+    public int lastUpdate = 0;
+
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
             this.getModule(0).getPosition(false),
@@ -388,6 +390,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         );
     }
 
+    public void updateGyroPeriodically() {
+        int currentTens = (int) (Timer.getFPGATimestamp() / 10);
+        if (currentTens != lastUpdate) {
+            zeroGyro();
+            lastUpdate = currentTens;
+            System.out.println("Updated GYRO PERIODICALLY *********** ************ *******");
+        }
+    }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumberArray("SwerveDrivePositions angles", new double[] {getModulePositions()[0].angle.getRadians(), getModulePositions()[1].angle.getRadians(), getModulePositions()[2].angle.getRadians(), getModulePositions()[3].angle.getRadians()});
@@ -419,6 +430,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             //         .getDistance(visionBotPose.getTranslation());
 
             if (Math.abs(pose[0]) >= 0.1) {
+                
+                updateGyroPeriodically();
             //     // multiple targets detected
             //     if (pose[7] >= 2) {
             //         if (!DriverStation.isEnabled()) {
@@ -448,7 +461,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 PoseEstimator.addVisionMeasurement(visionBotPose, timeStamp);
             
             }
-            
             PoseEstimator.update(gyro.getRotation2d(), getModulePositions());
         } catch (Exception e) {
             DriverStation.reportError("LIMELIGHT FAIL: RESTART ROBOT CODE", e.getStackTrace());

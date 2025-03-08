@@ -4,12 +4,12 @@
   "holonomicMode": true,
   "pathFolders": [
     "Linked Waypoints",
-    "New Folder",
+    "Test Paths",
     "Position to Station",
     "Preloaded",
     "Station to Position",
-    "Teleop Paths",
-    "Teleop Align"
+    "Teleop Align",
+    "Teleop Paths"
   ],
   "autoFolders": [
     "1 Coral Autos",
