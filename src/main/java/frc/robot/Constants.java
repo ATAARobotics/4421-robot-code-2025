@@ -74,6 +74,7 @@ public final class Constants {
     }
 
     public static final double threshold = 0.027;
+    public static double maxElevatorAcceleration = 0.29;
   }
 
   public static class ClimbConstants {

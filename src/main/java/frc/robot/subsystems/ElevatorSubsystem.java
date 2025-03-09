@@ -10,6 +10,8 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -45,6 +47,14 @@ public class ElevatorSubsystem extends SubsystemBase {
         Constants.ElevatorConstants.kI,
         Constants.ElevatorConstants.kD
     );
+
+    // private ProfiledPIDController ElevatorProfiledPID = new ProfiledPIDController(
+    //     Constants.ElevatorConstants.kP,
+    //     Constants.ElevatorConstants.kI,
+    //     Constants.ElevatorConstants.kD,
+    //     new TrapezoidProfile.Constraints(Constants.ElevatorConstants.maxElevatorSpeed, Constants.ElevatorConstants.maxElevatorAcceleration)
+    // );
+
 
     public ElevatorSubsystem() {
         leftConfig = new SparkFlexConfig();
