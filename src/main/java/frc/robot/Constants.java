@@ -51,11 +51,12 @@ public final class Constants {
     public static final int rightClimbMotorID = 22;
     
     public static final int minLimitTouchLeftPin = 1;
-    public static final double maxElevatorSpeed = 0.80;
+    public static final double maxElevatorSpeed = 0.40;
 
     public static final double kP = 1.3;
     public static final double kI = 0;
     public static final double kD = 0.1;
+
 
     public static class Encoder {
       public static final int encoderID = 23;
@@ -70,6 +71,24 @@ public final class Constants {
       public static final double L3 = 2.4638 - offset;
       public static final double L4 = 4.1 - offset;
       public static final double top = 4.135 - offset;
+
+      
+      public static final double pivotPoint = 0.0;
+    }
+
+    public static class Pivot {
+      public static final double pivotkP = 0.1;
+      public static final double pivotkI = 0;
+      public static final double pivotkD = 0;
+
+      
+      public static final int pivotSparkID = 61;
+      public static final int pivotEncoderID = 62;
+
+      public static final double pivotIntake = 0.0;
+      public static final double pivotL4 = 0.0;
+
+      public static final double pivotMaxSpeed = 0.1;
 
     }
 
@@ -101,15 +120,6 @@ public final class Constants {
     public static final int intakeThreshold = 80;
     public static final int absentThreshold = 80;
   } // 0.2758
-
-  public static class HornConstants {
-    public static final int hornSparkID = 61;
-    public static final int hornEncoderID = 62;
-    public static double kP = 1.0;
-    public static double kI = 0.1;
-    public static double kD = 0.0;
-    public static double maxHornSpeed = 0.4;
-  }
 
   public static class SwerveConstants {
     public static final double alignmentthreshold = 0.05;

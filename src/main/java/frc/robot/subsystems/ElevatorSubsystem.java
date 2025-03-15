@@ -3,10 +3,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SmartMotionConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -21,18 +23,21 @@ import frc.robot.generated.TunerConstants;
 public class ElevatorSubsystem extends SubsystemBase {
     private double elevatorSpeed = 0;
 
+    public SparkMax pivotMotor = new SparkMax(Constants.ElevatorConstants.Pivot.pivotSparkID, MotorType.kBrushless);
+
     public SparkFlex leftClimbMotor = new SparkFlex(Constants.ElevatorConstants.leftClimbMotorID, MotorType.kBrushless);
     public SparkFlex rightClimbMotor = new SparkFlex(Constants.ElevatorConstants.rightClimbMotorID, MotorType.kBrushless); // Put IDs in Constants.java
 
     public SparkFlexConfig leftConfig;
     public SparkFlexConfig rightConfig;
+
+    public SparkMaxConfig pivotConfig;
     
     public boolean setpointMode = false;
 
     public double defaultSetpoint = Constants.ElevatorConstants.Encoder.L2;
   
     private DigitalInput minLimitTouchLeft;
-    private DigitalInput minLimitTouchRight;
 
     private boolean hasBeenReset = false;
     private boolean isManualMode = false;
@@ -40,37 +45,50 @@ public class ElevatorSubsystem extends SubsystemBase {
     private boolean prevPressed = false;
 
     public CANcoder encoder = new CANcoder(Constants.ElevatorConstants.Encoder.encoderID, new CANBus("rio"));
-    public double encoderCurrentPosition;
+    public CANcoder pivotEncoder = new CANcoder(Constants.ElevatorConstants.Pivot.pivotEncoderID, new CANBus("rio"));
 
-    private PIDController ElevatorPID = new PIDController(
-        Constants.ElevatorConstants.kP,
-        Constants.ElevatorConstants.kI,
-        Constants.ElevatorConstants.kD
+    public double encoderCurrentPosition;
+    public double pivotEncoderPosition;
+
+    public double pivotSpeed = 0.0;
+
+
+
+    private PIDController pivotPID = new PIDController(
+        Constants.ElevatorConstants.Pivot.pivotkP,
+        Constants.ElevatorConstants.Pivot.pivotkI,
+        Constants.ElevatorConstants.Pivot.pivotkD
     );
 
-    // private ProfiledPIDController ElevatorProfiledPID = new ProfiledPIDController(
-    //     Constants.ElevatorConstants.kP,
-    //     Constants.ElevatorConstants.kI,
-    //     Constants.ElevatorConstants.kD,
-    //     new TrapezoidProfile.Constraints(Constants.ElevatorConstants.maxElevatorSpeed, Constants.ElevatorConstants.maxElevatorAcceleration)
-    // );
+    private ProfiledPIDController ElevatorPID = new ProfiledPIDController(
+        Constants.ElevatorConstants.kP,
+        Constants.ElevatorConstants.kI,
+        Constants.ElevatorConstants.kD,
+        new TrapezoidProfile.Constraints(Constants.ElevatorConstants.maxElevatorSpeed, Constants.ElevatorConstants.maxElevatorAcceleration)
+    );
 
 
     public ElevatorSubsystem() {
         leftConfig = new SparkFlexConfig();
         rightConfig = new SparkFlexConfig();
+        pivotConfig = new SparkMaxConfig();
 
         leftConfig.idleMode(IdleMode.kBrake);
         rightConfig.idleMode(IdleMode.kBrake);
+        pivotConfig.idleMode(IdleMode.kBrake);
+
 
         leftConfig.inverted(true);
         rightConfig.inverted(false);
+        pivotConfig.inverted(false);
 
         leftConfig.smartCurrentLimit(40);
         rightConfig.smartCurrentLimit(40);
+        pivotConfig.smartCurrentLimit(20);
 
         leftClimbMotor.configure(leftConfig, null, null);
         rightClimbMotor.configure(rightConfig, null, null);
+        pivotMotor.configure(pivotConfig, null, null);
 
         minLimitTouchLeft = new DigitalInput(Constants.ElevatorConstants.minLimitTouchLeftPin);
         //SmartDashboard.putNumber("Elevator P", defaultSetpoint)
@@ -82,9 +100,12 @@ public class ElevatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Elevator Speed", elevatorSpeed);
         SmartDashboard.putBoolean("Setpoint Mode", setpointMode);
         encoderCurrentPosition = encoder.getPosition().getValueAsDouble();
+        pivotEncoderPosition = pivotEncoder.getPosition().getValueAsDouble();
 
         SmartDashboard.putNumber("Elevator Encoder Value", encoderCurrentPosition);
         SmartDashboard.putNumber("Current Elevator Setpoint", defaultSetpoint);
+
+        SmartDashboard.putNumber("Pivot Encoder Value", pivotEncoderPosition);
 
         if (isPressed() && !prevPressed) {
             prevPressed = true;
@@ -95,7 +116,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
 
         if (setpointMode) {
-            ElevatorPID.setSetpoint(defaultSetpoint);
+            ElevatorPID.setGoal(defaultSetpoint);
 
             elevatorSpeed = MathUtil.clamp(ElevatorPID.calculate(encoderCurrentPosition), 
                                             -Constants.ElevatorConstants.maxElevatorSpeed, 
@@ -107,6 +128,19 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.top) {
             elevatorSpeed = -0.02;
+        }
+
+        if (encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotPoint) {
+            pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotIntake);
+            pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 
+                                        -Constants.ElevatorConstants.Pivot.pivotMaxSpeed, 
+                                        Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
+        }
+        else if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotPoint) {
+            pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotL4);
+            pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 
+                                        -Constants.ElevatorConstants.Pivot.pivotMaxSpeed, 
+                                        Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
         }
 /* 
         if (isPressed() && !hasBeenReset) {
@@ -120,6 +154,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         leftClimbMotor.set(elevatorSpeed);
         rightClimbMotor.set(elevatorSpeed);
+        pivotMotor.set(pivotSpeed);
 
         SmartDashboard.putBoolean("Left Min Touch Limit Value", isPressed());
     }

@@ -31,7 +31,6 @@ import frc.robot.commands.ScoreCoralCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.HornSubsystem;
 import frc.robot.subsystems.AbsoluteRotation;
 import frc.robot.subsystems.AlignmentSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -72,7 +71,6 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final AlignmentSubsystem m_alignmentSubsystem = new AlignmentSubsystem(drivetrain);
-    private final HornSubsystem m_hornSubsystem = new HornSubsystem();
 
     private AbsoluteRotation m_AbsoluteRotation = new AbsoluteRotation(() -> joystick.getRightX(), () -> joystick.getRightY(), () -> drivetrain.getState().Pose.getRotation().getRadians());
 
@@ -222,9 +220,6 @@ public class RobotContainer {
             .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
 
         
-
-        operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunIn())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
-        operatorJoystick.rightBumper().onTrue(new InstantCommand(() -> m_hornSubsystem.hornRunOut())).onFalse(new InstantCommand(() -> m_hornSubsystem.hornStop()));
 
         DriverStation.startDataLog(DataLogManager.getLog(), true);
 
