@@ -391,7 +391,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public void updateGyroPeriodically() {
-        int currentTens = (int) (Timer.getFPGATimestamp() / 10);
+        int currentTens = (int) (Timer.getFPGATimestamp() / 5);
         if (currentTens != lastUpdate) {
             zeroGyro();
             lastUpdate = currentTens;

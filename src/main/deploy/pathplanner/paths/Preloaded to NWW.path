@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.1,
-        "y": 7.5595
+        "x": 7.0785,
+        "y": 4.161499999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.8626012670747745,
-        "y": 7.395010264051713
+        "x": 6.473360655737705,
+        "y": 4.786219262295081
       },
       "isLocked": false,
-      "linkedName": "West Preloaded"
+      "linkedName": "NNW Preloaded"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 5.301690573770491
       },
       "prevControl": {
-        "x": 5.078605798476329,
-        "y": 5.549662150160187
+        "x": 5.574282786885245,
+        "y": 5.529456967213114
       },
       "nextControl": null,
       "isLocked": false,
