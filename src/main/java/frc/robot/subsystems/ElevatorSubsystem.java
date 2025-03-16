@@ -173,9 +173,9 @@ public class ElevatorSubsystem extends SubsystemBase {
                                         Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
         }
 
-        if (elevatorSpeed < -0.2 && pivotEncoderPosition > 0.02) {
-            elevatorSpeed = -0.15;
-        }
+        // if (elevatorSpeed < -0.2 && pivotEncoderPosition > 0.02) {
+        //     elevatorSpeed = -0.15;
+        // }
 /* 
         if (isPressed() && !hasBeenReset) {
             elevatorStop();
