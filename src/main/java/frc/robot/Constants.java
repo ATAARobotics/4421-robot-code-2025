@@ -33,7 +33,8 @@ public final class Constants {
      * joystick.b: elevator down with hold PID
      * joystick.povDown: set elevator setpoint to L1
      * joystick.povUp: set elevator setpoint to L2
-     * joystick.povLeft: set elevator setpoint to L3
+     * joystick.povLeft:
+     *  set elevator setpoint to L3
      * joystick.povRight: set elevator setpoint to L4
      * joystick.button(10): set elevator setpoint to intake
      * operatorJoystick.x: set elevator setpoint to rest
@@ -51,49 +52,47 @@ public final class Constants {
     public static final int rightClimbMotorID = 22;
     
     public static final int minLimitTouchLeftPin = 1;
-    public static final double maxElevatorSpeed = 0.40;
+    public static final double maxElevatorSpeed = 0.80;
 
     public static final double kP = 1.3;
-    public static final double kI = 0;
+    public static final double kI = 0.01;
     public static final double kD = 0.1;
+
+    public static final double threshold = 0.027;
+    public static final double maxElevatorAcceleration = 0.70;
 
 
     public static class Encoder {
       public static final int encoderID = 23;
 
-      public static final double offset = 0.02;
-
       public static final double rest = 0.01;
-      public static final double Intake = 0.38 - offset;
-      public static final double Processor = 0.76;
-      public static final double L1 = 1f - offset;
-      public static final double L2 = 1.55 - offset;
-      public static final double L3 = 2.4638 - offset;
-      public static final double L4 = 4.1 - offset;
-      public static final double top = 4.135 - offset;
+      public static final double Intake = 0.04;
+      public static final double Processor = 1.0;
+      public static final double L1 = 0.69;
+      public static final double L2 = 1.42;
+      public static final double L3 = 2.9;
+      public static final double L4 = 5.26;
+      public static final double top = 5.27;
 
       
-      public static final double pivotPoint = 0.0;
+      public static final double pivotPoint = 5.15;
     }
 
     public static class Pivot {
-      public static final double pivotkP = 0.1;
-      public static final double pivotkI = 0;
-      public static final double pivotkD = 0;
+      public static final double pivotkP = 7;
+      public static final double pivotkI = 0.01;
+      public static final double pivotkD = 0.01;
 
       
       public static final int pivotSparkID = 61;
       public static final int pivotEncoderID = 62;
 
       public static final double pivotIntake = 0.0;
-      public static final double pivotL4 = 0.0;
+      public static final double pivotL4 = 0.125;
 
-      public static final double pivotMaxSpeed = 0.1;
+      public static final double pivotMaxSpeed = 0.7;
 
     }
-
-    public static final double threshold = 0.027;
-    public static double maxElevatorAcceleration = 0.29;
   }
 
   public static class ClimbConstants {
@@ -105,7 +104,6 @@ public final class Constants {
     public static final double kP = 0.1;
     public static final double kI = 0;
     public static final double kD = 0;
-    public static double startPos;
   }
 
   public static class ShooterConstants {

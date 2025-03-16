@@ -223,6 +223,10 @@ public class RobotContainer {
 
         DriverStation.startDataLog(DataLogManager.getLog(), true);
 
+        operatorJoystick.rightTrigger().onTrue(new InstantCommand(() -> m_shooterSubsystem.algaeIn())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
+        operatorJoystick.leftTrigger().onTrue(new InstantCommand(() -> m_shooterSubsystem.algaeOut())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
+
+
         
     }
 

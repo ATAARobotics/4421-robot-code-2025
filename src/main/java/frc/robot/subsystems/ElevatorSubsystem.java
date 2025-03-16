@@ -60,11 +60,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         Constants.ElevatorConstants.Pivot.pivotkD
     );
 
-    private ProfiledPIDController ElevatorPID = new ProfiledPIDController(
+    private PIDController ElevatorPID = new PIDController(
         Constants.ElevatorConstants.kP,
         Constants.ElevatorConstants.kI,
-        Constants.ElevatorConstants.kD,
-        new TrapezoidProfile.Constraints(Constants.ElevatorConstants.maxElevatorSpeed, Constants.ElevatorConstants.maxElevatorAcceleration)
+        Constants.ElevatorConstants.kD
     );
 
 
@@ -90,17 +89,25 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightClimbMotor.configure(rightConfig, null, null);
         pivotMotor.configure(pivotConfig, null, null);
 
+
         minLimitTouchLeft = new DigitalInput(Constants.ElevatorConstants.minLimitTouchLeftPin);
         //SmartDashboard.putNumber("Elevator P", defaultSetpoint)
         prevPressed = false;
+
+        SmartDashboard.putNumber("Pivot P", Constants.ElevatorConstants.Pivot.pivotkP);
+        SmartDashboard.putNumber("Pivot I", Constants.ElevatorConstants.Pivot.pivotkI);
+        SmartDashboard.putNumber("Pivot D", Constants.ElevatorConstants.Pivot.pivotkD);
+
     }
 
     @Override
     public void periodic() {
+        pivotPID.setPID(SmartDashboard.getNumber("Pivot P", Constants.ElevatorConstants.Pivot.pivotkP), SmartDashboard.getNumber("Pivot I", Constants.ElevatorConstants.Pivot.pivotkI), SmartDashboard.getNumber("Pivot D", Constants.ElevatorConstants.Pivot.pivotkD));
+
         SmartDashboard.putNumber("Elevator Speed", elevatorSpeed);
         SmartDashboard.putBoolean("Setpoint Mode", setpointMode);
         encoderCurrentPosition = encoder.getPosition().getValueAsDouble();
-        pivotEncoderPosition = pivotEncoder.getPosition().getValueAsDouble();
+        pivotEncoderPosition = pivotEncoder.getAbsolutePosition().getValueAsDouble();
 
         SmartDashboard.putNumber("Elevator Encoder Value", encoderCurrentPosition);
         SmartDashboard.putNumber("Current Elevator Setpoint", defaultSetpoint);
@@ -116,12 +123,13 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
 
         if (setpointMode) {
-            ElevatorPID.setGoal(defaultSetpoint);
+            ElevatorPID.setSetpoint(defaultSetpoint);
 
             elevatorSpeed = MathUtil.clamp(ElevatorPID.calculate(encoderCurrentPosition), 
                                             -Constants.ElevatorConstants.maxElevatorSpeed, 
                                             Constants.ElevatorConstants.maxElevatorSpeed);
         }
+
         else if (!isManualMode) {
             elevatorSpeed = 0.0;
         }
@@ -141,6 +149,10 @@ public class ElevatorSubsystem extends SubsystemBase {
             pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 
                                         -Constants.ElevatorConstants.Pivot.pivotMaxSpeed, 
                                         Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
+        }
+
+        if (elevatorSpeed < -0.2 && pivotEncoderPosition > 0.02) {
+            elevatorSpeed = -0.15;
         }
 /* 
         if (isPressed() && !hasBeenReset) {
@@ -166,7 +178,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void elevatorDown(double speed) {
-        elevatorSpeed = speed * -Constants.ElevatorConstants.maxElevatorSpeed / 2.0; 
+        elevatorSpeed = speed * -Constants.ElevatorConstants.maxElevatorSpeed; 
         setpointMode = false;
         isManualMode = true;
 
@@ -219,5 +231,17 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public void initSetPointMode() {
         setpointMode = false;
+    }
+
+    public void runPivot() {
+        pivotSpeed = 0.1;
+    }
+
+    public void reversePivot() {
+        pivotSpeed = -0.1;
+    }
+
+    public void stopPivot() {
+        pivotSpeed = 0.0;
     }
 }

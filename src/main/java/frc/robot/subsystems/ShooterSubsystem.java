@@ -30,7 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private int shooterLaserCan_distance;
 
     public enum ShooterState {
-        IDLE, INTAKE, REVERSE, SLOW, SHOOT, SHOOTL1
+        IDLE, ALGAE_IN, ALGAE_OUT, INTAKE, REVERSE, SLOW, SHOOT, SHOOTL1
     }
 
     private ShooterState shooterState;
@@ -103,6 +103,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
                 break;
 
+            case ALGAE_IN:
+                leftSpeed = -Constants.ShooterConstants.maxShooterSpeed;
+                rightSpeed = -Constants.ShooterConstants.maxShooterSpeed;
+
+                break;
+
+            case ALGAE_OUT:
+                leftSpeed = Constants.ShooterConstants.maxShooterSpeed;
+                rightSpeed = Constants.ShooterConstants.maxShooterSpeed;
+
+                break;
+
             case INTAKE:
                 leftSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.75;
                 rightSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.75;
@@ -171,6 +183,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void stop() {
         shooterState = ShooterState.IDLE;
+    }
+
+    public void algaeIn() {
+        shooterState = ShooterState.ALGAE_IN;
+    }
+
+    public void algaeOut() {
+        shooterState = ShooterState.ALGAE_OUT;
     }
 
     public ShooterState getState() {
