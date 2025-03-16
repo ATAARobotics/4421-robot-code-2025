@@ -52,6 +52,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public double pivotSpeed = 0.0;
 
+    public boolean hasBeenZero = false;
+
 
 
     private PIDController pivotPID = new PIDController(
@@ -68,6 +70,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
 
     public ElevatorSubsystem() {
+        hasBeenZero = false;
+
         leftConfig = new SparkFlexConfig();
         rightConfig = new SparkFlexConfig();
         pivotConfig = new SparkMaxConfig();
@@ -114,13 +118,13 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("Pivot Encoder Value", pivotEncoderPosition);
 
-        if (isPressed() && !prevPressed) {
-            prevPressed = true;
-            zero();
-        }
-        if(!isPressed()) {
-            prevPressed = false;
-        }
+        // if (isPressed() && !prevPressed) {
+        //     prevPressed = true;
+        //     zero();
+        // }
+        // if(!isPressed()) {
+        //     prevPressed = false;
+        // }
 
         if (setpointMode) {
             ElevatorPID.setSetpoint(defaultSetpoint);
@@ -211,9 +215,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void zero(){  
-        encoder.setPosition(0);
-        setpointMode = false;
-        System.out.println("Zero Elevator");
+        if (!hasBeenZero || Math.abs(encoderCurrentPosition) > 0.15) {
+            encoder.setPosition(0);
+            setpointMode = false;
+            System.out.println("Zero Elevator");
+        }
     }
 
     public boolean isAtSetpoint(double setpoint) {

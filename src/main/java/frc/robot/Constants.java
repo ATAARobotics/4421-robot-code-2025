@@ -55,7 +55,7 @@ public final class Constants {
     public static final double maxElevatorSpeed = 0.80;
 
     public static final double kP = 1.3;
-    public static final double kI = 0.01;
+    public static final double kI = 0.02;
     public static final double kD = 0.1;
 
     public static final double threshold = 0.027;
@@ -66,7 +66,7 @@ public final class Constants {
       public static final int encoderID = 23;
 
       public static final double rest = 0.01;
-      public static final double Intake = 0.04;
+      public static final double Intake = 0.06;
       public static final double Processor = 1.0;
       public static final double L1 = 0.69;
       public static final double L2 = 1.42;
@@ -87,8 +87,8 @@ public final class Constants {
       public static final int pivotSparkID = 61;
       public static final int pivotEncoderID = 62;
 
-      public static final double pivotIntake = 0.0;
-      public static final double pivotL4 = 0.125;
+      public static final double pivotIntake = 0.005;
+      public static final double pivotL4 = 0.104;
 
       public static final double pivotMaxSpeed = 0.7;
 

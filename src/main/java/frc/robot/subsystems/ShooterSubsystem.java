@@ -93,7 +93,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 leftSpeed = 0.0;
                 rightSpeed = 0.0;
 
-                if (checkLaserCan() && !checkShooterLaserCan()) {
+                if (checkLaserCan() && !checkShooterLaserCan() && Math.abs(SmartDashboard.getNumber("Elevator Encoder Value", 0.0) - Constants.ElevatorConstants.Encoder.Intake) < 0.1) {
                     shooterState = ShooterState.INTAKE;
                 }
                 else if(overrideIntake && !checkShooterLaserCan()) {
