@@ -62,7 +62,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         Constants.ElevatorConstants.Pivot.pivotkD
     );
 
-    private PIDController ElevatorPID = new PIDController(
+    private PIDController elevatorPID = new PIDController(
         Constants.ElevatorConstants.kP,
         Constants.ElevatorConstants.kI,
         Constants.ElevatorConstants.kD
@@ -102,11 +102,15 @@ public class ElevatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Pivot I", Constants.ElevatorConstants.Pivot.pivotkI);
         SmartDashboard.putNumber("Pivot D", Constants.ElevatorConstants.Pivot.pivotkD);
 
+        SmartDashboard.putNumber("Elevator P", Constants.ElevatorConstants.kP);
+        SmartDashboard.putNumber("Elevator I", Constants.ElevatorConstants.kI);
+        SmartDashboard.putNumber("Elevator D", Constants.ElevatorConstants.kD);
     }
 
     @Override
     public void periodic() {
         pivotPID.setPID(SmartDashboard.getNumber("Pivot P", Constants.ElevatorConstants.Pivot.pivotkP), SmartDashboard.getNumber("Pivot I", Constants.ElevatorConstants.Pivot.pivotkI), SmartDashboard.getNumber("Pivot D", Constants.ElevatorConstants.Pivot.pivotkD));
+        elevatorPID.setPID(SmartDashboard.getNumber("Elevator P", Constants.ElevatorConstants.kP), SmartDashboard.getNumber("Elevator I", Constants.ElevatorConstants.kI), SmartDashboard.getNumber("Elevator D", Constants.ElevatorConstants.kD));
 
         SmartDashboard.putNumber("Elevator Speed", elevatorSpeed);
         SmartDashboard.putBoolean("Setpoint Mode", setpointMode);
@@ -127,9 +131,9 @@ public class ElevatorSubsystem extends SubsystemBase {
         // }
 
         if (setpointMode) {
-            ElevatorPID.setSetpoint(defaultSetpoint);
+            elevatorPID.setSetpoint(defaultSetpoint);
 
-            elevatorSpeed = MathUtil.clamp(ElevatorPID.calculate(encoderCurrentPosition), 
+            elevatorSpeed = MathUtil.clamp(elevatorPID.calculate(encoderCurrentPosition), 
                                             -Constants.ElevatorConstants.maxElevatorSpeed, 
                                             Constants.ElevatorConstants.maxElevatorSpeed);
         }
