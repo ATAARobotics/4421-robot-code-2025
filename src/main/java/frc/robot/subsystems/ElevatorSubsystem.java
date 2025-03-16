@@ -134,7 +134,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             elevatorPID.setSetpoint(defaultSetpoint);
 
             elevatorSpeed = MathUtil.clamp(elevatorPID.calculate(encoderCurrentPosition), 
-                                            -Constants.ElevatorConstants.maxElevatorSpeed * 0.5, 
+                                            -Constants.ElevatorConstants.maxElevatorSpeed * 0.66, 
                                             Constants.ElevatorConstants.maxElevatorSpeed);
         }
 

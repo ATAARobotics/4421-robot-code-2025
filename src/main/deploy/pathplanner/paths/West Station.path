@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.7355,
-        "y": 7.25225
+        "x": 1.6543032786885246,
+        "y": 7.243698770491803
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.9165000000000002,
-        "y": 8.26625
+        "x": 0.8353032786885248,
+        "y": 8.257698770491803
       },
       "isLocked": false,
       "linkedName": "West Station"
