@@ -3,23 +3,26 @@
   "robotLength": 0.985,
   "holonomicMode": true,
   "pathFolders": [
+    "Align Paths",
     "Linked Waypoints",
-    "Test Paths",
+    "PRELOADED TO ALIGN (NEW)",
     "Position to Station",
     "Preloaded",
+    "STATION TO ALIGN (NEW)",
     "Station to Position",
-    "Teleop Align",
-    "Teleop Paths"
+    "Teleop Paths",
+    "Test Paths"
   ],
   "autoFolders": [
     "1 Coral Autos",
     "2 Coral Autos",
     "3 Coral Autos",
     "4 Coral Autos",
+    "Alignment Autos (NEW)",
     "Test Autos"
   ],
-  "defaultMaxVel": 1.9,
-  "defaultMaxAccel": 1.9,
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 2.7,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
