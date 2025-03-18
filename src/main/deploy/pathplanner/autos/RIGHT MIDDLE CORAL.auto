@@ -3,10 +3,23 @@
   "command": {
     "type": "sequential",
     "data": {
-      "commands": []
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEW PRELOADED TO NNE"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreCoralL4"
+          }
+        }
+      ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "Alignment Autos (NEW)",
   "choreoAuto": false
 }

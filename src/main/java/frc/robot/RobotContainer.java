@@ -98,16 +98,10 @@ public class RobotContainer {
         isAbsoluteHeading = false;
         speedMultiplier = 1;
 
-        coralL1Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 1);
-        coralL2Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 2);
-        coralL3Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 3);
-        coralL4Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem, 4);
+        coralL4Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem);
         intake = new IntakeCommand(m_shooterSubsystem, m_elevatorSubsystem);
         
         NamedCommands.registerCommand("Intake", intake);
-        NamedCommands.registerCommand("ScoreCoralL1", coralL1Command);
-        NamedCommands.registerCommand("ScoreCoralL2", coralL2Command);
-        NamedCommands.registerCommand("ScoreCoralL3", coralL3Command);
         NamedCommands.registerCommand("ScoreCoralL4", coralL4Command);
 
         autoChooser = AutoBuilder.buildAutoChooser();

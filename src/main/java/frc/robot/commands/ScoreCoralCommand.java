@@ -19,7 +19,7 @@ public class ScoreCoralCommand extends Command{
     private boolean doneScoring;
     private boolean isDone;
 
-    public ScoreCoralCommand(ShooterSubsystem shooter, ElevatorSubsystem elevator, int position) {
+    public ScoreCoralCommand(ShooterSubsystem shooter, ElevatorSubsystem elevator) {
         this.shooter = shooter;
         this.elevator = elevator;
         this.position = position;
@@ -34,21 +34,9 @@ public class ScoreCoralCommand extends Command{
         startedScoring = false;
         doneScoring = false;
         isDone = false;
-        switch(position) {
-            case 1:
-                desiredPosition = Constants.ElevatorConstants.Encoder.L1;
-                
-                break;
-            case 2:
-            desiredPosition = Constants.ElevatorConstants.Encoder.L2;
-                break;
-            case 3:
-            desiredPosition = Constants.ElevatorConstants.Encoder.L3;
-                break;
-            case 4:
-            desiredPosition = Constants.ElevatorConstants.Encoder.L4;
-                break;
-        }
+        
+        desiredPosition = Constants.ElevatorConstants.Encoder.L4;
+        
         elevator.setElevatorSetpoint(desiredPosition);
         shooter.stop();
 
