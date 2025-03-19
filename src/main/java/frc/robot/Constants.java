@@ -127,6 +127,9 @@ public final class Constants {
     public static final double autoAlignMaxSpeed = 2.0; // Meters per second, for running auto-alignment
     public static final double autoAlignMaxAngularRate = 2.7; //99 Rotations per second, for running auto-alignment
 
+    public static final double autoAlignTimeConstraint = 5;
+    public static final double shootingCommandWaitCommand = 3;
+
     public static final double MaxAngularSpeed = 1.5 * Math.PI;
 
     public static final double fieldX = 17.548225 / 2;

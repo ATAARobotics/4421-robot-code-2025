@@ -4,6 +4,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -26,6 +27,11 @@ public class AutoScoreCoralCommand extends Command{
     private boolean isDone;
 
     private double desiredPosition;
+
+    private double initialTime;
+    private double elapsedTime;
+    private double timeSinceScoring;
+
     
     public AutoScoreCoralCommand(CommandSwerveDrivetrain drivetrain, 
                                  ElevatorSubsystem elevator,
@@ -39,6 +45,8 @@ public class AutoScoreCoralCommand extends Command{
 
     @Override
     public void initialize() {
+        initialTime = Timer.getFPGATimestamp();
+        elapsedTime = Timer.getFPGATimestamp() - initialTime;
         startedScoring = false;
         isDone = false;
         
@@ -54,6 +62,8 @@ public class AutoScoreCoralCommand extends Command{
 
     @Override
     public void execute() {
+        elapsedTime = Timer.getFPGATimestamp() - initialTime;
+
         // drivetrain.applyRequest(() ->
         // driveToSetpoint.withVelocityX(align.getOutputs()[0])
         //         .withVelocityY(align.getOutputs()[1])
@@ -66,13 +76,16 @@ public class AutoScoreCoralCommand extends Command{
 
 
 
-        if (!startedScoring && align.aligned() && elevator.isAtSetpoint(Constants.ElevatorConstants.Encoder.L4)) {
+        if (!startedScoring && align.aligned() && elevator.isAtSetpoint(Constants.ElevatorConstants.Encoder.L4) || 
+            !startedScoring && elapsedTime > Constants.SwerveConstants.autoAlignTimeConstraint && elevator.isAtSetpoint(Constants.ElevatorConstants.Encoder.L4)) {
             shooter.shoot();
             startedScoring = true;
+            timeSinceScoring = Timer.getFPGATimestamp();
         }
         else if(startedScoring && shooter.getState() == ShooterSubsystem.ShooterState.IDLE) {
-            new WaitCommand(5);
-            isDone = true;
+            if (Timer.getFPGATimestamp() - timeSinceScoring > Constants.SwerveConstants.shootingCommandWaitCommand) {
+                isDone = true;
+            }
         }
     }
 

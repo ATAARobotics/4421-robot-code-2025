@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.479500000000001,
-        "y": 5.863006756756756
+        "x": 3.159,
+        "y": 5.67275
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.244956598660116,
-        "y": 5.9495480352769965
+        "x": 3.3954053592206748,
+        "y": 5.415416857042086
       },
       "isLocked": false,
-      "linkedName": "Align NWW"
+      "linkedName": "Align SW"
     },
     {
       "anchor": {
-        "x": 3.9682500000000003,
-        "y": 6.35525
+        "x": 3.65625,
+        "y": 5.133862704918033
       },
       "prevControl": {
-        "x": 4.22175,
-        "y": 6.238250000000001
+        "x": 3.4868335312165253,
+        "y": 5.3177051921317835
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SW"
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.2,
-    "maxAcceleration": 0.2,
-    "maxAngularVelocity": 90.0,
-    "maxAngularAcceleration": 90.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.3,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "PRELOADED TO ALIGN (NEW)",
+  "folder": "END ALIGNMENT PATHS",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -59.99999999999999
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

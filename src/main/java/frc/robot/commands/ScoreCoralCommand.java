@@ -22,7 +22,6 @@ public class ScoreCoralCommand extends Command{
     public ScoreCoralCommand(ShooterSubsystem shooter, ElevatorSubsystem elevator) {
         this.shooter = shooter;
         this.elevator = elevator;
-        this.position = position;
 
         startedScoring = false;
         doneScoring = false;
