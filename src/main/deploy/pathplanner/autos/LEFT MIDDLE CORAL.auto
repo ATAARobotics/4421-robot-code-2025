@@ -11,9 +11,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ScoreCoralL4"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "END NNW"
+                }
+              }
+            ]
           }
         }
       ]

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.079,
-        "y": 3.8787499999999993
+        "x": 7.1175,
+        "y": 3.8689999999999993
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.743377092105675,
-        "y": 3.875344430290429
+        "x": 6.781877092105675,
+        "y": 3.8655944302904293
       },
       "isLocked": false,
       "linkedName": "NNE Preloaded"
@@ -63,7 +63,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 2.3,
     "maxAcceleration": 2.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
