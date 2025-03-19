@@ -5,6 +5,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.AlignmentSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -70,6 +71,7 @@ public class AutoScoreCoralCommand extends Command{
             startedScoring = true;
         }
         else if(startedScoring && shooter.getState() == ShooterSubsystem.ShooterState.IDLE) {
+            new WaitCommand(5);
             isDone = true;
         }
     }

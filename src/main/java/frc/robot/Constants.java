@@ -81,7 +81,7 @@ public final class Constants {
     }
 
     public static class Pivot {
-      public static final double pivotkP = 7;
+      public static final double pivotkP = 5;
       public static final double pivotkI = 0.01;
       public static final double pivotkD = 0.01;
 

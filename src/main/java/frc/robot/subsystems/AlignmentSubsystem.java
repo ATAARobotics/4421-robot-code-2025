@@ -37,7 +37,7 @@ public class AlignmentSubsystem extends SubsystemBase {
 
     private PIDController controllerX = new PIDController(3, 0.0, 0.4);
     private PIDController controllerY = new PIDController(3, 0.0, 0.4);
-    private PIDController controllerR = new PIDController(3.5, 0.0, 0.17);
+    private PIDController controllerR = new PIDController(3.5, 0.02, 0.17);
         
     private double xOutput;
     private double yOutput;
