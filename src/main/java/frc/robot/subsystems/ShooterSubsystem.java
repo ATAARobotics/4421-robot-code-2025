@@ -134,8 +134,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
                 break;
             case SLOW:
-                leftSpeed = Constants.ShooterConstants.intakeSpeed;
-                rightSpeed = Constants.ShooterConstants.intakeSpeed;
+                leftSpeed = Constants.ShooterConstants.intakeSpeed * 0.5;
+                rightSpeed = Constants.ShooterConstants.intakeSpeed * 0.5;
 
                 if (!checkLaserCan() && checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;
@@ -154,8 +154,8 @@ public class ShooterSubsystem extends SubsystemBase {
                 break;
             
             case SHOOTL1:
-                leftSpeed = 0.4;
-                rightSpeed = Constants.ShooterConstants.maxShooterSpeed / Constants.ShooterConstants.fractionalRatio;
+                leftSpeed = 0.25;
+                rightSpeed = -0.1;
 
                 if (!checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;

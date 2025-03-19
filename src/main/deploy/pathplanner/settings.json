@@ -21,8 +21,8 @@
     "Alignment Autos (NEW)",
     "Test Autos"
   ],
-  "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 2.7,
+  "defaultMaxVel": 2.0,
+  "defaultMaxAccel": 2.3,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,

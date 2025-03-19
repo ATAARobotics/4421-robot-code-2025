@@ -61,7 +61,7 @@ public final class Constants {
     public static final double threshold = 0.027;
     public static final double maxElevatorAcceleration = 0.70;
 
-    public static final double feedForward = 0.023;
+    public static final double feedForward = 0.0;
 
 
     public static class Encoder {
@@ -163,6 +163,8 @@ public final class Constants {
     
     public static final double linearDeadBand = 0.20;
     public static final double angularDeadBand = 0.15;
+    public static double distanceThreshold = 0.05;
+    public static double angleThreshold = 5 * Math.PI / 180;
   }
   
    

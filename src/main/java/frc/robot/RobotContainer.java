@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.*;
 import org.ejml.dense.row.CovarianceRandomDraw_DDRM;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.fasterxml.jackson.databind.util.Named;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -26,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.AutoScoreCoralCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ScoreCoralCommand;
 import frc.robot.generated.TunerConstants;
@@ -56,7 +58,7 @@ public class RobotContainer {
              // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
-    private final SwerveRequest.FieldCentric driveToSetpoint = new SwerveRequest.FieldCentric() // Add a 10% deadband
+    private final SwerveRequest.FieldCentric driveToSetpoint = new SwerveRequest.FieldCentric()
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for turn motors
 
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -82,6 +84,8 @@ public class RobotContainer {
     private Command coralL3Command;
     private Command coralL4Command;
 
+    private Command autoCommand;
+
     private Command intake;
 
     // private UsbCamera cam1;
@@ -100,9 +104,11 @@ public class RobotContainer {
 
         coralL4Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem);
         intake = new IntakeCommand(m_shooterSubsystem, m_elevatorSubsystem);
+        autoCommand = new AutoScoreCoralCommand(drivetrain, m_elevatorSubsystem, m_shooterSubsystem, m_alignmentSubsystem);
         
         NamedCommands.registerCommand("Intake", intake);
         NamedCommands.registerCommand("ScoreCoralL4", coralL4Command);
+        NamedCommands.registerCommand("AlignScoreCoralL4", autoCommand);
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);

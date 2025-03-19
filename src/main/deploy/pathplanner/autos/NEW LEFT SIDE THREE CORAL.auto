@@ -13,7 +13,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ScoreCoralL4"
+            "name": "AlignScoreCoralL4"
           }
         },
         {
@@ -37,7 +37,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ScoreCoralL4"
+            "name": "AlignScoreCoralL4"
           }
         },
         {
@@ -61,7 +61,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ScoreCoralL4"
+            "name": "AlignScoreCoralL4"
           }
         }
       ]

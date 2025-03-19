@@ -55,6 +55,8 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double controllerR_I;
     private double controllerR_D;
 
+    private double distanceError;
+    private double angleError;
     private boolean isAligned;
 
     public Field2d goalPoseField = new Field2d();
@@ -123,6 +125,13 @@ public class AlignmentSubsystem extends SubsystemBase {
         curX = currentPose.getX();
         curY = currentPose.getY();
         curR = currentPose.getRotation().getRadians();
+
+        distanceError = Math.sqrt(Math.pow(curX-goalX, 2) + 
+                                    Math.pow(curY-goalY,2));
+        angleError = Math.abs(curR - goalR);
+
+        isAligned = distanceError < Constants.SwerveConstants.distanceThreshold && 
+            angleError < Constants.SwerveConstants.angleThreshold;
 
         calcPID();
 
@@ -248,5 +257,9 @@ public class AlignmentSubsystem extends SubsystemBase {
                 return new double[]{xOutput, yOutput, rOutput};
 
             }
+    }
+
+    public boolean aligned() {
+        return isAligned;
     }
 }
