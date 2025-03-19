@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.461,
-        "y": 6.297
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 3.461000000000002,
-        "y": 6.297
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 5.37225,
         "y": 5.8775
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.137706598660116,
+        "y": 5.964041278520241
+      },
+      "isLocked": false,
+      "linkedName": "Align NWW"
+    },
+    {
+      "anchor": {
+        "x": 3.9682500000000003,
+        "y": 6.35525
+      },
       "prevControl": {
-        "x": 5.610455238344942,
-        "y": 5.953383228878515
+        "x": 4.22175,
+        "y": 6.238250000000001
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Align NWW"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0,
+    "maxVelocity": 0.2,
+    "maxAcceleration": 0.2,
+    "maxAngularVelocity": 90.0,
+    "maxAngularAcceleration": 90.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -45,10 +45,10 @@
     "rotation": -119.99999999999999
   },
   "reversed": false,
-  "folder": "Align Paths",
+  "folder": "PRELOADED TO ALIGN (NEW)",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -119.99999999999999
   },
   "useDefaultConstraints": false
 }

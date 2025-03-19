@@ -11,9 +11,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "AlignScoreCoralL4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "PRELOADED TO NWW END"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
+                }
+              }
+            ]
           }
         },
         {

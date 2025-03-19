@@ -130,8 +130,7 @@ public class AlignmentSubsystem extends SubsystemBase {
                                     Math.pow(curY-goalY,2));
         angleError = Math.abs(curR - goalR);
 
-        isAligned = distanceError < Constants.SwerveConstants.distanceThreshold && 
-            angleError < Constants.SwerveConstants.angleThreshold;
+        isAligned = distanceError < Constants.SwerveConstants.distanceThreshold && angleError < Constants.SwerveConstants.angleThreshold;
 
         calcPID();
 
