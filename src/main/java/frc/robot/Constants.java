@@ -89,7 +89,7 @@ public final class Constants {
       public static final int pivotSparkID = 61;
       public static final int pivotEncoderID = 62;
 
-      public static final double pivotIntake = 0.004;
+      public static final double pivotIntake = 0.0015;
       // public static final double pivotInBetween = 0.039;
       public static final double pivotL4 = 0.065;
 
@@ -127,8 +127,8 @@ public final class Constants {
     public static final double autoAlignMaxSpeed = 2.0; // Meters per second, for running auto-alignment
     public static final double autoAlignMaxAngularRate = 2.7; //99 Rotations per second, for running auto-alignment
 
-    public static final double autoAlignTimeConstraint = 2.25;
-    public static final double shootingCommandWaitCommand = 0.25;
+    public static final double autoAlignTimeConstraint = 2.00;
+    public static final double shootingCommandWaitCommand = 0.2;
 
     public static final double MaxAngularSpeed = 1.5 * Math.PI;
 
@@ -172,8 +172,8 @@ public final class Constants {
     
     public static final double linearDeadBand = 0.20;
     public static final double angularDeadBand = 0.15;
-    public static double distanceThreshold = 0.05;
-    public static double angleThreshold = 5 * Math.PI / 180;
+    public static final double distanceThreshold = 0.05;
+    public static final double angleThreshold = 5 * Math.PI / 180;
   }
   
    

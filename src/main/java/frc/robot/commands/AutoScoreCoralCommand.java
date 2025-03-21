@@ -56,7 +56,7 @@ public class AutoScoreCoralCommand extends Command{
         
         shooter.stop();
 
-        drivetrain.zeroGyro();
+        drivetrain.checkFirstZeroGyro();
 
         System.out.println("Started Elevator Score Coral Command *********************##################");
     }
@@ -65,7 +65,7 @@ public class AutoScoreCoralCommand extends Command{
     public void execute() {
         elapsedTime = Timer.getFPGATimestamp() - initialTime;
 
-        if (!hasSetDesiredPosition && elapsedTime > 0.25) {
+        if (!hasSetDesiredPosition && elapsedTime > 0.18) {
             elevator.setElevatorSetpoint(desiredPosition);
             hasSetDesiredPosition = true;
         }
