@@ -65,7 +65,7 @@ public class AutoScoreCoralCommand extends Command{
     public void execute() {
         elapsedTime = Timer.getFPGATimestamp() - initialTime;
 
-        if (!hasSetDesiredPosition && elapsedTime > 0.39) {
+        if (!hasSetDesiredPosition && elapsedTime > 0.25) {
             elevator.setElevatorSetpoint(desiredPosition);
             hasSetDesiredPosition = true;
         }
@@ -75,7 +75,7 @@ public class AutoScoreCoralCommand extends Command{
         //         .withVelocityY(align.getOutputs()[1])
         //         .withRotationalRate(align.getOutputs()[2]));
 
-        if (Math.abs(align.getOutputs()[0]) > 0.07 || Math.abs(align.getOutputs()[1]) > 0.07 || Math.abs(align.getOutputs()[2]) > 0.07 * Math.PI) {
+        if (Math.abs(align.getOutputs()[0]) > 0.01 || Math.abs(align.getOutputs()[1]) > 0.07 || Math.abs(align.getOutputs()[2]) > 0.07 * Math.PI) {
         PPHolonomicDriveController.overrideXYFeedback(() -> {System.out.println("getting x " + align.getOutputs()[0]); return -align.getOutputs()[0];}, () -> {return -align.getOutputs()[1];});
         PPHolonomicDriveController.overrideRotationFeedback(() -> {return align.getOutputs()[2];});
 
