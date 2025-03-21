@@ -96,6 +96,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public int lastUpdate = 0;
 
+    private double speed;
+    private double angularSpeed;
+
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
             this.getModule(0).getPosition(false),
@@ -341,6 +344,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
           if (Math.abs(pose[0]) >= 0.1) {
               gyro.setYaw(poseR.getDegrees());
           }
+
     }
 
     public void setSpeeds(ChassisSpeeds speed) {
@@ -391,8 +395,19 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public void updateGyroPeriodically() {
+
+        double speed = Math.sqrt(Math.pow(this.getState().Speeds.vxMetersPerSecond,2)+
+                                Math.pow(this.getState().Speeds.vxMetersPerSecond,2));
+        double angularSpeed = Math.abs(this.getState().Speeds.omegaRadiansPerSecond);
+        double ta = inst.getTable("limelight").getEntry("ta").getDouble(0);
+        double tx = Math.abs(inst.getTable("limelight").getEntry("tx").getDouble(0));
+
         int currentTens = (int) (Timer.getFPGATimestamp() / 10);
-        if (currentTens != lastUpdate) {
+        if (currentTens != lastUpdate &&
+            !(ta < Constants.SwerveConstants.LimelightConstants.taMin ||
+            tx > Constants.SwerveConstants.LimelightConstants.txMin ||
+            angularSpeed > Constants.SwerveConstants.LimelightConstants.angularMin ||
+            speed > Constants.SwerveConstants.LimelightConstants.speedMin)) {
             zeroGyro();
             lastUpdate = currentTens;
             System.out.println("Updated GYRO PERIODICALLY *********** ************ *******");

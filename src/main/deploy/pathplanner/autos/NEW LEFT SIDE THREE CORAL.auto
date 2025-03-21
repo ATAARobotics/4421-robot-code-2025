@@ -15,15 +15,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "AlignScoreCoralL4"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "END NWW"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
                 }
               }
             ]
@@ -52,15 +52,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "AlignScoreCoralL4"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "END SWW"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
                 }
               }
             ]
@@ -89,15 +89,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "AlignScoreCoralL4"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "END SW"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
                 }
               }
             ]

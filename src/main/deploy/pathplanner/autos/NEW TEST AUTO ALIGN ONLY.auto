@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "AlignScoreCoralL4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "END NWW"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
+                }
+              }
+            ]
           }
         }
       ]

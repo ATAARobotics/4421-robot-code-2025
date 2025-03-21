@@ -20,31 +20,31 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
-    /* Controller buttons
-     * 
-     * operatorJoystick.b: toggle absolute heading mode
-     * operatorJoystick.y: toggle slow mode
-     * operatorJoystick.povRight: while true set swerve module directions to 0
-     * joystick.leftBumper: reset field-centric heading
-     * joystick.y: climb up while held
-     * joystick.a: climb down while held
-     * operatorJoystick.a: zero elevator
-     * joystick.x: elevator up with hold PID
-     * joystick.b: elevator down with hold PID
-     * joystick.povDown: set elevator setpoint to L1
-     * joystick.povUp: set elevator setpoint to L2
-     * joystick.povLeft:
-     *  set elevator setpoint to L3
-     * joystick.povRight: set elevator setpoint to L4
-     * joystick.button(10): set elevator setpoint to intake
-     * operatorJoystick.x: set elevator setpoint to rest
-     * operatorJoystick.rightBumper: stop elevator
-     * operatorJoystick.leftBumper: zero gyro
-     * operatorJoystick.povUp and operatorJoystick.a: activate alignment when held
-     * joystick.rightBumper: shoot
-     * joystick.rightTrigger: intake while trigger held
-     * 
-     */
+    // Button mappings
+    // DRIVER JOYSTICK
+    // y
+    // a
+    // x
+    // b
+    // RB
+    // LB
+    // RT
+    // LT
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    // 
+    //  public static final int kDriverControllerPort = 0;
+    //   
   }
 
   public static class ElevatorConstants {
@@ -89,7 +89,7 @@ public final class Constants {
       public static final int pivotSparkID = 61;
       public static final int pivotEncoderID = 62;
 
-      public static final double pivotIntake = 0.001;
+      public static final double pivotIntake = 0.004;
       // public static final double pivotInBetween = 0.039;
       public static final double pivotL4 = 0.065;
 
@@ -127,8 +127,8 @@ public final class Constants {
     public static final double autoAlignMaxSpeed = 2.0; // Meters per second, for running auto-alignment
     public static final double autoAlignMaxAngularRate = 2.7; //99 Rotations per second, for running auto-alignment
 
-    public static final double autoAlignTimeConstraint = 5;
-    public static final double shootingCommandWaitCommand = 3;
+    public static final double autoAlignTimeConstraint = 2.75;
+    public static final double shootingCommandWaitCommand = 0.5;
 
     public static final double MaxAngularSpeed = 1.5 * Math.PI;
 
@@ -136,7 +136,13 @@ public final class Constants {
     public static final double fieldY = 8.0518000 / 2;
 
     public static final int gyroCounter = 10;
+    public static class LimelightConstants {
 
+      public static final double taMin = 0.002;
+      public static final double txMin = 30;
+      public static final double angularMin = 0.1 * Math.PI;
+      public static final double speedMin = 1;
+  }
     public static class Waypoints {
       public static final Pose2d NNW = new Pose2d(5.870, 4.191, Rotation2d.fromDegrees(180.0));
       public static final Pose2d NW = new Pose2d(5.333, 5.156, Rotation2d.  fromDegrees(-120.0));

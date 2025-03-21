@@ -31,6 +31,8 @@ public class AutoScoreCoralCommand extends Command{
     private double elapsedTime;
     private double timeSinceScoring;
 
+    private boolean hasSetDesiredPosition;
+
     
     public AutoScoreCoralCommand(CommandSwerveDrivetrain drivetrain, 
                                  ElevatorSubsystem elevator,
@@ -44,6 +46,7 @@ public class AutoScoreCoralCommand extends Command{
 
     @Override
     public void initialize() {
+        hasSetDesiredPosition = false;
         initialTime = Timer.getFPGATimestamp();
         elapsedTime = Timer.getFPGATimestamp() - initialTime;
         startedScoring = false;
@@ -51,7 +54,6 @@ public class AutoScoreCoralCommand extends Command{
         
         desiredPosition = Constants.ElevatorConstants.Encoder.L4;
         
-        elevator.setElevatorSetpoint(desiredPosition);
         shooter.stop();
 
         drivetrain.zeroGyro();
@@ -63,17 +65,25 @@ public class AutoScoreCoralCommand extends Command{
     public void execute() {
         elapsedTime = Timer.getFPGATimestamp() - initialTime;
 
+        if (!hasSetDesiredPosition && elapsedTime > 0.39) {
+            elevator.setElevatorSetpoint(desiredPosition);
+            hasSetDesiredPosition = true;
+        }
+
         // drivetrain.applyRequest(() ->
         // driveToSetpoint.withVelocityX(align.getOutputs()[0])
         //         .withVelocityY(align.getOutputs()[1])
         //         .withRotationalRate(align.getOutputs()[2]));
 
-        PPHolonomicDriveController.overrideXYFeedback(() -> {System.out.println("getting x " + align.getOutputs()[0]); return -align.getOutputs()[0];}, () -> -align.getOutputs()[1]);
-        // PPHolonomicDriveController.overrideXFeedback(() -> {System.out.println("CALLING X OVERRIDE XXXXXXXXXXX-----XXXXXXXXXXX");return align.getOutputs()[0];});
-        // PPHolonomicDriveController.overrideYFeedback(() -> {System.out.println("CALLING Y OVERRIDE YYYYYYYYYYY-----YYYYYYYYYYY");return align.getOutputs()[1];});
+        if (Math.abs(align.getOutputs()[0]) > 0.07 || Math.abs(align.getOutputs()[1]) > 0.07 || Math.abs(align.getOutputs()[2]) > 0.07 * Math.PI) {
+        PPHolonomicDriveController.overrideXYFeedback(() -> {System.out.println("getting x " + align.getOutputs()[0]); return -align.getOutputs()[0];}, () -> {return -align.getOutputs()[1];});
         PPHolonomicDriveController.overrideRotationFeedback(() -> {return align.getOutputs()[2];});
 
-
+        }
+        else {
+            PPHolonomicDriveController.overrideXYFeedback(() -> {return 0.0;}, () -> {return 0.0;});
+        PPHolonomicDriveController.overrideRotationFeedback(() -> {return 0.0;});
+        }
 
         if (!startedScoring && align.aligned() && elevator.isAtSetpoint(Constants.ElevatorConstants.Encoder.L4) || 
             !startedScoring && elapsedTime > Constants.SwerveConstants.autoAlignTimeConstraint && elevator.isAtSetpoint(Constants.ElevatorConstants.Encoder.L4)) {
