@@ -157,6 +157,11 @@ public class AlignmentSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Current Robot R", currentPose.getRotation().getDegrees());
         
         SmartDashboard.putNumber("Waypoint Index", (int) (angle(curY, curX) / 30));
+
+        SmartDashboard.putNumber("Distance Error", distanceError);
+        SmartDashboard.putNumber("Angle Error", angleError);
+
+        SmartDashboard.putBoolean("Aligned", isAligned);
     }
 
     public void updateGoal() {

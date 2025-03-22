@@ -168,8 +168,8 @@ public class RobotContainer {
         joystick.leftTrigger(0.1).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorDown(joystick.getLeftTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
         joystick.rightTrigger(0.1).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorUp(joystick.getRightTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
 
-        operatorJoystick.povRight().onTrue(new InstantCommand(m_elevatorSubsystem::switchClearAlgae))
-                                    .onFalse(new InstantCommand(m_elevatorSubsystem::switchClearAlgae));
+        operatorJoystick.povRight().onTrue(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(true)))
+                                    .onFalse(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(false)));
 
         // Rest
         operatorJoystick.a().onTrue(new InstantCommand(

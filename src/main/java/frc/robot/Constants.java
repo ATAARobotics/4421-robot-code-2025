@@ -68,7 +68,7 @@ public final class Constants {
       public static final int encoderID = 23;
 
       public static final double rest = 0.01;
-      public static final double Intake = 0.06;
+      public static final double Intake = 0.043;
       public static final double Processor = 1.0;
       public static final double L1 = 0.69;
       public static final double L2 = 1.42;
@@ -89,9 +89,10 @@ public final class Constants {
       public static final int pivotSparkID = 61;
       public static final int pivotEncoderID = 62;
 
-      public static final double pivotIntake = 0.0015;
+      public static final double pivotIntake = 0.0006;
       public static final double pivotInBetween = 0.015;
       public static final double pivotL4 = 0.065;
+      public static final double pivotAlgae = 0.15;
 
       public static final double pivotMaxSpeed = 0.7;
 
@@ -119,7 +120,7 @@ public final class Constants {
     public static final double fractionalRatio = 3; //By how much the speed is divided when shooting L1
 
     public static final int intakeThreshold = 80;
-    public static final int absentThreshold = 80;
+    public static final int absentThreshold = 50;
   } // 0.2758
 
   public static class SwerveConstants {
@@ -128,7 +129,7 @@ public final class Constants {
     public static final double autoAlignMaxAngularRate = 2.7; //99 Rotations per second, for running auto-alignment
 
     public static final double autoAlignTimeConstraint = 2.00;
-    public static final double shootingCommandWaitCommand = 0.25;
+    public static final double shootingCommandWaitCommand = 0.3;
 
     public static final double MaxAngularSpeed = 1.5 * Math.PI;
 
@@ -136,13 +137,15 @@ public final class Constants {
     public static final double fieldY = 8.0518000 / 2;
 
     public static final int gyroCounter = 10;
+
     public static class LimelightConstants {
 
       public static final double taMin = 0.002;
       public static final double txMin = 30;
       public static final double angularMin = 0.1 * Math.PI;
       public static final double speedMin = 1;
-  }
+    }
+
     public static class Waypoints {
       public static final Pose2d NNW = new Pose2d(5.870, 4.191, Rotation2d.fromDegrees(180.0));
       public static final Pose2d NW = new Pose2d(5.333, 5.156, Rotation2d.  fromDegrees(-120.0));
@@ -172,8 +175,9 @@ public final class Constants {
     
     public static final double linearDeadBand = 0.20;
     public static final double angularDeadBand = 0.15;
-    public static final double distanceThreshold = 0.05;
-    public static final double angleThreshold = 5 * Math.PI / 180;
+
+    public static final double distanceThreshold = 0.15;
+    public static final double angleThreshold = 15 * Math.PI / 180;
   }
   
    

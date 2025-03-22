@@ -143,6 +143,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         //     prevPressed = false;
         // }
 
+
         if(justDoneAutoCommand && Timer.getFPGATimestamp() - timeAtDone > 0.2) {
             justDoneAutoCommand = false;
             this.returnToIntake();
@@ -179,6 +180,10 @@ public class ElevatorSubsystem extends SubsystemBase {
             hasBeenReset = false;
         }*/
 
+        if ((!SmartDashboard.getBoolean("Check Shooter LaserCAN", false) && SmartDashboard.getBoolean("Check LaserCAN", false)) && elevatorSpeed > 0.2) {
+            elevatorSpeed = 0;
+        }
+
         leftClimbMotor.set(elevatorSpeed + feedForward);
         rightClimbMotor.set(elevatorSpeed + feedForward);
 
@@ -187,12 +192,15 @@ public class ElevatorSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Left Min Touch Limit Value", isPressed());
     }
 
-    public void switchClearAlgae() {
-        clearAlgae = !clearAlgae;
+    public void setClearAlgae(boolean value) {
+        clearAlgae = value;
     }
 
     private void controlPivot() {
-        if(encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotL4Point || clearAlgae){
+        if (clearAlgae) {
+            pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotAlgae);
+        }
+        else if(encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotL4Point){
             pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotL4);
         }
         else if (encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotInBetweenPoint) {

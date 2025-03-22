@@ -65,7 +65,7 @@ public class AutoScoreCoralCommand extends Command{
     public void execute() {
         elapsedTime = Timer.getFPGATimestamp() - initialTime;
 
-        if (!hasSetDesiredPosition && elapsedTime > 0.18) {
+        if (!hasSetDesiredPosition && elapsedTime > 0.07) {
             elevator.setElevatorSetpoint(desiredPosition);
             hasSetDesiredPosition = true;
         }
@@ -93,10 +93,8 @@ public class AutoScoreCoralCommand extends Command{
             startedScoring = true;
             timeSinceScoring = Timer.getFPGATimestamp();
         }
-        else if(startedScoring && shooter.getState() == ShooterSubsystem.ShooterState.IDLE) {
-            if (Timer.getFPGATimestamp() - timeSinceScoring > Constants.SwerveConstants.shootingCommandWaitCommand) {
-                isDone = true;
-            }
+        else if(startedScoring && Timer.getFPGATimestamp() - timeSinceScoring > Constants.SwerveConstants.shootingCommandWaitCommand) {
+            isDone = true;
         }
     }
 

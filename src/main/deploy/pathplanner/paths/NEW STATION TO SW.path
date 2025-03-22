@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.886,
-        "y": 5.7995
+        "x": 2.62275,
+        "y": 5.9165
       },
       "prevControl": {
-        "x": 2.5931645400740573,
-        "y": 5.989755499303974
+        "x": 2.329914540074057,
+        "y": 6.106755499303974
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Align SW"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

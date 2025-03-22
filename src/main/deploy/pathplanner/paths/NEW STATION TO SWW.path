@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4420998829813354,
-        "y": 6.655637705680893
+        "x": 2.50575,
+        "y": 6.9110000000000005
       },
       "isLocked": false,
       "linkedName": "West Station"
     },
     {
       "anchor": {
-        "x": 3.51975,
-        "y": 6.08225
+        "x": 3.3735000000000004,
+        "y": 6.374750000000001
       },
       "prevControl": {
-        "x": 3.286937114313034,
-        "y": 6.274027779328079
+        "x": 3.1406871143130344,
+        "y": 6.566527779328079
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Align SWW"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
