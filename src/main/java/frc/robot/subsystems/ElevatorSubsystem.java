@@ -15,6 +15,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -56,7 +57,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public double feedForward = Constants.ElevatorConstants.feedForward;
 
-
+    private boolean justDoneAutoCommand;
+    private double timeAtDone = 0;
 
     private PIDController pivotPID = new PIDController(
         Constants.ElevatorConstants.Pivot.pivotkP,
@@ -72,6 +74,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
 
     public ElevatorSubsystem() {
+        justDoneAutoCommand = false;
         hasBeenZero = false;
 
         leftConfig = new SparkFlexConfig();
@@ -136,7 +139,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         //     prevPressed = false;
         // }
 
-        
+        if(justDoneAutoCommand && Timer.getFPGATimestamp() - timeAtDone > 0.2) {
+            justDoneAutoCommand = false;
+            this.returnToIntake();
+        }
 
         if (setpointMode) {
             elevatorPID.setSetpoint(defaultSetpoint);
@@ -226,6 +232,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void returnToIntake() {
         setpointMode = true;
         defaultSetpoint = Constants.ElevatorConstants.Encoder.Intake;
+    }
+
+    public void delayedReturnTOIntake() {
+        justDoneAutoCommand = true;
+        timeAtDone = Timer.getFPGATimestamp();
     }
 
     public void setElevatorSetpoint(double setpoint) {
