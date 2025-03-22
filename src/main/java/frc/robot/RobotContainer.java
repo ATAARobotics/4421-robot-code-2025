@@ -168,14 +168,15 @@ public class RobotContainer {
         joystick.leftTrigger(0.1).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorDown(joystick.getLeftTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
         joystick.rightTrigger(0.1).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorUp(joystick.getRightTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
 
-
+        operatorJoystick.povRight().onTrue(new InstantCommand(m_elevatorSubsystem::switchClearAlgae))
+                                    .onFalse(new InstantCommand(m_elevatorSubsystem::switchClearAlgae));
 
         // Rest
         operatorJoystick.a().onTrue(new InstantCommand(
             () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L1)
         )); 
-        operatorJoystick.povRight()
-            .onTrue(new InstantCommand(()->m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Processor)));
+        //operatorJoystick.povRight()
+          //  .onTrue(new InstantCommand(()->m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Processor)));
 
 
         // L2
