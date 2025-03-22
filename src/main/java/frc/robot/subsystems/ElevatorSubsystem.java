@@ -60,6 +60,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     private boolean justDoneAutoCommand;
     private double timeAtDone = 0;
 
+    private boolean clearAlgae;
+
     private PIDController pivotPID = new PIDController(
         Constants.ElevatorConstants.Pivot.pivotkP,
         Constants.ElevatorConstants.Pivot.pivotkI,
@@ -76,6 +78,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     public ElevatorSubsystem() {
         justDoneAutoCommand = false;
         hasBeenZero = false;
+
+        clearAlgae = false;
 
         leftConfig = new SparkFlexConfig();
         rightConfig = new SparkFlexConfig();
@@ -160,24 +164,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             elevatorSpeed = -0.02;
         }
 
-        if (encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotInBetweenPoint) {
-            pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotIntake);
-            pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 
-                                        -Constants.ElevatorConstants.Pivot.pivotMaxSpeed, 
-                                        Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
-        }
-        else if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotInBetweenPoint && encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotL4Point) {
-            pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotInBetween);
-            pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 
-                                        -Constants.ElevatorConstants.Pivot.pivotMaxSpeed, 
-                                        Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
-        } 
-        else if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotL4Point) {
-            pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotL4);
-            pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 
-                                        -Constants.ElevatorConstants.Pivot.pivotMaxSpeed, 
-                                        Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
-        }
+        controlPivot();
 
         // if (elevatorSpeed < -0.2 && pivotEncoderPosition > 0.02) {
         //     elevatorSpeed = -0.15;
@@ -198,6 +185,26 @@ public class ElevatorSubsystem extends SubsystemBase {
         pivotMotor.set(pivotSpeed);
 
         SmartDashboard.putBoolean("Left Min Touch Limit Value", isPressed());
+    }
+
+    public void switchClearAlgae() {
+        clearAlgae = !clearAlgae;
+    }
+
+    private void controlPivot() {
+        if(encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotL4Point || clearAlgae){
+            pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotL4);
+        }
+        else if (encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotInBetweenPoint) {
+            pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotIntake);
+        }
+        else if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotInBetweenPoint && encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotL4Point) {
+            pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotInBetween);
+        } 
+
+        pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 
+                                        -Constants.ElevatorConstants.Pivot.pivotMaxSpeed, 
+                                        Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
     }
 
     public void elevatorUp(double speed) {
