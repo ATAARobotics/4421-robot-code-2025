@@ -154,18 +154,18 @@ public class ElevatorSubsystem extends SubsystemBase {
             elevatorSpeed = -0.02;
         }
 
-        if (encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotL4Point) {
+        if (encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotInBetweenPoint) {
             pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotIntake);
             pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 
                                         -Constants.ElevatorConstants.Pivot.pivotMaxSpeed, 
                                         Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
         }
-        // else if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotInBetweenPoint && encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotL4Point) {
-        //     pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotInBetween);
-        //     pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 
-        //                                 -Constants.ElevatorConstants.Pivot.pivotMaxSpeed, 
-        //                                 Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
-        // } 
+        else if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotInBetweenPoint && encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotL4Point) {
+            pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotInBetween);
+            pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 
+                                        -Constants.ElevatorConstants.Pivot.pivotMaxSpeed, 
+                                        Constants.ElevatorConstants.Pivot.pivotMaxSpeed);
+        } 
         else if (encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotL4Point) {
             pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotL4);
             pivotSpeed = MathUtil.clamp(pivotPID.calculate(pivotEncoderPosition), 

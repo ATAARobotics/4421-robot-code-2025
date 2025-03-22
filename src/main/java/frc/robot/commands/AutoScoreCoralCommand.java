@@ -79,6 +79,8 @@ public class AutoScoreCoralCommand extends Command{
         PPHolonomicDriveController.overrideXYFeedback(() -> {System.out.println("getting x " + align.getOutputs()[0]); return -align.getOutputs()[0];}, () -> {return -align.getOutputs()[1];});
         PPHolonomicDriveController.overrideRotationFeedback(() -> {return align.getOutputs()[2];});
 
+        // PPHolonomicDriveController.overrideXYFeedback(() -> {System.out.println("$#^#%^#%^#%^#%^#%^%#%^#%^#%^#%^#%^"); return 0.0;}, () -> {return 0.0;});
+        // PPHolonomicDriveController.overrideRotationFeedback(() -> {return 0.0;});
         }
         else {
             PPHolonomicDriveController.overrideXYFeedback(() -> {return 0.0;}, () -> {return 0.0;});

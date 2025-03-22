@@ -76,7 +76,7 @@ public final class Constants {
       public static final double L4 = 5.26;
       public static final double top = 5.27;
 
-      // public static final double pivotInBetweenPoint = 3.9;
+      public static final double pivotInBetweenPoint = 1.2;
       public static final double pivotL4Point = 4.8;
     }
 
@@ -90,7 +90,7 @@ public final class Constants {
       public static final int pivotEncoderID = 62;
 
       public static final double pivotIntake = 0.0015;
-      // public static final double pivotInBetween = 0.039;
+      public static final double pivotInBetween = 0.015;
       public static final double pivotL4 = 0.065;
 
       public static final double pivotMaxSpeed = 0.7;
@@ -114,7 +114,7 @@ public final class Constants {
     public static final int leftShooterMotorID = 31;
     public static final int rightShooterMotorID = 32;
 
-    public static final double maxShooterSpeed = 0.25;
+    public static final double maxShooterSpeed = 0.32;
     public static final double intakeSpeed = 0.09;
     public static final double fractionalRatio = 3; //By how much the speed is divided when shooting L1
 
@@ -128,7 +128,7 @@ public final class Constants {
     public static final double autoAlignMaxAngularRate = 2.7; //99 Rotations per second, for running auto-alignment
 
     public static final double autoAlignTimeConstraint = 2.00;
-    public static final double shootingCommandWaitCommand = 0.2;
+    public static final double shootingCommandWaitCommand = 0.25;
 
     public static final double MaxAngularSpeed = 1.5 * Math.PI;
 
