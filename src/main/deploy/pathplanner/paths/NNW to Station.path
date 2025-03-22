@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.85,
+        "y": 4.1907499999999995
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.552,
+        "y": 7.135250000000001
+      },
+      "isLocked": false,
+      "linkedName": "NNW"
+    },
+    {
+      "anchor": {
+        "x": 1.7355,
+        "y": 7.25225
+      },
+      "prevControl": {
+        "x": 2.184,
+        "y": 6.23825
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "West Station"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.9,
+    "maxAcceleration": 1.9,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -53.806792694435316
+  },
+  "reversed": false,
+  "folder": "Position to Station",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}
