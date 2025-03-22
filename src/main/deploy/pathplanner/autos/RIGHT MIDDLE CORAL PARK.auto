@@ -1,0 +1,44 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEW PRELOADED TO NNE"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "END NNE"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NNE TO PARK"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": "Alignment Autos (NEW)",
+  "choreoAuto": false
+}

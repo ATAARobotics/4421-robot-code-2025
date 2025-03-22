@@ -4,8 +4,9 @@
   "holonomicMode": true,
   "pathFolders": [
     "Align Paths",
-    "Linked Waypoints",
     "END ALIGNMENT PATHS",
+    "Linked Waypoints",
+    "Reef to Park",
     "PRELOADED TO ALIGN (NEW)",
     "Position to Station",
     "Preloaded",

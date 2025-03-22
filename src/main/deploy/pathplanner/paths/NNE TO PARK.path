@@ -1,0 +1,102 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.859749999999999,
+        "y": 3.8592499999999994
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.1034999999999995,
+        "y": 4.366249999999999
+      },
+      "isLocked": false,
+      "linkedName": "NNE"
+    },
+    {
+      "anchor": {
+        "x": 5.986500000000001,
+        "y": 5.0584999999999996
+      },
+      "prevControl": {
+        "x": 6.142682750773548,
+        "y": 4.821994691685772
+      },
+      "nextControl": {
+        "x": 5.64525,
+        "y": 5.57525
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.53375,
+        "y": 5.90675
+      },
+      "prevControl": {
+        "x": 5.1285,
+        "y": 5.819
+      },
+      "nextControl": {
+        "x": 4.0221703499181904,
+        "y": 5.982228964766168
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.8665,
+        "y": 5.14625
+      },
+      "prevControl": {
+        "x": 3.01275,
+        "y": 5.390000000000001
+      },
+      "nextControl": {
+        "x": 2.6393758356550063,
+        "y": 4.767709726091677
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.77875,
+        "y": 4.03475
+      },
+      "prevControl": {
+        "x": 2.8375478194247563,
+        "y": 4.277737276273664
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Middle Park"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.2,
+    "maxAcceleration": 3.7,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "Reef to Park",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}
