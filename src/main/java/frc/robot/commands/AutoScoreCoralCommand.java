@@ -107,7 +107,8 @@ public class AutoScoreCoralCommand extends Command{
 
     @Override
     public void end(boolean isInterrupted) {
-        elevator.returnToIntake();
+        elevator.delayedReturnTOIntake();
+        //elevator.returnToIntake();
         PPHolonomicDriveController.clearFeedbackOverrides();
     }
 }
