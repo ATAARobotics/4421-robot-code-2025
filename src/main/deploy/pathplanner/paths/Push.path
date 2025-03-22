@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.72575,
-        "y": 0.7879999999999996
+        "x": 2.0,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5545000000000004,
-        "y": 1.3047499999999992
+        "x": 3.0,
+        "y": 7.0
       },
       "isLocked": false,
-      "linkedName": "East Station"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.6855,
-        "y": 2.1334999999999993
+        "x": 7.852,
+        "y": 6.8
       },
       "prevControl": {
-        "x": 3.4320000000000004,
-        "y": 1.840999999999999
+        "x": 8.041814987266616,
+        "y": 6.63730313276226
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Align SEE"
+      "linkedName": "Push"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "STATION TO ALIGN (NEW)",
+  "folder": "Linked Waypoints",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 54.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

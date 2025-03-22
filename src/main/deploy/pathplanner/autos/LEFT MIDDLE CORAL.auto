@@ -11,19 +11,19 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AlignScoreCoralL4"
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "END NNW"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
                 }
               }
             ]

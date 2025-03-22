@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.72575,
-        "y": 0.7879999999999996
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 2.5545000000000004,
-        "y": 1.3047499999999992
-      },
-      "isLocked": false,
-      "linkedName": "East Station"
-    },
-    {
-      "anchor": {
         "x": 3.6855,
         "y": 2.1334999999999993
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.778347669088527,
+        "y": 2.365619172721314
+      },
+      "isLocked": false,
+      "linkedName": "Align SEE"
+    },
+    {
+      "anchor": {
+        "x": 3.94875,
+        "y": 2.7575
+      },
       "prevControl": {
-        "x": 3.4320000000000004,
-        "y": 1.840999999999999
+        "x": 3.970407404091211,
+        "y": 2.508439852951079
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Align SEE"
+      "linkedName": "SEE"
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.2,
-    "maxAcceleration": 3.7,
+    "maxVelocity": 0.1,
+    "maxAcceleration": 0.1,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -45,10 +45,10 @@
     "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "STATION TO ALIGN (NEW)",
+  "folder": "END ALIGNMENT PATHS",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 54.0
+    "rotation": 59.99999999999999
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

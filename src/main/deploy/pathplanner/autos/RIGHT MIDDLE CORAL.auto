@@ -11,9 +11,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "ScoreCoralL4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "END NNE"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
+                }
+              }
+            ]
           }
         }
       ]

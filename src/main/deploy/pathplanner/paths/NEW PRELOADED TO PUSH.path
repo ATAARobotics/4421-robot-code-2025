@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.72575,
-        "y": 0.7879999999999996
+        "x": 7.6,
+        "y": 6.153
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5545000000000004,
-        "y": 1.3047499999999992
+        "x": 7.726755031640849,
+        "y": 6.368483553789441
       },
       "isLocked": false,
-      "linkedName": "East Station"
+      "linkedName": "Push Preloaded"
     },
     {
       "anchor": {
-        "x": 3.6855,
-        "y": 2.1334999999999993
+        "x": 7.852,
+        "y": 6.8
       },
       "prevControl": {
-        "x": 3.4320000000000004,
-        "y": 1.840999999999999
+        "x": 8.041814150591325,
+        "y": 6.637302156636008
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Align SEE"
+      "linkedName": "Push"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.2,
-    "maxAcceleration": 3.7,
+    "maxAcceleration": 5.2,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "STATION TO ALIGN (NEW)",
+  "folder": "PRELOADED TO ALIGN (NEW)",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 54.0
+    "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

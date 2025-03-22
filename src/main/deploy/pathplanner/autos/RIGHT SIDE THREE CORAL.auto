@@ -11,9 +11,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "ScoreCoralL4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "END NEE"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
+                }
+              }
+            ]
           }
         },
         {
@@ -35,9 +48,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "ScoreCoralL4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "END SEE"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
+                }
+              }
+            ]
           }
         },
         {
@@ -59,9 +85,40 @@
           }
         },
         {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "END SE"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SE to Station"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "ScoreCoralL4"
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEW STATION TO SE"
           }
         }
       ]

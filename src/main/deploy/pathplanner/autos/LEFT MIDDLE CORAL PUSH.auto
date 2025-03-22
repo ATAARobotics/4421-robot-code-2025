@@ -3,7 +3,39 @@
   "command": {
     "type": "sequential",
     "data": {
-      "commands": []
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEW PRELOADED TO PUSH"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEW PUSH TO NNW"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "END NNW"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
+                }
+              }
+            ]
+          }
+        }
+      ]
     }
   },
   "resetOdom": false,
