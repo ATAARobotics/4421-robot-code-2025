@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix6.Orchestra;
+import com.ctre.phoenix6.configs.AudioConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -14,6 +15,7 @@ import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -27,6 +29,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
+  public Orchestra orchestra = new Orchestra();
 
   //private VideoSink server;
   
@@ -35,6 +38,9 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   public Robot() {
+    AudioConfigs configs = new AudioConfigs();
+    configs.AllowMusicDurDisable = true;
+    configs.BeepOnBoot = false;
     TalonFX module0 = new TalonFX(0);
     TalonFX module1 = new TalonFX(1);
     TalonFX module2 = new TalonFX(2);
@@ -43,7 +49,6 @@ public class Robot extends TimedRobot {
     TalonFX module5 = new TalonFX(5);
     TalonFX module6 = new TalonFX(6);
     TalonFX module7 = new TalonFX(7);
-    Orchestra orchestra = new Orchestra();
     orchestra.addInstrument(module0);
     orchestra.addInstrument(module1);
     orchestra.addInstrument(module2);
@@ -53,8 +58,8 @@ public class Robot extends TimedRobot {
     orchestra.addInstrument(module6);
     orchestra.addInstrument(module7);
     orchestra.loadMusic("music.chrp");
-    orchestra.play();
-    DataLogManager.start();
+    
+    System.out.println(orchestra.isPlaying());
     DataLogManager.start();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -118,6 +123,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -126,11 +132,14 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.resetClimbAndElevator();
+    orchestra.play();
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    SmartDashboard.putBoolean("Is Playing", orchestra.isPlaying());
+  }
 
   @Override
   public void teleopExit() {
