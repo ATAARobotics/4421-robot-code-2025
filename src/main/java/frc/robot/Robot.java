@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.Orchestra;
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
@@ -32,6 +35,26 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   public Robot() {
+    TalonFX module0 = new TalonFX(0);
+    TalonFX module1 = new TalonFX(1);
+    TalonFX module2 = new TalonFX(2);
+    TalonFX module3 = new TalonFX(3);
+    TalonFX module4 = new TalonFX(4);
+    TalonFX module5 = new TalonFX(5);
+    TalonFX module6 = new TalonFX(6);
+    TalonFX module7 = new TalonFX(7);
+    Orchestra orchestra = new Orchestra();
+    orchestra.addInstrument(module0);
+    orchestra.addInstrument(module1);
+    orchestra.addInstrument(module2);
+    orchestra.addInstrument(module3);
+    orchestra.addInstrument(module4);
+    orchestra.addInstrument(module5);
+    orchestra.addInstrument(module6);
+    orchestra.addInstrument(module7);
+    orchestra.loadMusic("music.chrp");
+    orchestra.play();
+    DataLogManager.start();
     DataLogManager.start();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
