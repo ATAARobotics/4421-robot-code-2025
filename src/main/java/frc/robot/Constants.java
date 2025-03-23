@@ -58,7 +58,7 @@ public final class Constants {
     public static final double kI = 0;
     public static final double kD = 0.04;
 
-    public static final double threshold = 0.027;
+    public static final double threshold = 0.075;
     public static final double maxElevatorAcceleration = 0.70;
 
     public static final double feedForward = 0.0;

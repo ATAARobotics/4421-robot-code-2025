@@ -134,6 +134,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Current Elevator Setpoint", defaultSetpoint);
 
         SmartDashboard.putNumber("Pivot Encoder Value", pivotEncoderPosition);
+        SmartDashboard.putBoolean("Elevator is at Setpoint",  Math.abs(encoderCurrentPosition - defaultSetpoint) < Constants.ElevatorConstants.threshold);
 
         // if (isPressed() && !prevPressed) {
         //     prevPressed = true;
