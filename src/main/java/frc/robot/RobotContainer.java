@@ -193,8 +193,8 @@ public class RobotContainer {
         ));
 
         joystick.button(10).onTrue(new InstantCommand(
-            () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake)
-        ));
+            () -> {m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake);m_shooterSubsystem.setOverrideTrue();}
+        )).onFalse(new InstantCommand(() -> {m_shooterSubsystem.setOverrideFalse(); m_shooterSubsystem.stop();}));
 
         joystick.button(9).onTrue(new InstantCommand(() -> speedMultiplier = 0.1))
         .onFalse(new InstantCommand(() -> speedMultiplier = 1)); 

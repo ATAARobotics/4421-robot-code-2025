@@ -97,8 +97,7 @@ public class ShooterSubsystem extends SubsystemBase {
                     shooterState = ShooterState.INTAKE;
                 }
                 else if(overrideIntake && !checkShooterLaserCan()) {
-                    leftSpeed = Constants.ShooterConstants.maxShooterSpeed;
-                    rightSpeed = Constants.ShooterConstants.maxShooterSpeed;
+                    shooterState = ShooterState.INTAKE;
                 }
 
                 break;
@@ -116,8 +115,8 @@ public class ShooterSubsystem extends SubsystemBase {
                 break;
 
             case INTAKE:
-                leftSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.75;
-                rightSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.75;
+                leftSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.5;
+                rightSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.5;
 
                 if (!checkLaserCan() && checkShooterLaserCan()) {
                     shooterState = ShooterState.REVERSE;
@@ -125,8 +124,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
                 break;
             case REVERSE:
-                leftSpeed = -Constants.ShooterConstants.intakeSpeed;
-                rightSpeed = -Constants.ShooterConstants.intakeSpeed;
+                leftSpeed = -Constants.ShooterConstants.intakeSpeed * 1.3;
+                rightSpeed = -Constants.ShooterConstants.intakeSpeed * 1.3;
 
                 if (checkLaserCan() && checkShooterLaserCan()) {
                     shooterState = ShooterState.SLOW;
@@ -134,8 +133,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
                 break;
             case SLOW:
-                leftSpeed = Constants.ShooterConstants.intakeSpeed * 0.5;
-                rightSpeed = Constants.ShooterConstants.intakeSpeed * 0.5;
+                leftSpeed = Constants.ShooterConstants.intakeSpeed * 0.4;
+                rightSpeed = Constants.ShooterConstants.intakeSpeed * 0.4;
 
                 if (!checkLaserCan() && checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;
@@ -220,5 +219,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void toggleOverride() {
         overrideIntake = !overrideIntake;
+    }
+    
+    public void setOverrideTrue() {
+        overrideIntake = true;
+    }
+
+    public void setOverrideFalse() {
+        overrideIntake = false;
     }
 }

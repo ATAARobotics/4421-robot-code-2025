@@ -22,10 +22,12 @@ public class IntakeCommand extends Command {
 
     @Override
     public void initialize() {
+       
         System.out.println("Started Intake Command *********************##################");
 
         isDone = false;
         shooter.stop();
+        shooter.setOverrideTrue();
         elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake);
     }
 
@@ -39,6 +41,7 @@ public class IntakeCommand extends Command {
 
     @Override
     public boolean isFinished() {
+        shooter.setOverrideFalse();
         return isDone;
     }
 }
