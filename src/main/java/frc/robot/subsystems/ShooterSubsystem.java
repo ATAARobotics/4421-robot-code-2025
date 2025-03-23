@@ -30,7 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private int shooterLaserCan_distance;
 
     public enum ShooterState {
-        IDLE, ALGAE_IN, ALGAE_OUT, INTAKE, REVERSE, SLOW, SHOOT, SHOOTL1
+        IDLE, ALGAE_IN, ALGAE_OUT, INTAKE, REVERSE, SLOW, SHOOT, SHOOTL1, TWIST
     }
 
     private ShooterState shooterState;
@@ -154,14 +154,22 @@ public class ShooterSubsystem extends SubsystemBase {
                 break;
             
             case SHOOTL1:
-                leftSpeed = 0.25;
-                rightSpeed = -0.1;
+                leftSpeed = 0.15;
+                rightSpeed = 0.15;
 
-                if (!checkShooterLaserCan()) {
-                    shooterState = ShooterState.IDLE;
+                if (!checkLaserCan()) {
+                    shooterState = ShooterState.TWIST;
                     overrideIntake = false;
                 }
 
+                break;
+            case TWIST:
+                leftSpeed = 0.6;
+                rightSpeed = 0.2;
+
+                if (!checkShooterLaserCan()) {
+                    shooterState = ShooterState.IDLE;
+                }
                 break;
         }
 
