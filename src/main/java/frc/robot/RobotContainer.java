@@ -209,9 +209,11 @@ public class RobotContainer {
          
 
         // bool to acitvate alignment, press both the up buttom on the d-pad and the a button on second controller
-        joystick.leftBumper().onTrue(new InstantCommand(() -> {scoring = true; drivetrain.checkFirstZeroGyro();})).onFalse(new InstantCommand(() -> scoring = false));
+        joystick.leftBumper().onTrue(new InstantCommand(() -> {scoring = true; drivetrain.checkFirstZeroGyro(); m_alignmentSubsystem.setBiasedSideTrue(); m_alignmentSubsystem.left();})).onFalse(new InstantCommand(() -> scoring = false));
+        joystick.rightBumper().onTrue(new InstantCommand(() -> {scoring = true; drivetrain.checkFirstZeroGyro(); m_alignmentSubsystem.setBiasedSideTrue(); m_alignmentSubsystem.right();})).onFalse(new InstantCommand(() -> scoring = false));
+
         
-        joystick.rightBumper()
+        operatorJoystick.rightTrigger()
             .onTrue(new InstantCommand(() -> {if (m_elevatorSubsystem.isAtL1()) { m_shooterSubsystem.shootL1();} else { m_shooterSubsystem.shoot();}}))
             .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
 

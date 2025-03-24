@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.099772727272726,
-        "y": 5.445951704545455
+        "x": 6.93225,
+        "y": 6.140750000000001
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.859711916461917,
-        "y": 5.557944947788698
+        "x": 6.6921891891891905,
+        "y": 6.252743243243244
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "West Preloaded"
     },
     {
       "anchor": {
-        "x": 5.853323863636364,
-        "y": 6.014332386363637
+        "x": 5.897950819672132,
+        "y": 6.0449282786885234
       },
       "prevControl": {
-        "x": 6.253073863636365,
-        "y": 6.111832386363636
+        "x": 6.297700819672133,
+        "y": 6.142428278688523
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Align NWW"
     }
   ],
   "rotationTargets": [],
@@ -48,7 +48,7 @@
   "folder": "PRELOADED TO ALIGN (NEW)",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.69332562969217
+    "rotation": -135.0
   },
   "useDefaultConstraints": true
 }

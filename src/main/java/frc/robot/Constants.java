@@ -165,6 +165,10 @@ public final class Constants {
 
       public static final Pose2d[] Waypoints = {NNW, NW, NWW, SWW, SW, SSW, SSE, SE, SEE, NEE, NE, NNE};
       public static final String[] teleopWaypoints = {"Teleop NNW", "Teleop NW", "Teleop NWW", "Teleop SWW", "Teleop SW", "Teleop SSW", "Teleop SSE", "Teleop SE", "Teleop SEE", "Teleop NEE", "Teleop NE", "Teleop NNE"};
+      public static final String[] teleopWaypointsLeft = {"Teleop NNE", "Teleop NW", "Teleop SWW", "Teleop SSW", "Teleop SE", "Teleop NEE"};
+      public static final String[] teleopWaypointsRight = {"Teleop NNW", "Teleop NWW", "Teleop SW", "Teleop SSE", "Teleop SEE", "Teleop NE"};
+
+    
       public static final String[] teleopAlignWaypoints = {"Align NNW", "Align NW", "Align NWW", "Align SWW", "Align SW", "Align SSW", "Align SSE", "Align SE", "Align SEE", "Align NEE", "Align NE", "Align NNE"};
 
 

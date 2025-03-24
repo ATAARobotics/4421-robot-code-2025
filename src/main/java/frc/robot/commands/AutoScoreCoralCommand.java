@@ -46,6 +46,7 @@ public class AutoScoreCoralCommand extends Command{
 
     @Override
     public void initialize() {
+        align.setBiasedSideFalse();
         hasSetDesiredPosition = false;
         initialTime = Timer.getFPGATimestamp();
         elapsedTime = Timer.getFPGATimestamp() - initialTime;
@@ -105,6 +106,7 @@ public class AutoScoreCoralCommand extends Command{
 
     @Override
     public void end(boolean isInterrupted) {
+        align.setBiasedSideTrue();
         shooter.setOverrideTrue();
         elevator.delayedReturnTOIntake();
         //elevator.returnToIntake();

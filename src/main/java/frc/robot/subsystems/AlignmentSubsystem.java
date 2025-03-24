@@ -59,6 +59,10 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double angleError;
     private boolean isAligned;
 
+    private boolean biasedSide = true;
+    private int currentIndex = 0;
+    private boolean isLeft = true;
+
     public Field2d goalPoseField = new Field2d();
         
         
@@ -137,8 +141,30 @@ public class AlignmentSubsystem extends SubsystemBase {
         updateSmartDashboard();
         
         goalPoseField.setRobotPose(goalPose);
-        updateGoal();
 
+        if (!biasedSide) {
+            updateGoal();
+        } else {
+            updateGoalBiased(isLeft);
+        }
+
+    }
+
+    public void right() {
+        isLeft = false;
+    }
+
+    public void left() {
+        isLeft = true;
+    }
+
+
+    public void setBiasedSideFalse() {
+        biasedSide = false;
+    }
+
+    public void setBiasedSideTrue() {
+        biasedSide = true;
     }
 
     public void calcPID() {
@@ -181,26 +207,74 @@ public class AlignmentSubsystem extends SubsystemBase {
         }
     }
 
-    public void updateGoalPose() {
-        Pose2d flipCur = currentPose;
-        // Pose2d flipCur = flipCoords(currentPose);
-        
-        goalPose = Constants.SwerveConstants.Waypoints.Waypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
-        // goalPose = flipCoords(goalPose);
+    public void updateGoalBiased(boolean isLeft) {
+        Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+        SmartDashboard.putBoolean("isRedAlliance", alliance.get() == DriverStation.Alliance.Red);
+        if (alliance.isPresent()) {
+            if (alliance.get() == DriverStation.Alliance.Red) {
+                // updateRedGoalPose();
+                updateFromPathPlannerGoalPoseRedBiased(isLeft);
+            } else{
+                // updateGoalPose();
+                updateFromPathPlannerGoalPoseBiased(isLeft);
+            }
+        } else{
+            // updateGoalPose();
+            updateFromPathPlannerGoalPoseRedBiased(isLeft);
+        }
     }
 
-    public void updateRedGoalPose() {
-        // Pose2d flipCur = currentPose;
-        Pose2d flipCur = flipCoords(currentPose);
+    // public void updateGoalPose() {
+    //     Pose2d flipCur = currentPose;
+    //     // Pose2d flipCur = flipCoords(currentPose);
         
-        goalPose = Constants.SwerveConstants.Waypoints.Waypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
+    //     goalPose = Constants.SwerveConstants.Waypoints.Waypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
+    //     // goalPose = flipCoords(goalPose);
+    // }
+
+    // public void updateRedGoalPose() {
+    //     // Pose2d flipCur = currentPose;
+    //     Pose2d flipCur = flipCoords(currentPose);
+        
+    //     goalPose = Constants.SwerveConstants.Waypoints.Waypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
+    //     goalPose = flipCoords(goalPose);
+    // }
+    public void updateFromPathPlannerGoalPoseBiased(boolean isLeft) {
+        Pose2d flipCur = currentPose;
+        
+        currentIndex = (int) ((((angle(flipCur.getY(), flipCur.getX()) + 30) % 360) / 60));
+        String goalPoseStr = (isLeft) ? Constants.SwerveConstants.Waypoints.teleopWaypointsLeft[currentIndex] : Constants.SwerveConstants.Waypoints.teleopWaypointsRight[currentIndex];
+        try {
+            PathPlannerPath goalPath = PathPlannerPath.fromPathFile(goalPoseStr);
+            PathPoint goalPoint = goalPath.getPoint(goalPath.getAllPathPoints().size() - 1);
+            goalPose = new Pose2d(goalPoint.position.getX(), goalPoint.position.getY(), goalPath.getGoalEndState().rotation()); 
+            // If angle is not showing the right angle, it is returning heading and not the angle from goal-end-state
+        } catch (Exception e) {
+            System.out.println("PATH FROM FILE ***************** ################ **************** ERROR: " + e);
+        }
+    }
+
+    // flipping GOALPOSE may not be needed if PATHPLANNER returns flipped coords already
+    public void updateFromPathPlannerGoalPoseRedBiased(boolean isLeft) {
+        Pose2d flipCur = flipCoords(currentPose);
+        currentIndex = (int) ((((angle(flipCur.getY(), flipCur.getX()) + 30) % 360) / 60));
+        String goalPoseStr = (isLeft) ? Constants.SwerveConstants.Waypoints.teleopWaypointsLeft[currentIndex] : Constants.SwerveConstants.Waypoints.teleopWaypointsRight[currentIndex];
+        try {
+            PathPlannerPath goalPath = PathPlannerPath.fromPathFile(goalPoseStr);
+            PathPoint goalPoint = goalPath.getPoint(goalPath.getAllPathPoints().size() - 1);
+            goalPose = new Pose2d(goalPoint.position.getX(), goalPoint.position.getY(), goalPath.getGoalEndState().rotation()); // If angle is not showing the right angle, it is returning heading and not the angle from goal-end-state
+        } catch (Exception e) {
+            System.out.println("PATH FROM FILE ***************** ################ **************** ERROR: " + e);
+        }
+
         goalPose = flipCoords(goalPose);
     }
 
     public void updateFromPathPlannerGoalPose() {
         Pose2d flipCur = currentPose;
         
-        String goalPoseStr = Constants.SwerveConstants.Waypoints.teleopWaypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
+        currentIndex = (int) ((angle(flipCur.getY(), flipCur.getX()) / 30));
+        String goalPoseStr = Constants.SwerveConstants.Waypoints.teleopWaypoints[currentIndex];
         try {
             PathPlannerPath goalPath = PathPlannerPath.fromPathFile(goalPoseStr);
             PathPoint goalPoint = goalPath.getPoint(goalPath.getAllPathPoints().size() - 1);
@@ -214,8 +288,8 @@ public class AlignmentSubsystem extends SubsystemBase {
     // flipping GOALPOSE may not be needed if PATHPLANNER returns flipped coords already
     public void updateFromPathPlannerGoalPoseRed() {
         Pose2d flipCur = flipCoords(currentPose);
-        
-        String goalPoseStr = Constants.SwerveConstants.Waypoints.teleopWaypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
+        currentIndex = (int) (angle(flipCur.getY(), flipCur.getX()) / 30);
+        String goalPoseStr = Constants.SwerveConstants.Waypoints.teleopWaypoints[currentIndex];
         try {
             PathPlannerPath goalPath = PathPlannerPath.fromPathFile(goalPoseStr);
             PathPoint goalPoint = goalPath.getPoint(goalPath.getAllPathPoints().size() - 1);
