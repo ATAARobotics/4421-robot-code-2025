@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.95175,
-        "y": 1.987249999999999
+        "x": 7.099772727272726,
+        "y": 2.76359375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.57925,
-        "y": 1.9970799180327867
+        "x": 6.727272727272727,
+        "y": 2.7734236680327875
       },
       "isLocked": false,
       "linkedName": "East Preloaded"
@@ -62,7 +62,7 @@
   "folder": "Preloaded",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 130.32620335212977
+    "rotation": -179.82813961702033
   },
   "useDefaultConstraints": true
 }

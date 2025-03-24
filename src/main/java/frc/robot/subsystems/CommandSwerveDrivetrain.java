@@ -419,7 +419,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         double ta = inst.getTable("limelight").getEntry("ta").getDouble(0);
         double tx = Math.abs(inst.getTable("limelight").getEntry("tx").getDouble(0));
 
-        int currentTens = (int) (Timer.getFPGATimestamp() / 10);
+        int currentTens = (int) (Timer.getFPGATimestamp() / 7);
         if (currentTens != lastUpdate &&
             !(ta < Constants.SwerveConstants.LimelightConstants.taMin ||
             tx > Constants.SwerveConstants.LimelightConstants.txMin ||

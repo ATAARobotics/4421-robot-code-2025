@@ -203,10 +203,6 @@ public class RobotContainer {
           //  () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.rest)
         //));
 
-        operatorJoystick.rightBumper().onTrue(new InstantCommand(
-            () -> m_elevatorSubsystem.elevatorStop()
-        ));
-        
         joystick.button(8).onTrue(new InstantCommand(() -> m_Swerve.zeroGyro()));
 
         // operatorJoystick.button(7).onTrue(new InstantCommand(() -> setSource()));
@@ -223,8 +219,8 @@ public class RobotContainer {
 
         DriverStation.startDataLog(DataLogManager.getLog(), true);
 
-        operatorJoystick.rightTrigger().onTrue(new InstantCommand(() -> m_shooterSubsystem.algaeIn())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
-        operatorJoystick.leftTrigger().onTrue(new InstantCommand(() -> m_shooterSubsystem.algaeOut())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
+        operatorJoystick.rightBumper().onTrue(new InstantCommand(() -> m_shooterSubsystem.algaeIn())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
+        operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_shooterSubsystem.algaeOut())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
 
 
         
