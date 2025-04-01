@@ -33,7 +33,6 @@ public class IntakeCommand extends Command {
 
     @Override
     public void execute() {
-        SmartDashboard.putBoolean("isDone", isDone);
         if(shooter.checkLaserCan()) {
             isDone = true;
         }

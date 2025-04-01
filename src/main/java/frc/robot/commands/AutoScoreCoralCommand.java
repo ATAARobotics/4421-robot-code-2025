@@ -1,10 +1,14 @@
 package frc.robot.commands;
 
+import java.util.Optional;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.AlignmentSubsystem;
@@ -33,6 +37,10 @@ public class AutoScoreCoralCommand extends Command{
 
     private boolean hasSetDesiredPosition;
 
+    private double xSpeed = 0;
+    private double ySpeed = 0;
+    private double rotSpeed = 0;
+
     
     public AutoScoreCoralCommand(CommandSwerveDrivetrain drivetrain, 
                                  ElevatorSubsystem elevator,
@@ -59,11 +67,31 @@ public class AutoScoreCoralCommand extends Command{
 
         drivetrain.checkFirstZeroGyro();
 
+        xSpeed = align.getOutputs()[0];
+        ySpeed = align.getOutputs()[1];
+        rotSpeed = align.getOutputs()[2];
+
         System.out.println("Started Elevator Score Coral Command *********************##################");
     }
 
     @Override
     public void execute() {
+        
+        // negative xy for red side, positive all for blue
+        
+
+        Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            xSpeed = (alliance.get() == DriverStation.Alliance.Red) ? -align.getOutputs()[0] : align.getOutputs()[0];
+        ySpeed = (alliance.get() == DriverStation.Alliance.Red) ? -align.getOutputs()[1] : align.getOutputs()[1];
+        rotSpeed = align.getOutputs()[2];
+        } else{
+            // updateGoalPose();
+            xSpeed = -align.getOutputs()[0];
+        ySpeed = -align.getOutputs()[1];
+        rotSpeed = align.getOutputs()[2];
+        }
+        
         elapsedTime = Timer.getFPGATimestamp() - initialTime;
 
         if (!hasSetDesiredPosition && elapsedTime > 0.07) {
@@ -76,9 +104,9 @@ public class AutoScoreCoralCommand extends Command{
         //         .withVelocityY(align.getOutputs()[1])
         //         .withRotationalRate(align.getOutputs()[2]));
 
-        if (Math.abs(align.getOutputs()[0]) > 0.01 || Math.abs(align.getOutputs()[1]) > 0.07 || Math.abs(align.getOutputs()[2]) > 0.07 * Math.PI) {
-        PPHolonomicDriveController.overrideXYFeedback(() -> {System.out.println("getting x " + align.getOutputs()[0]); return -align.getOutputs()[0];}, () -> {return -align.getOutputs()[1];});
-        PPHolonomicDriveController.overrideRotationFeedback(() -> {return align.getOutputs()[2];});
+        if (Math.abs(xSpeed) > 0.01 || Math.abs(ySpeed) > 0.07 || Math.abs(rotSpeed) > 0.07 * Math.PI) {
+        PPHolonomicDriveController.overrideXYFeedback(() -> {return xSpeed;}, () -> {return ySpeed;});
+        PPHolonomicDriveController.overrideRotationFeedback(() -> {return rotSpeed;});
 
         // PPHolonomicDriveController.overrideXYFeedback(() -> {System.out.println("$#^#%^#%^#%^#%^#%^%#%^#%^#%^#%^#%^"); return 0.0;}, () -> {return 0.0;});
         // PPHolonomicDriveController.overrideRotationFeedback(() -> {return 0.0;});

@@ -55,7 +55,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public boolean hasBeenZero = false;
 
-    public double feedForward = Constants.ElevatorConstants.feedForward;
+    // public double feedForward = Constants.ElevatorConstants.feedForward;
 
     private boolean justDoneAutoCommand;
     private double timeAtDone = 0;
@@ -103,38 +103,23 @@ public class ElevatorSubsystem extends SubsystemBase {
         pivotMotor.configure(pivotConfig, null, null);
 
 
-        minLimitTouchLeft = new DigitalInput(Constants.ElevatorConstants.minLimitTouchLeftPin);
         //SmartDashboard.putNumber("Elevator P", defaultSetpoint)
         prevPressed = false;
 
-        SmartDashboard.putNumber("Pivot P", Constants.ElevatorConstants.Pivot.pivotkP);
-        SmartDashboard.putNumber("Pivot I", Constants.ElevatorConstants.Pivot.pivotkI);
-        SmartDashboard.putNumber("Pivot D", Constants.ElevatorConstants.Pivot.pivotkD);
-
-        SmartDashboard.putNumber("Elevator P", Constants.ElevatorConstants.kP);
-        SmartDashboard.putNumber("Elevator I", Constants.ElevatorConstants.kI);
-        SmartDashboard.putNumber("Elevator D", Constants.ElevatorConstants.kD);
-
-        SmartDashboard.putNumber("Feed Forward", Constants.ElevatorConstants.feedForward);
+        // SmartDashboard.putNumber("Feed Forward", Constants.ElevatorConstants.feedForward);
     }
 
     @Override
     public void periodic() {
-        feedForward = SmartDashboard.getNumber("Feed Forward", Constants.ElevatorConstants.feedForward);
 
-        pivotPID.setPID(SmartDashboard.getNumber("Pivot P", Constants.ElevatorConstants.Pivot.pivotkP), SmartDashboard.getNumber("Pivot I", Constants.ElevatorConstants.Pivot.pivotkI), SmartDashboard.getNumber("Pivot D", Constants.ElevatorConstants.Pivot.pivotkD));
-        elevatorPID.setPID(SmartDashboard.getNumber("Elevator P", Constants.ElevatorConstants.kP), SmartDashboard.getNumber("Elevator I", Constants.ElevatorConstants.kI), SmartDashboard.getNumber("Elevator D", Constants.ElevatorConstants.kD));
+        pivotPID.setPID(Constants.ElevatorConstants.Pivot.pivotkP, Constants.ElevatorConstants.Pivot.pivotkI, Constants.ElevatorConstants.Pivot.pivotkD);
+        elevatorPID.setPID(Constants.ElevatorConstants.kP, Constants.ElevatorConstants.kI, Constants.ElevatorConstants.kD);
 
-        SmartDashboard.putNumber("Elevator Speed", elevatorSpeed);
-        SmartDashboard.putBoolean("Setpoint Mode", setpointMode);
         encoderCurrentPosition = encoder.getPosition().getValueAsDouble();
         pivotEncoderPosition = pivotEncoder.getAbsolutePosition().getValueAsDouble();
 
         SmartDashboard.putNumber("Elevator Encoder Value", encoderCurrentPosition);
-        SmartDashboard.putNumber("Current Elevator Setpoint", defaultSetpoint);
 
-        SmartDashboard.putNumber("Pivot Encoder Value", pivotEncoderPosition);
-        SmartDashboard.putBoolean("Elevator is at Setpoint",  Math.abs(encoderCurrentPosition - defaultSetpoint) < Constants.ElevatorConstants.threshold);
 
         // if (isPressed() && !prevPressed) {
         //     prevPressed = true;
@@ -185,12 +170,11 @@ public class ElevatorSubsystem extends SubsystemBase {
             elevatorSpeed = 0;
         }
 
-        leftClimbMotor.set(elevatorSpeed + feedForward);
-        rightClimbMotor.set(elevatorSpeed + feedForward);
+        leftClimbMotor.set(elevatorSpeed);
+        rightClimbMotor.set(elevatorSpeed);
 
         pivotMotor.set(pivotSpeed);
 
-        SmartDashboard.putBoolean("Left Min Touch Limit Value", isPressed());
     }
 
     public void setClearAlgae(boolean value) {

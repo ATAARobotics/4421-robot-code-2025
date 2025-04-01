@@ -30,7 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private int shooterLaserCan_distance;
 
     public enum ShooterState {
-        IDLE, ALGAE_IN, ALGAE_OUT, INTAKE, REVERSE, SLOW, SHOOT, SHOOTL1, TWIST
+        IDLE, ALGAE_IN, ALGAE_OUT, INTAKE, REVERSE, SLOW, SHOOT, SHOOTL1
     }
 
     private ShooterState shooterState;
@@ -78,14 +78,8 @@ public class ShooterSubsystem extends SubsystemBase {
         laserCan_distance = laserCan.getMeasurement().distance_mm;
         shooterLaserCan_distance = shooterLaserCan.getMeasurement().distance_mm;
 
-        SmartDashboard.putNumber("LaserCan Distance", laserCan_distance);
-        SmartDashboard.putNumber("ShooterLaserCan Distance", shooterLaserCan_distance);
-        SmartDashboard.putString("Shooter State", shooterState.toString());
-
         SmartDashboard.putBoolean("Check LaserCAN", checkLaserCan());
         SmartDashboard.putBoolean("Check Shooter LaserCAN", checkShooterLaserCan());
-
-        SmartDashboard.putString("Shooter State", shooterState.toString());
 
 
         switch(shooterState) {
@@ -153,23 +147,23 @@ public class ShooterSubsystem extends SubsystemBase {
                 break;
             
             case SHOOTL1:
-                leftSpeed = 0.15;
-                rightSpeed = 0.15;
-
-                if (!checkLaserCan()) {
-                    shooterState = ShooterState.TWIST;
-                    overrideIntake = false;
-                }
-
-                break;
-            case TWIST:
-                leftSpeed = 0.6;
-                rightSpeed = 0.2;
+                // overrideIntake = false;
+                leftSpeed = 0.8;
+                rightSpeed = 0.25;
 
                 if (!checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;
                 }
+
                 break;
+            // case TWIST:
+            //     leftSpeed = 1.0;
+            //     rightSpeed = 0.3;
+
+            //     if (!checkShooterLaserCan()) {
+            //         shooterState = ShooterState.IDLE;
+            //     }
+            //     break;
         }
 
         runShooter(leftSpeed, rightSpeed);

@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 1.690266393442623,
-        "y": 7.195747950819672
+        "y": 7.255686475409835
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.2558568340644882,
-        "y": 6.61278033975315
+        "y": 6.672718864343313
       },
       "isLocked": false,
       "linkedName": "West Station"

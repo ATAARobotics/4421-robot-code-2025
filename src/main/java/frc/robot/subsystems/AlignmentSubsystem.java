@@ -42,18 +42,6 @@ public class AlignmentSubsystem extends SubsystemBase {
     private double xOutput;
     private double yOutput;
     private double rOutput;
-        
-    private double controllerX_P;
-    private double controllerX_I;
-    private double controllerX_D;
-
-    private double controllerY_P;
-    private double controllerY_I;
-    private double controllerY_D;
-
-    private double controllerR_P;
-    private double controllerR_I;
-    private double controllerR_D;
 
     private double distanceError;
     private double angleError;
@@ -63,22 +51,10 @@ public class AlignmentSubsystem extends SubsystemBase {
     private int currentIndex = 0;
     private boolean isLeft = true;
 
-    public Field2d goalPoseField = new Field2d();
         
         
     public AlignmentSubsystem(CommandSwerveDrivetrain m_Swerve) {     
         isAligned = false;   
-        SmartDashboard.putNumber("AlignmentX P", controllerX.getP());
-        SmartDashboard.putNumber("AlignmentX I", controllerX.getI());
-        SmartDashboard.putNumber("AlignmentX D", controllerX.getD());
-
-        SmartDashboard.putNumber("AlignmentY P", controllerY.getP());
-        SmartDashboard.putNumber("AlignmentY I", controllerY.getI());
-        SmartDashboard.putNumber("AlignmentY D", controllerY.getD());
-
-        SmartDashboard.putNumber("AlignmentR P", controllerR.getP());
-        SmartDashboard.putNumber("AlignmentR I", controllerR.getI());
-        SmartDashboard.putNumber("AlignmentR D", controllerR.getD());
 
         this.m_Swerve = m_Swerve;
         currentPose = m_Swerve.getPose();
@@ -95,7 +71,6 @@ public class AlignmentSubsystem extends SubsystemBase {
 
         controllerR.enableContinuousInput(-Math.PI, Math.PI);
 
-        SmartDashboard.putData("Goal Pose", goalPoseField);
 
         
     }
@@ -108,21 +83,10 @@ public class AlignmentSubsystem extends SubsystemBase {
         goalY = goalPose.getY();
         goalR = goalPose.getRotation().getRadians();
         
-        controllerX_P = SmartDashboard.getNumber("AlignmentX P", 0.0);
-        controllerX_I = SmartDashboard.getNumber("AlignmentX I", 0.0);
-        controllerX_D = SmartDashboard.getNumber("AlignmentX D", 0.0);
 
-        controllerY_P = SmartDashboard.getNumber("AlignmentY P", 0.0);
-        controllerY_I = SmartDashboard.getNumber("AlignmentY I", 0.0);
-        controllerY_D = SmartDashboard.getNumber("AlignmentY D", 0.0);
-
-        controllerR_P = SmartDashboard.getNumber("AlignmentR P", 0.0);
-        controllerR_I = SmartDashboard.getNumber("AlignmentR I", 0.0);
-        controllerR_D = SmartDashboard.getNumber("AlignmentR D", 0.0);
-
-        controllerX.setPID(controllerX_P, controllerX_I, controllerX_D);
-        controllerY.setPID(controllerY_P, controllerY_I, controllerY_D);
-        controllerR.setPID(controllerR_P, controllerR_I, controllerR_D);
+        controllerX.setPID(3.0, 0.0, 0.4);
+        controllerY.setPID(3.0, 0.0, 0.4);
+        controllerR.setPID(3.5, 0.0, 0.17);
 
         currentPose = m_Swerve.getPose();
 
@@ -138,9 +102,7 @@ public class AlignmentSubsystem extends SubsystemBase {
 
         calcPID();
 
-        updateSmartDashboard();
-        
-        goalPoseField.setRobotPose(goalPose);
+        // updateSmartDashboard();
 
         if (!biasedSide) {
             updateGoal();
@@ -173,26 +135,17 @@ public class AlignmentSubsystem extends SubsystemBase {
         rOutput = MathUtil.clamp(controllerR.calculate(curR, goalR), -Constants.SwerveConstants.autoAlignMaxAngularRate, Constants.SwerveConstants.autoAlignMaxAngularRate);
     }
 
-    public void updateSmartDashboard() {
-        SmartDashboard.putNumber("xOutput", xOutput);
-        SmartDashboard.putNumber("yOutput", yOutput);
-        SmartDashboard.putNumber("rOutput", rOutput);
+    // public void updateSmartDashboard() {
+    //     SmartDashboard.putNumber("Waypoint Index", (int) (angle(curY, curX) / 30));
 
-        SmartDashboard.putNumber("Current Robot X", currentPose.getX());
-        SmartDashboard.putNumber("Current Robot Y", currentPose.getY());
-        SmartDashboard.putNumber("Current Robot R", currentPose.getRotation().getDegrees());
-        
-        SmartDashboard.putNumber("Waypoint Index", (int) (angle(curY, curX) / 30));
+    //     SmartDashboard.putNumber("Distance Error", distanceError);
+    //     SmartDashboard.putNumber("Angle Error", angleError);
 
-        SmartDashboard.putNumber("Distance Error", distanceError);
-        SmartDashboard.putNumber("Angle Error", angleError);
-
-        SmartDashboard.putBoolean("Aligned", isAligned);
-    }
+    //     SmartDashboard.putBoolean("Aligned", isAligned);
+    // }
 
     public void updateGoal() {
         Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
-        SmartDashboard.putBoolean("isRedAlliance", alliance.get() == DriverStation.Alliance.Red);
         if (alliance.isPresent()) {
             if (alliance.get() == DriverStation.Alliance.Red) {
                 // updateRedGoalPose();
@@ -209,7 +162,6 @@ public class AlignmentSubsystem extends SubsystemBase {
 
     public void updateGoalBiased(boolean isLeft) {
         Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
-        SmartDashboard.putBoolean("isRedAlliance", alliance.get() == DriverStation.Alliance.Red);
         if (alliance.isPresent()) {
             if (alliance.get() == DriverStation.Alliance.Red) {
                 // updateRedGoalPose();

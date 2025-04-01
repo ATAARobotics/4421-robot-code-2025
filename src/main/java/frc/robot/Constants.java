@@ -71,7 +71,7 @@ public final class Constants {
       public static final double Intake = 0.043;
       public static final double Processor = 1.0;
       public static final double L1 = 0.69;
-      public static final double L2 = 1.42;
+      public static final double L2 = 1.492;
       public static final double L3 = 2.9;
       public static final double L4 = 5.26;
       public static final double top = 5.27;

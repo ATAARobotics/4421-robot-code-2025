@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.099772727272726,
-        "y": 5.445951704545455
+        "x": 7.060758196721312,
+        "y": 5.33765368852459
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.104793219076005,
-        "y": 5.445951704545455
+        "x": 6.065778688524591,
+        "y": 5.33765368852459
       },
       "isLocked": false,
       "linkedName": "West Preloaded"
@@ -48,7 +48,7 @@
   "folder": "PRELOADED TO ALIGN (NEW)",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.69332562969217
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

@@ -20,7 +20,6 @@ import edu.wpi.first.cscore.VideoSink;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,7 +32,6 @@ import frc.robot.commands.ScoreCoralCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.AbsoluteRotation;
 import frc.robot.subsystems.AlignmentSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -73,10 +71,8 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final AlignmentSubsystem m_alignmentSubsystem = new AlignmentSubsystem(drivetrain);
 
-    private AbsoluteRotation m_AbsoluteRotation = new AbsoluteRotation(() -> joystick.getRightX(), () -> joystick.getRightY(), () -> drivetrain.getState().Pose.getRotation().getRadians());
-
+   
     private boolean scoring = false;
-    private boolean isAbsoluteHeading = false;
 
     private Command coralL1Command;
     private Command coralL2Command;
@@ -98,7 +94,6 @@ public class RobotContainer {
 
     public RobotContainer() {
         scoring = false;
-        isAbsoluteHeading = false;
         speedMultiplier = 1;
 
         coralL4Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem);
@@ -129,16 +124,13 @@ public class RobotContainer {
                 .withRotationalRate(m_alignmentSubsystem.getOutputs()[2]) :
                 drive.withVelocityX(-joystick.getLeftY() * MaxSpeed * speedMultiplier) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed * speedMultiplier) // Drive left with negative X (left)
-                    .withRotationalRate(isAbsoluteHeading ? speedMultiplier * m_AbsoluteRotation.rotationSpeed() : -joystick.getRightX() * MaxAngularRate * speedMultiplier)
-                    .withRotationalDeadband(isAbsoluteHeading ? 0.0 : speedMultiplier * MaxAngularRate * Constants.SwerveConstants.angularDeadBand) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate * speedMultiplier)
+                    .withRotationalDeadband(speedMultiplier * MaxAngularRate * Constants.SwerveConstants.angularDeadBand) // Drive counterclockwise with negative X (left)
                     .withDeadband(speedMultiplier * MaxSpeed * Constants.SwerveConstants.linearDeadBand)
             )
         );
 
         // toggle absolute heading mode on B press on the second controller
-        operatorJoystick.povUp().onTrue(
-            new InstantCommand(() -> isAbsoluteHeading = !isAbsoluteHeading)
-        );
 
         // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // operatorJoystick.povRight().whileTrue(drivetrain.applyRequest(() ->
@@ -219,7 +211,6 @@ public class RobotContainer {
 
         
 
-        DriverStation.startDataLog(DataLogManager.getLog(), true);
 
         operatorJoystick.rightBumper().onTrue(new InstantCommand(() -> m_shooterSubsystem.algaeIn())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
         operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_shooterSubsystem.algaeOut())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));

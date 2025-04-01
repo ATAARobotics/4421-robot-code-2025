@@ -342,7 +342,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         pose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
         Rotation2d poseR = Rotation2d.fromDegrees(pose[5]);
           if (Math.abs(pose[0]) >= 0.1) {
-              gyro.setYaw(poseR.getDegrees());
+              gyro.setYaw(poseR.getDegrees(),0.0);
               System.out.println("Zeroed GYRO *********** ************ *******");
           }
 
@@ -419,7 +419,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         double ta = inst.getTable("limelight").getEntry("ta").getDouble(0);
         double tx = Math.abs(inst.getTable("limelight").getEntry("tx").getDouble(0));
 
-        int currentTens = (int) (Timer.getFPGATimestamp() / 7);
+        int currentTens = (int) (Timer.getFPGATimestamp() / 15);
         if (currentTens != lastUpdate &&
             !(ta < Constants.SwerveConstants.LimelightConstants.taMin ||
             tx > Constants.SwerveConstants.LimelightConstants.txMin ||
@@ -433,8 +433,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumberArray("SwerveDrivePositions angles", new double[] {getModulePositions()[0].angle.getRadians(), getModulePositions()[1].angle.getRadians(), getModulePositions()[2].angle.getRadians(), getModulePositions()[3].angle.getRadians()});
-        SmartDashboard.putNumberArray("SwerveDrivePositions DistanceMeteres array", new double[] {getModulePositions()[0].distanceMeters, getModulePositions()[1].distanceMeters, getModulePositions()[2].distanceMeters, getModulePositions()[3].distanceMeters});
+        // SmartDashboard.putNumberArray("SwerveDrivePositions angles", new double[] {getModulePositions()[0].angle.getRadians(), getModulePositions()[1].angle.getRadians(), getModulePositions()[2].angle.getRadians(), getModulePositions()[3].angle.getRadians()});
+        // SmartDashboard.putNumberArray("SwerveDrivePositions DistanceMeteres array", new double[] {getModulePositions()[0].distanceMeters, getModulePositions()[1].distanceMeters, getModulePositions()[2].distanceMeters, getModulePositions()[3].distanceMeters});
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply
@@ -454,7 +454,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             poseY = pose[1];
             poseR = gyro.getRotation2d();
             timeStamp = Timer.getFPGATimestamp() - (pose[6] / 1000.0);
-            SmartDashboard.putBoolean("Limelight Status", true);
+            // SmartDashboard.putBoolean("Limelight Status", true);
             Pose2d visionBotPose = new Pose2d(poseX, poseY, poseR);
 
             // distance from current pose to vision estimated pose
@@ -496,7 +496,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             PoseEstimator.update(gyro.getRotation2d(), getModulePositions());
         } catch (Exception e) {
             DriverStation.reportError("LIMELIGHT FAIL: RESTART ROBOT CODE", e.getStackTrace());
-            SmartDashboard.putBoolean("Limelight Status", false);
+            // SmartDashboard.putBoolean("Limelight Status", false);
         }
 
         fieldTypePub.set("Field2d");
