@@ -180,7 +180,7 @@ public final class Constants {
     public static final double linearDeadBand = 0.20;
     public static final double angularDeadBand = 0.15;
 
-    public static final double distanceThreshold = 0.15;
+    public static final double distanceThreshold = 0.14;
     public static final double angleThreshold = 15 * Math.PI / 180;
   }
   

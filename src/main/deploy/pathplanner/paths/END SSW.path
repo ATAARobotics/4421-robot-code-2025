@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.690266393442623,
-        "y": 7.255686475409835
+        "x": 2.3497500000000002,
+        "y": 4.297999999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5417131147540983,
-        "y": 6.922987704918032
+        "x": 3.3497500000000002,
+        "y": 4.297999999999999
       },
       "isLocked": false,
-      "linkedName": "West Station"
+      "linkedName": "Align SSW"
     },
     {
       "anchor": {
-        "x": 3.3735000000000004,
-        "y": 6.374750000000001
+        "x": 3.1005000000000003,
+        "y": 4.1907499999999995
       },
       "prevControl": {
-        "x": 3.3294639276330167,
-        "y": 6.62084108949836
+        "x": 2.851117266801232,
+        "y": 4.173192882289167
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SSW"
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.2,
-    "maxAcceleration": 3.7,
+    "maxVelocity": 0.1,
+    "maxAcceleration": 0.1,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
-    "rotation": -59.99999999999999
+    "velocity": 0,
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "STATION TO ALIGN (NEW)",
+  "folder": "END ALIGNMENT PATHS",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -53.806792694435316
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

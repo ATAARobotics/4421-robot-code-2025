@@ -28,7 +28,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
-  // public Orchestra orchestra = new Orchestra();
 
   //private VideoSink server;
   
@@ -37,28 +36,8 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   public Robot() {
-    // AudioConfigs configs = new AudioConfigs();
-    // configs.AllowMusicDurDisable = true;
-    // configs.BeepOnBoot = false;
-    // TalonFX module0 = new TalonFX(0);
-    // TalonFX module1 = new TalonFX(1);
-    // TalonFX module2 = new TalonFX(2);
-    // TalonFX module3 = new TalonFX(3);
-    // TalonFX module4 = new TalonFX(4);
-    // TalonFX module5 = new TalonFX(5);
-    // TalonFX module6 = new TalonFX(6);
-    // TalonFX module7 = new TalonFX(7);
-    // orchestra.addInstrument(module0);
-    // orchestra.addInstrument(module1);
-    // orchestra.addInstrument(module2);
-    // orchestra.addInstrument(module3);
-    // orchestra.addInstrument(module4);
-    // orchestra.addInstrument(module5);
-    // orchestra.addInstrument(module6);
-    // orchestra.addInstrument(module7);
-    // orchestra.loadMusic("music.chrp");
     
-    // System.out.println(orchestra.isPlaying());
+    
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     
@@ -131,7 +110,7 @@ public class Robot extends TimedRobot {
     }
     m_robotContainer.resetClimbAndElevator();
     // orchestra.play();
-
+    
 
   }
 

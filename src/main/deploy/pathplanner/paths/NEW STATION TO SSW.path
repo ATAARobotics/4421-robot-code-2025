@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5417131147540983,
-        "y": 6.922987704918032
+        "x": 1.831444333625079,
+        "y": 6.399683058628779
       },
       "isLocked": false,
       "linkedName": "West Station"
     },
     {
       "anchor": {
-        "x": 3.3735000000000004,
-        "y": 6.374750000000001
+        "x": 2.085860655737705,
+        "y": 4.73826844262295
       },
       "prevControl": {
-        "x": 3.3294639276330167,
-        "y": 6.62084108949836
+        "x": 1.6303278688524592,
+        "y": 4.330686475409836
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.2,
-    "maxAcceleration": 3.7,
+    "maxVelocity": 4.8,
+    "maxAcceleration": 5000.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
-    "rotation": -59.99999999999999
+    "velocity": 0.9,
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "STATION TO ALIGN (NEW)",
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": -53.806792694435316
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -115,7 +115,6 @@ public class AutoScoreCoralCommand extends Command{
             PPHolonomicDriveController.overrideXYFeedback(() -> {return 0.0;}, () -> {return 0.0;});
         PPHolonomicDriveController.overrideRotationFeedback(() -> {return 0.0;});
         }
-
         if (!startedScoring && align.aligned() && elevator.isAtSetpoint(Constants.ElevatorConstants.Encoder.L4) || 
             !startedScoring && elapsedTime > Constants.SwerveConstants.autoAlignTimeConstraint && elevator.isAtSetpoint(Constants.ElevatorConstants.Encoder.L4)) {
             shooter.shoot();
@@ -137,7 +136,7 @@ public class AutoScoreCoralCommand extends Command{
         align.setBiasedSideTrue();
         shooter.setOverrideTrue();
         elevator.delayedReturnTOIntake();
-        //elevator.returnToIntake();
+        // elevator.returnToIntake();
         PPHolonomicDriveController.clearFeedbackOverrides();
     }
 }

@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4539631147540986,
-        "y": 6.513487704918032
+        "x": 1.8318985991643892,
+        "y": 7.049675994359993
       },
       "isLocked": false,
       "linkedName": "West Station"
     },
     {
       "anchor": {
-        "x": 2.62275,
-        "y": 5.9165
+        "x": 2.5893442622950817,
+        "y": 5.757223360655737
       },
       "prevControl": {
-        "x": 2.329914540074057,
-        "y": 6.106755499303974
+        "x": 2.3256147540983605,
+        "y": 5.877100409836065
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": -59.99999999999999
   },
   "reversed": false,
