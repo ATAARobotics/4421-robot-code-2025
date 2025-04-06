@@ -21,6 +21,8 @@ import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,14 +31,17 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AutoScoreCoralCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ScoreCoralCommand;
+import frc.robot.commands.ShootAlgaeCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.AlignmentSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 
 
 public class RobotContainer {
@@ -44,6 +49,7 @@ public class RobotContainer {
     private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
     private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+    private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
   
     private final double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private final double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -79,6 +85,8 @@ public class RobotContainer {
     private Command coralL3Command;
     private Command coralL4Command;
 
+    private Command algaeCommand;
+
     private Command autoCommand;
 
     private Command intake;
@@ -96,10 +104,12 @@ public class RobotContainer {
         scoring = false;
         speedMultiplier = 1;
 
+
         coralL4Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem);
         intake = new IntakeCommand(m_shooterSubsystem, m_elevatorSubsystem);
         autoCommand = new AutoScoreCoralCommand(drivetrain, m_elevatorSubsystem, m_shooterSubsystem, m_alignmentSubsystem);
-        
+        algaeCommand = new ShootAlgaeCommand(m_elevatorSubsystem, m_algaeSubsystem);
+
         NamedCommands.registerCommand("Intake", intake);
         NamedCommands.registerCommand("ScoreCoralL4", coralL4Command);
         NamedCommands.registerCommand("AlignScoreCoralL4", autoCommand);
@@ -160,10 +170,14 @@ public class RobotContainer {
         joystick.leftTrigger(0.1).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorDown(joystick.getLeftTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
         joystick.rightTrigger(0.1).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorUp(joystick.getRightTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
 
-        operatorJoystick.povRight().onTrue(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(true)))
-                                    .onFalse(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(false)));
+        operatorJoystick.povRight().onTrue(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(true, Constants.ElevatorConstants.Pivot.pivotAlgae)))
+            .onFalse(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(false, Constants.ElevatorConstants.Pivot.pivotAlgae)));
 
-        // Rest
+        operatorJoystick.povDown().onTrue(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(true, Constants.ElevatorConstants.Pivot.pivotProcessor)))
+            .onFalse(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(false, Constants.ElevatorConstants.Pivot.pivotProcessor)));
+         
+        
+                                    // Rest
         operatorJoystick.a().onTrue(new InstantCommand(
             () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.L1)
         )); 
@@ -195,7 +209,16 @@ public class RobotContainer {
           //  () -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.rest)
         //));
 
+        operatorJoystick.button(8).onTrue(new InstantCommand(() -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.algaeHigh)));
+        operatorJoystick.button(7).onTrue(new InstantCommand(() -> m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.algaeLow)));
+
+
+
         joystick.button(8).onTrue(new InstantCommand(() -> m_Swerve.zeroGyro()));
+
+        operatorJoystick.povUp().onTrue(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(true, Constants.ElevatorConstants.Pivot.pivotClimb)))
+        .onFalse(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(false, Constants.ElevatorConstants.Pivot.pivotClimb)));
+            
 
         // operatorJoystick.button(7).onTrue(new InstantCommand(() -> setSource()));
          
@@ -204,19 +227,26 @@ public class RobotContainer {
         joystick.leftBumper().onTrue(new InstantCommand(() -> {scoring = true; drivetrain.checkFirstZeroGyro(); m_alignmentSubsystem.setBiasedSideTrue(); m_alignmentSubsystem.left();})).onFalse(new InstantCommand(() -> scoring = false));
         joystick.rightBumper().onTrue(new InstantCommand(() -> {scoring = true; drivetrain.checkFirstZeroGyro(); m_alignmentSubsystem.setBiasedSideTrue(); m_alignmentSubsystem.right();})).onFalse(new InstantCommand(() -> scoring = false));
 
+        joystick.x().onTrue(new InstantCommand(() -> {m_alignmentSubsystem.alignBarge(); scoring = true; drivetrain.checkFirstZeroGyro();})).onFalse(new InstantCommand(() -> {scoring = false; m_alignmentSubsystem.regularAlign();}));
         
         operatorJoystick.rightTrigger()
             .onTrue(new InstantCommand(() -> {if (m_elevatorSubsystem.isAtL1()) { m_shooterSubsystem.shootL1();} else { m_shooterSubsystem.shoot();}}))
             .onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
 
-        
+        joystick.b().onTrue(algaeCommand);
 
 
         operatorJoystick.rightBumper().onTrue(new InstantCommand(() -> m_shooterSubsystem.algaeIn())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
         operatorJoystick.leftBumper().onTrue(new InstantCommand(() -> m_shooterSubsystem.algaeOut())).onFalse(new InstantCommand(() -> m_shooterSubsystem.stop()));
 
-
+        operatorJoystick.povLeft().and(operatorJoystick.leftTrigger()).onTrue(new InstantCommand(() -> joystick.setRumble(GenericHID.RumbleType.kBothRumble, 1))).onFalse(new InstantCommand(() -> joystick.setRumble(GenericHID.RumbleType.kBothRumble, 0)));
         
+        joystick.povLeft().onTrue(new InstantCommand(() -> m_algaeSubsystem.setIntakeSpeed())).onFalse(new InstantCommand(() -> m_algaeSubsystem.setHold()));
+        // joystick.povRight().onTrue(new InstantCommand(() -> m_algaeSubsystem.setOuttakeSpeed())).onFalse(new InstantCommand(() -> m_algaeSubsystem.setHold()));
+
+        operatorJoystick.button(9).onTrue(new InstantCommand(() -> m_algaeSubsystem.setIntakeSpeed())).onFalse(new InstantCommand(() -> m_algaeSubsystem.setHold()));
+        operatorJoystick.button(10).onTrue(new InstantCommand(() -> m_algaeSubsystem.setOuttakeSpeed())).onFalse(new InstantCommand(() -> m_algaeSubsystem.setHold()));
+
     }
 
     // public void camerainit() {

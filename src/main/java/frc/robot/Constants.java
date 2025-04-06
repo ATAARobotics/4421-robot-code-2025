@@ -59,7 +59,7 @@ public final class Constants {
     public static final double kD = 0.04;
 
     public static final double threshold = 0.075;
-    public static final double maxElevatorAcceleration = 0.70;
+    public static final double maxElevatorAcceleration = 1.0;
 
     public static final double feedForward = 0.0;
 
@@ -75,6 +75,8 @@ public final class Constants {
       public static final double L3 = 2.9;
       public static final double L4 = 5.26;
       public static final double top = 5.27;
+      public static final double algaeHigh = 3.18;
+      public static final double algaeLow = 1.772;
 
       public static final double pivotInBetweenPoint = 1.2;
       public static final double pivotL4Point = 4.8;
@@ -89,10 +91,14 @@ public final class Constants {
       public static final int pivotSparkID = 61;
       public static final int pivotEncoderID = 62;
 
-      public static final double pivotIntake = 0.0006;
+      public static final double pivotIntake = -0.001;
       public static final double pivotInBetween = 0.015;
+      // public static final double pivotL4 = 0.065;
+      public static final double pivotClimb = 0.035;
       public static final double pivotL4 = 0.065;
-      public static final double pivotAlgae = 0.15;
+      public static final double pivotShoot = 0.18;
+      public static final double pivotAlgae = 0.23;
+      public static final double pivotProcessor = 0.3;
 
       public static final double pivotMaxSpeed = 0.7;
 
@@ -122,6 +128,19 @@ public final class Constants {
     public static final int intakeThreshold = 80;
     public static final int absentThreshold = 50;
   } // 0.2758
+
+
+  public static class AlgaeConstants {
+    public static final int algaeMotorID = 59;
+    public static final int algaeEncoderID = 58;
+
+    public static final double algaeMaxSpeed = 0.75;
+    public static final double kP = 1.0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+
+    public static final double shootStart = 3.8;
+  }
 
   public static class SwerveConstants {
     public static final double alignmentthreshold = 0.05;

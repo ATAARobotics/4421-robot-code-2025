@@ -51,6 +51,8 @@ public class AlignmentSubsystem extends SubsystemBase {
     private int currentIndex = 0;
     private boolean isLeft = true;
 
+    private boolean isAligningToBarge = false;
+
         
         
     public AlignmentSubsystem(CommandSwerveDrivetrain m_Swerve) {     
@@ -100,14 +102,21 @@ public class AlignmentSubsystem extends SubsystemBase {
 
         isAligned = distanceError < Constants.SwerveConstants.distanceThreshold;
 
-        calcPID();
+        if (isAligningToBarge) {
+            updateBargeGoal();
+            calcBargePID();
+        } else {
+        
+            calcPID();
 
         // updateSmartDashboard();
 
-        if (!biasedSide) {
-            updateGoal();
-        } else {
-            updateGoalBiased(isLeft);
+            if (!biasedSide) {
+                updateGoal();
+            } else {
+                updateGoalBiased(isLeft);
+            }
+    
         }
 
     }
@@ -120,6 +129,13 @@ public class AlignmentSubsystem extends SubsystemBase {
         isLeft = true;
     }
 
+    public void alignBarge() {
+        isAligningToBarge = true;
+    }
+
+    public void regularAlign() {
+        isAligningToBarge = false;
+    }
 
     public void setBiasedSideFalse() {
         biasedSide = false;
@@ -132,6 +148,12 @@ public class AlignmentSubsystem extends SubsystemBase {
     public void calcPID() {
         xOutput = MathUtil.clamp(controllerX.calculate(curX, goalX), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
         yOutput = MathUtil.clamp(controllerY.calculate(curY, goalY), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
+        rOutput = MathUtil.clamp(controllerR.calculate(curR, goalR), -Constants.SwerveConstants.autoAlignMaxAngularRate, Constants.SwerveConstants.autoAlignMaxAngularRate);
+    }
+
+    public void calcBargePID() {
+        xOutput = MathUtil.clamp(controllerX.calculate(curX, goalX), -Constants.SwerveConstants.autoAlignMaxSpeed, Constants.SwerveConstants.autoAlignMaxSpeed);
+        yOutput = 0.0;
         rOutput = MathUtil.clamp(controllerR.calculate(curR, goalR), -Constants.SwerveConstants.autoAlignMaxAngularRate, Constants.SwerveConstants.autoAlignMaxAngularRate);
     }
 
@@ -191,6 +213,43 @@ public class AlignmentSubsystem extends SubsystemBase {
     //     goalPose = Constants.SwerveConstants.Waypoints.Waypoints[(int) (angle(flipCur.getY(), flipCur.getX()) / 30)];
     //     goalPose = flipCoords(goalPose);
     // }
+
+    public void updateBargeGoal() {
+        Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            if (alliance.get() == DriverStation.Alliance.Red) {
+                updateBargeGoalPoseRed();
+            } else{
+                updateBargeGoalPose();
+            }
+        } else{
+            updateBargeGoalPoseRed();
+        }
+    }
+
+    public void updateBargeGoalPose() {
+        try {
+            PathPlannerPath goalPath = PathPlannerPath.fromPathFile("Barge");
+            PathPoint goalPoint = goalPath.getPoint(goalPath.getAllPathPoints().size() - 1);
+            goalPose = new Pose2d(goalPoint.position.getX(), goalPoint.position.getY(), goalPath.getGoalEndState().rotation()); 
+            // If angle is not showing the right angle, it is returning heading and not the angle from goal-end-state
+        } catch (Exception e) {
+            System.out.println("PATH FROM FILE ***************** ################ **************** ERROR: " + e);
+        }
+    }
+
+    public void updateBargeGoalPoseRed() {
+        try {
+            PathPlannerPath goalPath = PathPlannerPath.fromPathFile("Barge");
+            PathPoint goalPoint = goalPath.getPoint(goalPath.getAllPathPoints().size() - 1);
+            goalPose = new Pose2d(goalPoint.position.getX(), goalPoint.position.getY(), goalPath.getGoalEndState().rotation()); 
+            // If angle is not showing the right angle, it is returning heading and not the angle from goal-end-state
+        } catch (Exception e) {
+            System.out.println("PATH FROM FILE ***************** ################ **************** ERROR: " + e);
+        }
+        goalPose = flipCoords(goalPose);
+    }
+
     public void updateFromPathPlannerGoalPoseBiased(boolean isLeft) {
         Pose2d flipCur = currentPose;
         

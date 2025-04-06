@@ -40,6 +40,7 @@ public class AutoScoreCoralCommand extends Command{
     private double xSpeed = 0;
     private double ySpeed = 0;
     private double rotSpeed = 0;
+    
 
     
     public AutoScoreCoralCommand(CommandSwerveDrivetrain drivetrain, 
@@ -70,6 +71,8 @@ public class AutoScoreCoralCommand extends Command{
         xSpeed = align.getOutputs()[0];
         ySpeed = align.getOutputs()[1];
         rotSpeed = align.getOutputs()[2];
+
+        elevator.setDelayElevatorForPivot(false);
 
         System.out.println("Started Elevator Score Coral Command *********************##################");
     }
@@ -133,6 +136,8 @@ public class AutoScoreCoralCommand extends Command{
 
     @Override
     public void end(boolean isInterrupted) {
+        elevator.setDelayElevatorForPivot(true);
+
         align.setBiasedSideTrue();
         shooter.setOverrideTrue();
         elevator.delayedReturnTOIntake();
