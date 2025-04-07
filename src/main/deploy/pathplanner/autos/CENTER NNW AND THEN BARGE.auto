@@ -1,0 +1,80 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Preloaded to NNW"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "END NNW"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignScoreCoralL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Run Back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlgaeIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Let us grab an algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Now we carefully back up"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlgaeStore"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot it in the barge"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlgaeShoot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": "Alignment Autos (NEW)",
+  "choreoAuto": false
+}

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.886,
-        "y": 5.858
+        "x": 3.2857500000000006,
+        "y": 5.7995
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.122405359220675,
-        "y": 5.600666857042086
+        "x": 3.5221553592206756,
+        "y": 5.542166857042086
       },
       "isLocked": false,
       "linkedName": "Align SW"

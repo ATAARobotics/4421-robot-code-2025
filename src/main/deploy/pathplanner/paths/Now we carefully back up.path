@@ -3,40 +3,40 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.46425,
-        "y": 4.15175
+        "x": 6.05,
+        "y": 4.0118
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.16625,
-        "y": 7.096250000000001
+        "x": 6.298567506311214,
+        "y": 4.038524423403037
       },
       "isLocked": false,
-      "linkedName": "NNW"
+      "linkedName": "There should be an algae in now"
     },
     {
       "anchor": {
-        "x": 1.690266393442623,
-        "y": 7.255686475409835
+        "x": 6.298225,
+        "y": 3.9567499999999995
       },
       "prevControl": {
-        "x": 1.8689631147540986,
-        "y": 6.981487704918031
+        "x": 6.048225,
+        "y": 3.9567499999999995
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "West Station"
+      "linkedName": "Ready For Algae Now!"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.6977205153617443,
-      "maxWaypointRelativePos": 1.0,
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.6977667493796528,
       "constraints": {
-        "maxVelocity": 1.0,
-        "maxAcceleration": 3.0,
+        "maxVelocity": 0.2,
+        "maxAcceleration": 3.7,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
@@ -56,10 +56,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -53.806792694435316
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Position to Station",
+  "folder": "Algae",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

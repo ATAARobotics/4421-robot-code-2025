@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.660143442622951,
-        "y": 6.032940573770491
+        "x": 6.298225,
+        "y": 3.9567499999999995
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.036782786885246,
-        "y": 6.128842213114754
+        "x": 6.424980031640849,
+        "y": 4.172233553789442
       },
       "isLocked": false,
-      "linkedName": "Push"
+      "linkedName": "Ready For Algae Now!"
     },
     {
       "anchor": {
-        "x": 5.791500000000001,
-        "y": 6.02375
+        "x": 7.283250000000001,
+        "y": 4.980499999999999
       },
       "prevControl": {
-        "x": 6.366909836065574,
-        "y": 6.179590163934426
+        "x": 7.039637649579624,
+        "y": 4.924348217101684
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Align NWW"
+      "linkedName": "Barge Setpoint"
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.2,
+    "maxVelocity": 2.0,
     "maxAcceleration": 3.7,
-    "maxAngularVelocity": 540.0,
+    "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -124.79602627826819
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "PRELOADED TO ALIGN (NEW)",
+  "folder": "Algae",
   "idealStartingState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

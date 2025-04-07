@@ -209,6 +209,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         delayElevatorForPivot = value;
     }
 
+    public double getPivotEncoderPosition() {
+        return pivotEncoderPosition;
+    }
+
     public void setClearAlgae(boolean value, double setpointVal) {
         clearAlgae = value;
         setpoint = setpointVal;

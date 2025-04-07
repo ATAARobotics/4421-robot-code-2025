@@ -28,6 +28,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.AlgaeIntakeCommand;
+import frc.robot.commands.AlgaeStoreInRobotCommand;
 import frc.robot.commands.AutoScoreCoralCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ScoreCoralCommand;
@@ -86,6 +88,8 @@ public class RobotContainer {
     private Command coralL4Command;
 
     private Command algaeCommand;
+    private Command algaeIntakeCommand;
+    private Command algaeStore;
 
     private Command autoCommand;
 
@@ -105,6 +109,8 @@ public class RobotContainer {
         speedMultiplier = 1;
 
 
+        algaeIntakeCommand = new AlgaeIntakeCommand(m_algaeSubsystem, m_elevatorSubsystem);
+        algaeStore = new AlgaeStoreInRobotCommand(m_algaeSubsystem, m_elevatorSubsystem);
         coralL4Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem);
         intake = new IntakeCommand(m_shooterSubsystem, m_elevatorSubsystem);
         autoCommand = new AutoScoreCoralCommand(drivetrain, m_elevatorSubsystem, m_shooterSubsystem, m_alignmentSubsystem);
@@ -113,6 +119,9 @@ public class RobotContainer {
         NamedCommands.registerCommand("Intake", intake);
         NamedCommands.registerCommand("ScoreCoralL4", coralL4Command);
         NamedCommands.registerCommand("AlignScoreCoralL4", autoCommand);
+        NamedCommands.registerCommand("AlgaeIntake", algaeIntakeCommand);
+        NamedCommands.registerCommand("AlgaeShoot", algaeCommand);
+        NamedCommands.registerCommand("AlgaeStore", algaeStore);
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);

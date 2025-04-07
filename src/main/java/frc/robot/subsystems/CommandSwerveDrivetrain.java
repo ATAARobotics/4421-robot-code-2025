@@ -298,36 +298,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         publisher = NetworkTableInstance.getDefault()
         .getStructTopic("Pose", Pose2d.struct).publish();
 
-        AudioConfigs configs = new AudioConfigs();
-        configs.AllowMusicDurDisable = true;
-        configs.BeepOnBoot = false;
-        configs.BeepOnConfig = false;
-    
-        TalonFX module0 = new TalonFX(0, "canivore");
-        TalonFX module1 = new TalonFX(1, "canivore");
-        TalonFX module2 = new TalonFX(2, "canivore");
-        TalonFX module3 = new TalonFX(3, "canivore");
-        TalonFX module4 = new TalonFX(4, "canivore");
-        TalonFX module5 = new TalonFX(5, "canivore");
-        TalonFX module6 = new TalonFX(6, "canivore");
-        TalonFX module7 = new TalonFX(7, "canivore");
-        orchestra.addInstrument(module0);
-        orchestra.addInstrument(module1);
-        orchestra.addInstrument(module2);
-        orchestra.addInstrument(module3);
-        orchestra.addInstrument(module4);
-        orchestra.addInstrument(module5);
-        orchestra.addInstrument(module6);
-        orchestra.addInstrument(module7);
-        var status = orchestra.loadMusic("music.chrp");
-        if (!status.isOK()){
-        System.out.println("Error loading music**********************************");
-        }
-        else {
-        System.out.println("Music loaded--------------------------------");
-        }
-        orchestra.play();
-        System.out.println(orchestra.isPlaying() + "-----------------------------");
+        
     }
 
     /**
