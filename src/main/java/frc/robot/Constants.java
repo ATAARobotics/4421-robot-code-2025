@@ -100,7 +100,7 @@ public final class Constants {
       public static final double pivotAlgae = 0.23;
       public static final double pivotProcessor = 0.3;
 
-      public static final double pivotMaxSpeed = 0.7;
+      public static final double pivotMaxSpeed = 1;
 
       public static final double pivotThreshold = 0.05;
 
@@ -141,7 +141,7 @@ public final class Constants {
     public static final double kI = 0;
     public static final double kD = 0;
 
-    public static final double shootStart = 2.0;
+    public static final double shootStart = 1.6;
   }
 
   public static class SwerveConstants {

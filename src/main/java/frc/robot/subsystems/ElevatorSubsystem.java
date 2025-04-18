@@ -232,7 +232,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         if (clearAlgae) {
             pivotPID.setSetpoint(setpoint);
         }
-        else if(encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotL4Point || isAtSetpoint(Constants.ElevatorConstants.Encoder.L4)){
+        else if(encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotL4Point || isAtSetpoint(Constants.ElevatorConstants.Encoder.L4) || Math.abs(defaultSetpoint - Constants.ElevatorConstants.Encoder.L4) < 0.1 && encoderCurrentPosition > Constants.ElevatorConstants.Encoder.L3){
             pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotL4);
         }
         else if (encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotInBetweenPoint) {

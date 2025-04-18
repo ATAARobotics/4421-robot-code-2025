@@ -103,6 +103,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public Orchestra orchestra = new Orchestra();
 
+    public boolean readyToAlign = false;
+
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
             this.getModule(0).getPosition(false),
@@ -205,6 +207,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         publisher = NetworkTableInstance.getDefault()
         .getStructTopic("AdPose", Pose2d.struct).publish();
+
+
         
     }
 
@@ -366,6 +370,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             speed > Constants.SwerveConstants.LimelightConstants.speedMin)) {
             zeroGyro();
             System.out.println("MANUAL ZERO GYRO *********** ************ *******");
+            this.resetRotation(getPose().getRotation());
         }
     }
 

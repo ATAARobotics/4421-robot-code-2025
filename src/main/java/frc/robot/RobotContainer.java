@@ -178,8 +178,8 @@ public class RobotContainer {
         joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-        // reset the field-centric heading on left bumper press
-        joystick.button(7).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        joystick.povDown().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        joystick.button(7).onTrue(drivetrain.runOnce(() -> {drivetrain.resetRotation(drivetrain.getPose().getRotation()); System.out.println("RESET FIELD HEADING ++++++++++++++++++++++++++++++");drivetrain.checkFirstZeroGyro();}));
 
 
         drivetrain.registerTelemetry(logger::telemeterize);
@@ -189,7 +189,7 @@ public class RobotContainer {
         joystick.a().onTrue(new InstantCommand(m_climbSubsystem::climbDown)).onFalse(new InstantCommand(m_climbSubsystem::stop));
         // operatorJoystick.povDown().onTrue(new InstantCommand(() -> {m_elevatorSubsystem.zero(); m_elevatorSubsystem.elevatorStop();}));
         joystick.leftTrigger(0.1).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorDown(joystick.getLeftTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
-        joystick.rightTrigger(0.1).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorUp(joystick.getRightTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
+        joystick.rightTrigger(0.05).whileTrue(new RunCommand(() -> m_elevatorSubsystem.elevatorUp(joystick.getRightTriggerAxis()))).onFalse(new InstantCommand(() -> m_elevatorSubsystem.elevatorStop()));
 
         operatorJoystick.povRight().onTrue(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(true, Constants.ElevatorConstants.Pivot.pivotAlgae)))
             .onFalse(new InstantCommand(() -> m_elevatorSubsystem.setClearAlgae(false, Constants.ElevatorConstants.Pivot.pivotAlgae)));
@@ -223,7 +223,7 @@ public class RobotContainer {
             () -> {m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.Intake);m_shooterSubsystem.setOverrideTrue();}
         )).onFalse(new InstantCommand(() -> {m_shooterSubsystem.setOverrideFalse(); m_shooterSubsystem.stop();}));
 
-        joystick.button(9).onTrue(new InstantCommand(() -> speedMultiplier = 0.1))
+        joystick.button(9).onTrue(new InstantCommand(() -> speedMultiplier = 0.17))
         .onFalse(new InstantCommand(() -> speedMultiplier = 1)); 
 
         //operatorJoystick.x().onTrue(new InstantCommand(
