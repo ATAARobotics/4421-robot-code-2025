@@ -6,6 +6,8 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import javax.xml.crypto.Data;
+
 import org.ejml.dense.row.CovarianceRandomDraw_DDRM;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
@@ -20,6 +22,7 @@ import edu.wpi.first.cscore.VideoSink;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -29,11 +32,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AlgaeIntakeCommand;
+import frc.robot.commands.AlgaeIntakeHighCommand;
 import frc.robot.commands.AlgaeStoreInRobotCommand;
 import frc.robot.commands.AutoScoreCoralCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ScoreCoralCommand;
 import frc.robot.commands.ShootAlgaeCommand;
+import frc.robot.commands.ShootAlgaeGoToHighCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -89,6 +94,8 @@ public class RobotContainer {
 
     private Command algaeCommand;
     private Command algaeIntakeCommand;
+    private Command algaeIntakeHighCommand;
+    private Command algaeShootGoToHigh;
     private Command algaeStore;
 
     private Command autoCommand;
@@ -110,18 +117,23 @@ public class RobotContainer {
 
 
         algaeIntakeCommand = new AlgaeIntakeCommand(m_algaeSubsystem, m_elevatorSubsystem);
+        algaeIntakeHighCommand = new AlgaeIntakeHighCommand(m_algaeSubsystem, m_elevatorSubsystem);
         algaeStore = new AlgaeStoreInRobotCommand(m_algaeSubsystem, m_elevatorSubsystem);
         coralL4Command = new ScoreCoralCommand(m_shooterSubsystem, m_elevatorSubsystem);
         intake = new IntakeCommand(m_shooterSubsystem, m_elevatorSubsystem);
         autoCommand = new AutoScoreCoralCommand(drivetrain, m_elevatorSubsystem, m_shooterSubsystem, m_alignmentSubsystem);
         algaeCommand = new ShootAlgaeCommand(m_elevatorSubsystem, m_algaeSubsystem);
+        algaeShootGoToHigh = new ShootAlgaeGoToHighCommand(m_elevatorSubsystem, m_algaeSubsystem);
 
         NamedCommands.registerCommand("Intake", intake);
         NamedCommands.registerCommand("ScoreCoralL4", coralL4Command);
         NamedCommands.registerCommand("AlignScoreCoralL4", autoCommand);
         NamedCommands.registerCommand("AlgaeIntake", algaeIntakeCommand);
         NamedCommands.registerCommand("AlgaeShoot", algaeCommand);
+        NamedCommands.registerCommand("AlgaeShootGoToHigh", algaeShootGoToHigh);
+
         NamedCommands.registerCommand("AlgaeStore", algaeStore);
+        NamedCommands.registerCommand("AlgaeIntakeHigh", algaeIntakeHighCommand);
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -255,6 +267,8 @@ public class RobotContainer {
 
         operatorJoystick.button(9).onTrue(new InstantCommand(() -> m_algaeSubsystem.setIntakeSpeed())).onFalse(new InstantCommand(() -> m_algaeSubsystem.setHold()));
         operatorJoystick.button(10).onTrue(new InstantCommand(() -> m_algaeSubsystem.setOuttakeSpeed())).onFalse(new InstantCommand(() -> m_algaeSubsystem.setHold()));
+
+        DriverStation.startDataLog(DataLogManager.getLog());
 
     }
 

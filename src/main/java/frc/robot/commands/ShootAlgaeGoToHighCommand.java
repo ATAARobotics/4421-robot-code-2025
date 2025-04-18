@@ -7,7 +7,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
-public class ShootAlgaeCommand extends Command{
+public class ShootAlgaeGoToHighCommand extends Command{
 
     private AlgaeSubsystem m_algaeSubsystem;
     private ElevatorSubsystem m_elevatorSubsystem;
@@ -16,7 +16,7 @@ public class ShootAlgaeCommand extends Command{
     private double timer;
     private double startTime;
 
-    public ShootAlgaeCommand(ElevatorSubsystem m_elevatorSubsystem, AlgaeSubsystem m_algaeSubsystem) {
+    public ShootAlgaeGoToHighCommand(ElevatorSubsystem m_elevatorSubsystem, AlgaeSubsystem m_algaeSubsystem) {
         
         this.m_elevatorSubsystem = m_elevatorSubsystem;
         this.m_algaeSubsystem = m_algaeSubsystem;
@@ -64,7 +64,7 @@ public class ShootAlgaeCommand extends Command{
     @Override
     public void end(boolean interrupted) {
         m_algaeSubsystem.setHold();
-        m_elevatorSubsystem.returnToIntake();
+        m_elevatorSubsystem.setElevatorSetpoint(Constants.ElevatorConstants.Encoder.algaeHigh);
         m_elevatorSubsystem.setClearAlgae(false, Constants.ElevatorConstants.Pivot.pivotAlgae);
 
         m_elevatorSubsystem.setDelayElevatorForPivot(true);

@@ -54,15 +54,71 @@
           }
         },
         {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlgaeStore"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Shoot it in the barge"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "AlgaeStore"
+            "name": "AlgaeShootGoToHigh"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot it in the barge"
+            "pathName": "Go for second!"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlgaeIntakeHigh"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Hopefully it intakes the second"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Store it that second"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlgaeStore"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Shoot in that second!"
+                }
+              }
+            ]
           }
         },
         {

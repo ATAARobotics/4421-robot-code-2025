@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -26,11 +28,13 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public SparkMax pivotMotor = new SparkMax(Constants.ElevatorConstants.Pivot.pivotSparkID, MotorType.kBrushless);
 
-    public SparkFlex leftClimbMotor = new SparkFlex(Constants.ElevatorConstants.leftClimbMotorID, MotorType.kBrushless);
-    public SparkFlex rightClimbMotor = new SparkFlex(Constants.ElevatorConstants.rightClimbMotorID, MotorType.kBrushless); // Put IDs in Constants.java
+    public TalonFX leftClimbMotor = new TalonFX(Constants.ElevatorConstants.leftClimbMotorID, new CANBus("rio"));
+    public TalonFX rightClimbMotor = new TalonFX(Constants.ElevatorConstants.rightClimbMotorID, new CANBus("rio"));
+    // public SparkFlex leftClimbMotor = new SparkFlex(Constants.ElevatorConstants.leftClimbMotorID, MotorType.kBrushless);
+    // public SparkFlex rightClimbMotor = new SparkFlex(Constants.ElevatorConstants.rightClimbMotorID, MotorType.kBrushless); // Put IDs in Constants.java
 
-    public SparkFlexConfig leftConfig;
-    public SparkFlexConfig rightConfig;
+    // public SparkFlexConfig leftConfig;
+    // public SparkFlexConfig rightConfig;
 
     public SparkMaxConfig pivotConfig;
     
@@ -85,25 +89,29 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         clearAlgae = false;
 
-        leftConfig = new SparkFlexConfig();
-        rightConfig = new SparkFlexConfig();
+        // leftConfig = new SparkFlexConfig();
+        // rightConfig = new SparkFlexConfig();
         pivotConfig = new SparkMaxConfig();
 
-        leftConfig.idleMode(IdleMode.kBrake);
-        rightConfig.idleMode(IdleMode.kBrake);
+        leftClimbMotor.setNeutralMode(NeutralModeValue.Brake);
+        rightClimbMotor.setNeutralMode(NeutralModeValue.Brake);
+        // leftConfig.idleMode(IdleMode.kBrake);
+        // rightConfig.idleMode(IdleMode.kBrake);
         pivotConfig.idleMode(IdleMode.kBrake);
 
 
-        leftConfig.inverted(true);
-        rightConfig.inverted(false);
+        leftClimbMotor.setInverted(true);
+        rightClimbMotor.setInverted(false);
+        // leftConfig.inverted(true);
+        // rightConfig.inverted(false);
         pivotConfig.inverted(false);
 
-        leftConfig.smartCurrentLimit(40);
-        rightConfig.smartCurrentLimit(40);
+        // leftConfig.smartCurrentLimit(40);
+        // rightConfig.smartCurrentLimit(40);
         pivotConfig.smartCurrentLimit(20);
 
-        leftClimbMotor.configure(leftConfig, null, null);
-        rightClimbMotor.configure(rightConfig, null, null);
+        // leftClimbMotor.configure(leftConfig, null, null);
+        // rightClimbMotor.configure(rightConfig, null, null);
         pivotMotor.configure(pivotConfig, null, null);
 
         SmartDashboard.putNumber("Pivot P", Constants.ElevatorConstants.Pivot.pivotkP);
@@ -183,12 +191,12 @@ public class ElevatorSubsystem extends SubsystemBase {
             hasBeenReset = false;
         }*/
 
-        if ((!SmartDashboard.getBoolean("Check Shooter LaserCAN", false) && SmartDashboard.getBoolean("Check LaserCAN", false)) && elevatorSpeed > 0.2) {
+        if ((!SmartDashboard.getBoolean("Check Shooter LaserCAN", false) && SmartDashboard.getBoolean("Check LaserCAN", false)) && elevatorSpeed > 0.1) {
             elevatorSpeed = 0.0;
         }
 
         if (delayElevatorForPivot && pivotEncoderPosition - Constants.ElevatorConstants.Pivot.pivotIntake > 0.02 && elevatorEncoderPosition() > 5.0 && elevatorSpeed < -0.2) {
-            elevatorSpeed = -0.075;
+            elevatorSpeed = -0.05;
             setClearAlgae(true, -0.005);
         } else if ((delayElevatorForPivot && pivotEncoderPosition - Constants.ElevatorConstants.Pivot.pivotIntake < 0.02 && elevatorEncoderPosition() > Constants.ElevatorConstants.Encoder.algaeHigh + 0.3 && elevatorSpeed < -0.2)) {
             setClearAlgae(false, Constants.ElevatorConstants.Pivot.pivotIntake);
@@ -197,6 +205,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("Elevator Speed", elevatorSpeed);
         SmartDashboard.putBoolean("Custom Pivot", clearAlgae);
+        SmartDashboard.putBoolean("Shooting L4", encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.L4 || isAtSetpoint(Constants.ElevatorConstants.Encoder.L4));
 
         leftClimbMotor.set(elevatorSpeed);
         rightClimbMotor.set(elevatorSpeed);
@@ -223,7 +232,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         if (clearAlgae) {
             pivotPID.setSetpoint(setpoint);
         }
-        else if(encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotL4Point){
+        else if(encoderCurrentPosition >= Constants.ElevatorConstants.Encoder.pivotL4Point || isAtSetpoint(Constants.ElevatorConstants.Encoder.L4)){
             pivotPID.setSetpoint(Constants.ElevatorConstants.Pivot.pivotL4);
         }
         else if (encoderCurrentPosition <= Constants.ElevatorConstants.Encoder.pivotInBetweenPoint) {
@@ -269,6 +278,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorSpeed = 0.0;
         setpointMode = false;
         isManualMode = false;
+    }
+    
+    public boolean pivotAtSetpoint(double setpoint) {
+        return Math.abs(pivotEncoderPosition - setpoint) < Constants.ElevatorConstants.Pivot.pivotThreshold;
     }
 
     public void returnToIntake() {

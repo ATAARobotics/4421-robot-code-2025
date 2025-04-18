@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.298225,
-        "y": 3.9567499999999995
+        "x": 6.48375,
+        "y": 4.0055
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.048961378624605,
-        "y": 3.9759241247211845
+        "x": 6.234486378624604,
+        "y": 4.0246741247211855
       },
       "isLocked": false,
       "linkedName": "Ready For Algae Now!"
@@ -20,8 +20,8 @@
         "y": 4.0118
       },
       "prevControl": {
-        "x": 6.303186494869508,
-        "y": 3.98174232603165
+        "x": 6.302329352930181,
+        "y": 4.04824435730175
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.3,
+    "maxVelocity": 0.4,
     "maxAcceleration": 2.7,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,

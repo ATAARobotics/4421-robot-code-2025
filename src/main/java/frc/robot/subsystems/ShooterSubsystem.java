@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.BooleanPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -40,6 +42,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private boolean prevPressed;
 
     private boolean overrideIntake;
+    private boolean hasCoral = false;
+    private StructPublisher<Boolean> boolPub;
 
     public ShooterSubsystem() {
         leftSpeed = 0.0;
@@ -80,6 +84,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         SmartDashboard.putBoolean("Check LaserCAN", checkLaserCan());
         SmartDashboard.putBoolean("Check Shooter LaserCAN", checkShooterLaserCan());
+        SmartDashboard.putBoolean("Has Coral", hasCoral);
 
 
         switch(shooterState) {
@@ -92,6 +97,12 @@ public class ShooterSubsystem extends SubsystemBase {
                 }
                 else if(overrideIntake && !checkShooterLaserCan()) {
                     shooterState = ShooterState.INTAKE;
+                }
+
+                if (checkShooterLaserCan()) {
+                    hasCoral = true;
+                } else {
+                    hasCoral = false;
                 }
 
                 break;
@@ -111,6 +122,7 @@ public class ShooterSubsystem extends SubsystemBase {
             case INTAKE:
                 leftSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.8;
                 rightSpeed = Constants.ShooterConstants.maxShooterSpeed / 1.8;
+                hasCoral = false;
 
                 if (!checkLaserCan() && checkShooterLaserCan()) {
                     shooterState = ShooterState.REVERSE;
@@ -120,6 +132,7 @@ public class ShooterSubsystem extends SubsystemBase {
             case REVERSE:
                 leftSpeed = -Constants.ShooterConstants.intakeSpeed;
                 rightSpeed = -Constants.ShooterConstants.intakeSpeed;
+                hasCoral = true;
 
                 if (checkLaserCan() && checkShooterLaserCan()) {
                     shooterState = ShooterState.SLOW;
@@ -142,17 +155,19 @@ public class ShooterSubsystem extends SubsystemBase {
                 if (!checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;
                     overrideIntake = false;
+                    hasCoral = false;
                 }
      
                 break;
             
             case SHOOTL1:
                 // overrideIntake = false;
-                leftSpeed = 0.8;
-                rightSpeed = 0.25;
+                leftSpeed = 0.6;
+                rightSpeed = 0.2;
 
-                if (!checkShooterLaserCan()) {
+                if (!checkLaserCan() && !checkShooterLaserCan()) {
                     shooterState = ShooterState.IDLE;
+                    hasCoral = false;
                 }
 
                 break;
@@ -193,6 +208,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void algaeOut() {
         shooterState = ShooterState.ALGAE_OUT;
     }
+
 
     public ShooterState getState() {
         return shooterState;

@@ -52,13 +52,13 @@ public final class Constants {
     public static final int rightClimbMotorID = 22;
     
     public static final int minLimitTouchLeftPin = 1;
-    public static final double maxElevatorSpeed = 1.0;
+    public static final double maxElevatorSpeed = 0.8;
 
-    public static final double kP = 1.0;
+    public static final double kP = 0.7;
     public static final double kI = 0;
-    public static final double kD = 0.04;
+    public static final double kD = 0.06;
 
-    public static final double threshold = 0.075;
+    public static final double threshold = 0.1;
     public static final double maxElevatorAcceleration = 1.0;
 
     public static final double feedForward = 0.0;
@@ -102,6 +102,8 @@ public final class Constants {
 
       public static final double pivotMaxSpeed = 0.7;
 
+      public static final double pivotThreshold = 0.05;
+
     }
   }
 
@@ -139,7 +141,7 @@ public final class Constants {
     public static final double kI = 0;
     public static final double kD = 0;
 
-    public static final double shootStart = 3.8;
+    public static final double shootStart = 2.0;
   }
 
   public static class SwerveConstants {
@@ -159,8 +161,8 @@ public final class Constants {
 
     public static class LimelightConstants {
 
-      public static final double taMin = 0.002;
-      public static final double txMin = 30;
+      public static final double taMin = 0.001;
+      public static final double txMin = 31;
       public static final double angularMin = 0.1 * Math.PI;
       public static final double speedMin = 1;
     }
